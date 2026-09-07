@@ -1,0 +1,751 @@
+grn_no,received_date,vendor_name,qty_qtl,rate
+GRN00001,2023-04-12,Sanwariya Rathore Agro Company,3390.0,1900
+GRN00002,2023-04-18,Nakoda Marudhar Agri Residue Pvt Ltd,2360.0,2258
+GRN00003,2023-04-11,New Balaji Krishi Bhandar,1840.0,1926
+GRN00004,2023-04-22,New Rathore Agro Industries,2636.0,1950
+GRN00005,2023-04-17,Khatu Bhairav Biomass Suppliers,1600.0,2252
+GRN00006,2023-04-22,Maa Bhairav Krishi Udyog,1473.0,2273
+GRN00007,2023-04-28,Shri Bhagwati Trading Co,2579.0,1963
+GRN00008,2023-04-24,Maa Bhairav Krishi Udyog,1597.0,2184
+GRN00009,2023-05-07,Khatu Thar Agro Company,4050.0,1930
+GRN00010,2023-04-11,New Rathore Krishi Bhandar,4096.0,2004
+GRN00011,2023-04-17,Jai Rathore Krishi Bhandar,1914.0,2222
+GRN00012,2023-04-24,Maa Kathiawad Agri Residue Pvt Ltd,1333.0,2199
+GRN00013,2023-04-15,Salasar Mahaveer Fuels,2567.0,1913
+GRN00014,2023-04-15,New Rajputana Agro Traders,3997.0,1975
+GRN00015,2023-04-14,Maa Ganesh Biomass Co,3700.0,1964
+GRN00016,2023-05-12,Khatu Jagdamba Agro Industries,3130.0,1997
+GRN00017,2023-05-19,Sanwariya Krishna Agri Residue Pvt Ltd,4077.0,2315
+GRN00018,2023-05-23,Sanwariya Krishna Agri Residue Pvt Ltd,3893.0,2325
+GRN00019,2023-05-27,Salasar Banas Biomass Co,3000.0,2367
+GRN00020,2023-05-21,Shree Rajputana Trading Co,1845.0,2066
+GRN00021,2023-05-14,Jai Thar Fuels,3183.0,2311
+GRN00022,2023-05-26,Shree Ramdev Fuels,3925.0,1992
+GRN00023,2023-05-14,New Bhagwati Krishi Bhandar,3250.0,2031
+GRN00024,2023-05-12,Shree Laxmi Biomass Suppliers,4136.0,1973
+GRN00025,2023-05-24,Khatu Rajputana Enterprises,2903.0,2368
+GRN00026,2023-05-27,New Bhairav Krishi Udyog,2502.0,1981
+GRN00027,2023-05-18,Salasar Mahaveer Fuels,1515.0,1991
+GRN00028,2023-05-10,Nakoda Ramdev Trading Co,2538.0,2060
+GRN00029,2023-05-25,Maa Balaji Krishi Bhandar,3134.0,2056
+GRN00030,2023-05-18,Maa Ganesh Biomass Co,3958.0,1970
+GRN00031,2023-05-22,Shree Luni Trading Co,3772.0,2012
+GRN00032,2023-05-12,Salasar Deepak Agri Residue Pvt Ltd,2875.0,1978
+GRN00033,2023-05-26,Maa Ganesh Biomass Co,3686.0,2045
+GRN00034,2023-05-24,Nakoda Ramdev Trading Co,2208.0,1978
+GRN00035,2023-05-10,Maa Bhairav Krishi Udyog,1788.0,2372
+GRN00036,2023-06-22,Maa Ganesh Biomass Co,1809.0,2041
+GRN00037,2023-06-21,Salasar Banas Biomass Co,3833.0,2354
+GRN00038,2023-06-16,Maa Bhairav Krishi Udyog,2477.0,2311
+GRN00039,2023-06-10,Salasar Banas Biomass Co,2424.0,2312
+GRN00040,2023-06-26,Shree Ramdev Fuels,2262.0,2087
+GRN00041,2023-06-22,Maa Vijay Biomass Co,4015.0,2030
+GRN00042,2023-06-21,Maa Ganesh Biomass Co,2633.0,2090
+GRN00043,2023-06-19,Salasar Krishna Biomass Suppliers,3564.0,2052
+GRN00044,2023-07-15,Maa Krishna Fuels,2510.0,2439
+GRN00045,2023-06-19,Salasar Marudhar Krishi Udyog,3067.0,2033
+GRN00046,2023-06-11,Khatu Rathore Biomass Co,3980.0,2432
+GRN00047,2023-06-15,Salasar Banas Biomass Co,1351.0,2337
+GRN00048,2023-06-11,Sanwariya Suraj Biomass Suppliers,1258.0,2059
+GRN00049,2023-06-19,Salasar Marudhar Krishi Udyog,2516.0,2081
+GRN00050,2023-06-18,Khatu Bhairav Biomass Suppliers,3118.0,2361
+GRN00051,2023-06-10,Shree Rajputana Trading Co,1665.0,2023
+GRN00052,2023-06-18,Shri Bhagwati Trading Co,2766.0,2047
+GRN00053,2023-06-28,Maa Ganesh Biomass Co,1585.0,2030
+GRN00054,2023-06-10,New Bhagwati Krishi Bhandar,1682.0,2128
+GRN00055,2023-06-12,Sanwariya Ganesh Agri Residue Pvt Ltd,1941.0,2027
+GRN00056,2023-06-14,Sanwariya Vijay Enterprises,1299.0,2016
+GRN00057,2023-06-26,Maa Balaji Trading Co,2340.0,2111
+GRN00058,2023-07-10,Nakoda Banas Krishi Bhandar,2346.0,2485
+GRN00059,2023-07-12,Khatu Rathore Biomass Co,2266.0,2513
+GRN00060,2023-07-13,Nakoda Banas Krishi Bhandar,1465.0,2443
+GRN00061,2023-07-22,Salasar Krishna Biomass Suppliers,1709.0,2160
+GRN00062,2023-07-24,Maa Balaji Trading Co,2575.0,2158
+GRN00063,2023-07-25,Nakoda Banas Krishi Bhandar,2913.0,2473
+GRN00064,2023-07-13,Khatu Vijay Biomass Suppliers,3133.0,2155
+GRN00065,2023-07-10,New Bhagwati Krishi Bhandar,3936.0,2202
+GRN00066,2023-07-15,Salasar Marudhar Krishi Udyog,2042.0,2164
+GRN00067,2023-07-21,New Rathore Agro Industries,1219.0,2137
+GRN00068,2023-07-15,Maa Kathiawad Agri Residue Pvt Ltd,3503.0,2458
+GRN00069,2023-07-26,Nakoda Ramdev Trading Co,2558.0,2124
+GRN00070,2023-07-10,Nakoda Marudhar Agri Residue Pvt Ltd,634.0,2472
+GRN00071,2023-07-15,Sanwariya Vijay Enterprises,1576.0,2123
+GRN00072,2023-07-16,Salasar Deepak Agri Residue Pvt Ltd,936.0,2114
+GRN00073,2023-07-18,Khatu Jagdamba Agro Industries,3722.0,2165
+GRN00074,2023-07-27,Maa Kathiawad Agri Residue Pvt Ltd,3390.0,2424
+GRN00075,2023-07-27,Sanwariya Govind Agro Industries,2740.0,2111
+GRN00076,2023-08-27,Salasar Mahaveer Fuels,3321.0,2197
+GRN00077,2023-09-02,Maa Krishna Fuels,3156.0,2521
+GRN00078,2023-08-31,Maa Krishna Fuels,3346.0,2460
+GRN00079,2023-08-20,New Rajputana Agro Traders,3291.0,2187
+GRN00080,2023-08-23,Jai Rathore Agro Traders,2880.0,2566
+GRN00081,2023-08-12,Salasar Krishna Biomass Suppliers,4042.0,2168
+GRN00082,2023-08-25,Sanwariya Govind Agro Industries,3735.0,2180
+GRN00083,2023-08-27,Salasar Krishna Biomass Suppliers,3259.0,2203
+GRN00084,2023-08-16,Jai Rathore Agro Traders,3215.0,2520
+GRN00085,2023-08-14,Jai Sardar Agro Industries,1201.0,2609
+GRN00086,2023-08-20,Sanwariya Rathore Agro Company,2044.0,2255
+GRN00087,2023-08-24,Maa Vijay Biomass Co,3078.0,2266
+GRN00088,2023-08-24,Salasar Banas Biomass Co,3154.0,2604
+GRN00089,2023-08-11,Shree Vijay Agro Traders,2398.0,2189
+GRN00090,2023-08-25,Nakoda Banas Krishi Bhandar,3528.0,2571
+GRN00091,2023-09-10,Salasar Mahaveer Krishi Udyog,1603.0,2251
+GRN00092,2023-09-13,Shree Vijay Agro Traders,2927.0,2228
+GRN00093,2023-09-28,Nakoda Ramdev Trading Co,2250.0,2252
+GRN00094,2023-09-16,Maa Bhairav Krishi Udyog,3672.0,2526
+GRN00095,2023-09-25,Nakoda Marudhar Agri Residue Pvt Ltd,2238.0,2672
+GRN00096,2023-09-20,Maa Vijay Biomass Co,1892.0,2316
+GRN00097,2023-09-24,Shree Ramdev Fuels,1967.0,2285
+GRN00098,2023-09-15,Salasar Krishna Biomass Suppliers,2675.0,2321
+GRN00099,2023-10-03,Salasar Saurashtra Biomass Suppliers,3543.0,2307
+GRN00100,2023-10-25,Maa Krishna Fuels,3921.0,2649
+GRN00101,2023-09-22,Sanwariya Suraj Biomass Suppliers,3815.0,2246
+GRN00102,2023-09-14,New Rathore Agro Industries,1369.0,2239
+GRN00103,2023-09-13,Shree Ramdev Fuels,1903.0,2296
+GRN00104,2023-10-06,Maa Krishna Fuels,3204.0,2628
+GRN00105,2023-09-14,Maa Ganesh Biomass Co,2966.0,2199
+GRN00106,2023-10-12,New Bhairav Krishi Udyog,1908.0,2305
+GRN00107,2023-11-13,New Banas Biomass Co,1356.0,2612
+GRN00108,2023-10-26,Salasar Banas Biomass Co,4068.0,2536
+GRN00109,2023-10-21,Sanwariya Rathore Agro Company,1089.0,2339
+GRN00110,2023-10-17,Maa Vijay Biomass Co,1740.0,2211
+GRN00111,2023-10-20,Maa Balaji Krishi Bhandar,2811.0,2273
+GRN00112,2023-10-23,New Rathore Krishi Bhandar,3596.0,2250
+GRN00113,2023-10-27,Maa Balaji Krishi Bhandar,1489.0,2289
+GRN00114,2023-10-19,Salasar Mahaveer Fuels,2317.0,2324
+GRN00115,2023-10-17,Jai Rathore Krishi Bhandar,3318.0,2625
+GRN00116,2023-10-13,Salasar Marudhar Krishi Udyog,1980.0,2235
+GRN00117,2023-10-14,Maa Bhairav Krishi Udyog,1788.0,2554
+GRN00118,2023-10-18,Maa Ganesh Biomass Co,3215.0,2251
+GRN00119,2023-10-10,New Rathore Agro Industries,3341.0,2250
+GRN00120,2023-10-27,Maa Ganesh Biomass Co,2416.0,2241
+GRN00121,2023-10-10,New Rathore Agro Industries,2415.0,2261
+GRN00122,2023-10-23,Khatu Vijay Biomass Suppliers,1884.0,2259
+GRN00123,2023-10-10,Jai Rathore Krishi Bhandar,2749.0,2585
+GRN00124,2023-11-07,Khatu Thar Agro Company,3192.0,2297
+GRN00125,2023-10-26,Maa Bhairav Krishi Udyog,1403.0,2635
+GRN00126,2023-10-26,Shree Ramdev Fuels,2622.0,2215
+GRN00127,2023-11-25,Salasar Mahaveer Krishi Udyog,1239.0,2132
+GRN00128,2023-11-13,Salasar Mahaveer Krishi Udyog,3399.0,2121
+GRN00129,2023-11-22,Salasar Deepak Agri Residue Pvt Ltd,3694.0,2161
+GRN00130,2023-11-22,Salasar Krishna Biomass Suppliers,3871.0,2109
+GRN00131,2023-11-28,Maa Balaji Krishi Bhandar,1832.0,2155
+GRN00132,2023-11-26,Khatu Rathore Biomass Co,2267.0,2398
+GRN00133,2023-11-12,Maa Balaji Krishi Bhandar,1345.0,2078
+GRN00134,2023-11-15,Sanwariya Govind Agro Industries,3636.0,2186
+GRN00135,2023-11-21,Maa Ganesh Biomass Co,3077.0,2177
+GRN00136,2023-11-22,Salasar Marudhar Krishi Udyog,3506.0,2122
+GRN00137,2023-11-25,Maa Balaji Krishi Bhandar,2172.0,2070
+GRN00138,2023-11-16,Nakoda Marudhar Agri Residue Pvt Ltd,4162.0,2384
+GRN00139,2023-12-13,Khatu Shyam Enterprises,3057.0,2136
+GRN00140,2023-11-12,Maa Ganesh Biomass Co,3127.0,2139
+GRN00141,2023-11-23,Om Shyam Biomass Suppliers,1401.0,2184
+GRN00142,2023-11-14,Jai Sardar Agro Industries,3502.0,2394
+GRN00143,2023-11-23,Khatu Rajputana Enterprises,2991.0,2433
+GRN00144,2023-12-11,Shree Vijay Agro Traders,1982.0,2101
+GRN00145,2023-12-16,Maa Vijay Biomass Co,2042.0,2093
+GRN00146,2023-12-20,Jai Rathore Krishi Bhandar,4014.0,2406
+GRN00147,2023-12-10,Salasar Krishna Biomass Suppliers,1375.0,2080
+GRN00148,2024-01-11,Khatu Shyam Enterprises,2017.0,2101
+GRN00149,2023-12-12,Shree Rajputana Trading Co,2580.0,1986
+GRN00150,2023-12-18,Salasar Marudhar Krishi Udyog,1772.0,2058
+GRN00151,2024-01-06,Maa Krishna Fuels,2513.0,2319
+GRN00152,2023-12-13,Sanwariya Suraj Biomass Suppliers,2843.0,1988
+GRN00153,2023-12-10,Sanwariya Krishna Agri Residue Pvt Ltd,2129.0,2423
+GRN00154,2023-12-28,Nakoda Marudhar Agri Residue Pvt Ltd,3376.0,2300
+GRN00155,2023-12-11,Maa Ganesh Biomass Co,2105.0,2078
+GRN00156,2024-01-08,Khatu Thar Agro Company,1833.0,2084
+GRN00157,2023-12-10,Salasar Mahaveer Fuels,3602.0,1988
+GRN00158,2023-12-16,New Bhairav Krishi Udyog,1393.0,2053
+GRN00159,2024-01-11,Maa Kathiawad Agri Residue Pvt Ltd,2788.0,2342
+GRN00160,2024-02-02,New Banas Biomass Co,3874.0,2359
+GRN00161,2024-01-10,Maa Ganesh Biomass Co,2426.0,2054
+GRN00162,2024-01-27,Salasar Krishna Biomass Suppliers,3576.0,2075
+GRN00163,2024-01-12,Khatu Rathore Biomass Co,3911.0,2385
+GRN00164,2024-01-20,New Balaji Krishi Bhandar,3729.0,1977
+GRN00165,2024-01-10,New Rathore Agro Industries,2295.0,2029
+GRN00166,2024-01-12,Jai Rathore Agro Traders,3772.0,2391
+GRN00167,2024-01-27,New Rathore Agro Industries,2317.0,2025
+GRN00168,2024-01-11,Shri Bhagwati Trading Co,1283.0,1985
+GRN00169,2024-01-13,New Rajputana Agro Traders,3764.0,2008
+GRN00170,2024-01-25,Salasar Marudhar Krishi Udyog,3312.0,2032
+GRN00171,2024-01-13,Maa Bhairav Krishi Udyog,1851.0,2396
+GRN00172,2024-01-21,Sanwariya Vijay Enterprises,3290.0,2050
+GRN00173,2024-01-10,Maa Kathiawad Agri Residue Pvt Ltd,1455.0,2355
+GRN00174,2024-01-18,Nakoda Banas Krishi Bhandar,1934.0,2282
+GRN00175,2024-01-16,New Bhagwati Krishi Bhandar,2737.0,2071
+GRN00176,2024-01-16,Salasar Mahaveer Fuels,2496.0,2009
+GRN00177,2024-02-22,Shree Luni Trading Co,1614.0,2057
+GRN00178,2024-02-15,New Balaji Krishi Bhandar,3130.0,2020
+GRN00179,2024-02-16,Om Shyam Biomass Suppliers,1578.0,2002
+GRN00180,2024-02-14,Maa Kathiawad Agri Residue Pvt Ltd,2083.0,2375
+GRN00181,2024-02-12,Khatu Rajputana Enterprises,3437.0,2336
+GRN00182,2024-02-19,Khatu Jagdamba Agro Industries,2746.0,2068
+GRN00183,2024-02-18,Maa Vijay Biomass Co,1684.0,2092
+GRN00184,2024-02-14,Khatu Rajputana Enterprises,2450.0,2347
+GRN00185,2024-02-28,Nakoda Banas Krishi Bhandar,758.0,2400
+GRN00186,2024-02-13,Shree Rajputana Trading Co,2757.0,2067
+GRN00187,2024-02-19,New Rathore Agro Industries,2970.0,2099
+GRN00188,2024-02-17,Khatu Rajputana Enterprises,1908.0,2409
+GRN00189,2024-02-22,Shree Rajputana Trading Co,3400.0,2038
+GRN00190,2024-02-20,Khatu Rathore Biomass Co,2271.0,2404
+GRN00191,2024-02-24,Jai Rathore Agro Traders,2132.0,2338
+GRN00192,2024-02-10,New Bhagwati Krishi Bhandar,2266.0,2045
+GRN00193,2024-02-24,Jai Sardar Agro Industries,1563.0,2335
+GRN00194,2024-03-12,Maa Krishna Fuels,1990.0,2287
+GRN00195,2024-02-21,Shri Bhagwati Trading Co,1971.0,2093
+GRN00196,2024-02-24,Khatu Bhairav Biomass Suppliers,3098.0,2396
+GRN00197,2024-02-10,Salasar Krishna Biomass Suppliers,2843.0,2068
+GRN00198,2024-03-20,Sanwariya Ganesh Agri Residue Pvt Ltd,3754.0,2002
+GRN00199,2024-03-25,Jai Thar Fuels,1867.0,2227
+GRN00200,2024-03-26,New Rathore Agro Industries,2771.0,2014
+GRN00201,2024-03-13,Khatu Rathore Biomass Co,2142.0,2314
+GRN00202,2024-03-19,Salasar Marudhar Krishi Udyog,1933.0,1943
+GRN00203,2024-03-13,Salasar Marudhar Krishi Udyog,3217.0,1911
+GRN00204,2024-04-01,Khatu Shyam Enterprises,3248.0,1961
+GRN00205,2024-03-28,Khatu Rajputana Enterprises,3888.0,2250
+GRN00206,2024-03-10,New Bhagwati Krishi Bhandar,3424.0,1957
+GRN00207,2024-03-11,Shree Luni Trading Co,4015.0,2011
+GRN00208,2024-03-17,Shree Vijay Agro Traders,2148.0,1954
+GRN00209,2024-03-15,Jai Sardar Agro Industries,2849.0,2210
+GRN00210,2024-03-13,Sanwariya Ganesh Agri Residue Pvt Ltd,3548.0,1960
+GRN00211,2024-03-17,Nakoda Ramdev Trading Co,1406.0,1930
+GRN00212,2024-03-19,Maa Vijay Biomass Co,3897.0,1945
+GRN00213,2024-03-27,New Balaji Krishi Bhandar,3462.0,1948
+GRN00214,2024-04-13,Maa Vijay Biomass Co,3819.0,2106
+GRN00215,2024-04-25,Sanwariya Ganesh Agri Residue Pvt Ltd,3687.0,2097
+GRN00216,2024-04-15,Maa Vijay Biomass Co,4165.0,2080
+GRN00217,2024-04-27,Jai Rathore Krishi Bhandar,2823.0,2302
+GRN00218,2024-04-20,New Rajputana Agro Traders,3979.0,2111
+GRN00219,2024-04-12,Khatu Vijay Biomass Suppliers,3918.0,2063
+GRN00220,2024-04-18,New Rathore Agro Industries,3422.0,2043
+GRN00221,2024-04-29,Khatu Shyam Enterprises,1262.0,2047
+GRN00222,2024-04-10,Khatu Bhairav Biomass Suppliers,2954.0,2354
+GRN00223,2024-04-19,Maa Kathiawad Agri Residue Pvt Ltd,3088.0,2421
+GRN00224,2024-05-15,Salasar Saurashtra Biomass Suppliers,3631.0,2018
+GRN00225,2024-04-14,Shree Laxmi Biomass Suppliers,2717.0,2104
+GRN00226,2024-04-18,New Rathore Agro Industries,1479.0,2022
+GRN00227,2024-04-20,New Bhairav Krishi Udyog,3437.0,2039
+GRN00228,2024-04-26,Sanwariya Krishna Agri Residue Pvt Ltd,3015.0,2355
+GRN00229,2024-04-16,Maa Bhairav Krishi Udyog,1684.0,2323
+GRN00230,2024-04-17,Khatu Marudhar Enterprises,2748.0,2062
+GRN00231,2024-04-24,Salasar Mahaveer Fuels,1871.0,2008
+GRN00232,2024-04-14,Sanwariya Rathore Agro Company,3296.0,2092
+GRN00233,2024-04-18,Sanwariya Suraj Biomass Suppliers,1713.0,2096
+GRN00234,2024-04-27,Maa Balaji Trading Co,1872.0,1998
+GRN00235,2024-04-22,Maa Kathiawad Agri Residue Pvt Ltd,3479.0,2321
+GRN00236,2024-05-22,Jai Sardar Agro Industries,1387.0,2388
+GRN00237,2024-05-27,Maa Ganesh Biomass Co,2701.0,2087
+GRN00238,2024-05-25,Nakoda Banas Krishi Bhandar,1516.0,2451
+GRN00239,2024-05-26,Khatu Rajputana Enterprises,1747.0,2393
+GRN00240,2024-05-16,Khatu Marudhar Enterprises,1262.0,2118
+GRN00241,2024-05-16,Maa Bhairav Krishi Udyog,3585.0,2388
+GRN00242,2024-05-27,Salasar Banas Biomass Co,1415.0,2463
+GRN00243,2024-05-23,New Balaji Krishi Bhandar,3755.0,2172
+GRN00244,2024-05-14,Khatu Bhairav Biomass Suppliers,1982.0,2470
+GRN00245,2024-05-23,Salasar Mahaveer Krishi Udyog,1758.0,2061
+GRN00246,2024-05-11,Khatu Rajputana Enterprises,3509.0,2443
+GRN00247,2024-05-15,Sanwariya Ganesh Agri Residue Pvt Ltd,3470.0,2105
+GRN00248,2024-05-26,Jai Rathore Krishi Bhandar,1371.0,2445
+GRN00249,2024-05-12,Khatu Rajputana Enterprises,1152.0,2367
+GRN00250,2024-05-27,Shree Ramdev Fuels,1906.0,2174
+GRN00251,2024-05-12,Shree Laxmi Biomass Suppliers,2016.0,2152
+GRN00252,2024-06-14,Maa Kathiawad Agri Residue Pvt Ltd,3706.0,2509
+GRN00253,2024-06-15,Maa Kathiawad Agri Residue Pvt Ltd,1209.0,2558
+GRN00254,2024-06-10,Shree Ramdev Fuels,3975.0,2140
+GRN00255,2024-07-15,Khatu Shyam Enterprises,2120.0,2153
+GRN00256,2024-06-14,Jai Thar Fuels,1892.0,2556
+GRN00257,2024-06-13,Shree Laxmi Biomass Suppliers,2979.0,2144
+GRN00258,2024-06-16,Sanwariya Rathore Agro Company,2139.0,2202
+GRN00259,2024-06-22,Shree Ramdev Fuels,1619.0,2207
+GRN00260,2024-07-08,Maa Krishna Fuels,2180.0,2472
+GRN00261,2024-06-26,New Bhagwati Krishi Bhandar,2821.0,2176
+GRN00262,2024-06-11,Salasar Banas Biomass Co,2182.0,2469
+GRN00263,2024-06-23,New Rathore Krishi Bhandar,3375.0,2137
+GRN00264,2024-06-24,Khatu Bhairav Biomass Suppliers,2926.0,2448
+GRN00265,2024-06-24,Shree Laxmi Biomass Suppliers,1278.0,2195
+GRN00266,2024-06-25,Shree Luni Trading Co,2375.0,2191
+GRN00267,2024-07-22,Salasar Mahaveer Fuels,1284.0,2285
+GRN00268,2024-07-24,Khatu Rajputana Enterprises,3924.0,2580
+GRN00269,2024-07-18,Maa Kathiawad Agri Residue Pvt Ltd,1496.0,2653
+GRN00270,2024-07-17,Nakoda Banas Krishi Bhandar,4062.0,2565
+GRN00271,2024-07-16,Maa Ganesh Biomass Co,2268.0,2232
+GRN00272,2024-08-08,New Banas Biomass Co,2477.0,2578
+GRN00273,2024-07-10,Salasar Deepak Agri Residue Pvt Ltd,2859.0,2242
+GRN00274,2024-07-19,Khatu Jagdamba Agro Industries,1508.0,2205
+GRN00275,2024-07-15,Maa Vijay Biomass Co,2113.0,2330
+GRN00276,2024-07-20,Sanwariya Govind Agro Industries,1767.0,2326
+GRN00277,2024-07-11,Shree Luni Trading Co,3089.0,2225
+GRN00278,2024-07-15,New Rathore Agro Industries,1464.0,2294
+GRN00279,2024-07-11,Shree Rajputana Trading Co,4045.0,2282
+GRN00280,2024-07-23,Sanwariya Suraj Biomass Suppliers,1936.0,2333
+GRN00281,2024-07-22,Khatu Rathore Biomass Co,4090.0,2580
+GRN00282,2024-07-14,Nakoda Banas Krishi Bhandar,3852.0,2617
+GRN00283,2024-07-26,Maa Bhairav Krishi Udyog,4026.0,2616
+GRN00284,2024-07-11,Salasar Marudhar Krishi Udyog,3238.0,2249
+GRN00285,2024-07-24,Khatu Vijay Biomass Suppliers,1407.0,2321
+GRN00286,2024-07-15,Jai Rathore Agro Traders,3788.0,2618
+GRN00287,2024-07-14,Jai Sardar Agro Industries,1574.0,2636
+GRN00288,2024-07-24,New Rajputana Agro Traders,2870.0,2286
+GRN00289,2024-08-14,Om Shyam Biomass Suppliers,2876.0,2358
+GRN00290,2024-08-21,Nakoda Banas Krishi Bhandar,2713.0,2725
+GRN00291,2024-08-20,Nakoda Banas Krishi Bhandar,1499.0,2691
+GRN00292,2024-08-15,Maa Ganesh Biomass Co,3379.0,2264
+GRN00293,2024-09-19,Maa Krishna Fuels,2351.0,2646
+GRN00294,2024-09-14,Salasar Saurashtra Biomass Suppliers,4186.0,2267
+GRN00295,2024-08-23,Maa Ganesh Biomass Co,1264.0,2369
+GRN00296,2024-08-25,New Rathore Krishi Bhandar,3992.0,2292
+GRN00297,2024-09-04,New Banas Biomass Co,1985.0,2738
+GRN00298,2024-08-21,New Rathore Agro Industries,4081.0,2356
+GRN00299,2024-08-25,Sanwariya Suraj Biomass Suppliers,1432.0,2258
+GRN00300,2024-08-17,Salasar Banas Biomass Co,3315.0,2714
+GRN00301,2024-08-16,New Rathore Agro Industries,2479.0,2349
+GRN00302,2024-08-13,Nakoda Banas Krishi Bhandar,2439.0,2614
+GRN00303,2024-08-19,Salasar Deepak Agri Residue Pvt Ltd,2644.0,2277
+GRN00304,2024-08-18,Maa Balaji Krishi Bhandar,2363.0,2285
+GRN00305,2024-08-16,Maa Ganesh Biomass Co,2577.0,2347
+GRN00306,2024-08-28,Khatu Thar Agro Company,1207.0,2274
+GRN00307,2024-09-19,Maa Balaji Krishi Bhandar,1758.0,2427
+GRN00308,2024-09-12,Khatu Marudhar Enterprises,1750.0,2411
+GRN00309,2024-09-12,New Rathore Krishi Bhandar,1760.0,2395
+GRN00310,2024-09-24,Salasar Mahaveer Fuels,3029.0,2380
+GRN00311,2024-10-11,Maa Krishna Fuels,2323.0,2717
+GRN00312,2024-09-22,Khatu Rathore Biomass Co,1358.0,2771
+GRN00313,2024-09-22,Salasar Deepak Agri Residue Pvt Ltd,1483.0,2443
+GRN00314,2024-09-23,Shree Luni Trading Co,4000.0,2330
+GRN00315,2024-09-12,Shree Luni Trading Co,3154.0,2345
+GRN00316,2024-09-22,Sanwariya Rathore Agro Company,3483.0,2372
+GRN00317,2024-09-20,Salasar Deepak Agri Residue Pvt Ltd,3549.0,2425
+GRN00318,2024-09-10,New Rathore Agro Industries,2873.0,2440
+GRN00319,2024-09-14,Shri Bhagwati Trading Co,2228.0,2456
+GRN00320,2024-09-24,Shree Vijay Agro Traders,4085.0,2370
+GRN00321,2024-09-28,Maa Ganesh Biomass Co,3426.0,2342
+GRN00322,2024-09-10,New Rathore Agro Industries,4023.0,2332
+GRN00323,2024-09-13,Shree Laxmi Biomass Suppliers,1771.0,2369
+GRN00324,2024-10-21,Jai Sardar Agro Industries,3911.0,2801
+GRN00325,2024-10-18,Sanwariya Ganesh Agri Residue Pvt Ltd,3204.0,2330
+GRN00326,2024-10-23,Nakoda Marudhar Agri Residue Pvt Ltd,1103.0,2832
+GRN00327,2024-10-19,Nakoda Ramdev Trading Co,2634.0,2400
+GRN00328,2024-10-19,New Bhagwati Krishi Bhandar,2964.0,2415
+GRN00329,2024-10-20,Jai Thar Fuels,1902.0,2778
+GRN00330,2024-10-22,Jai Rathore Agro Traders,1660.0,2792
+GRN00331,2024-10-25,Sanwariya Ganesh Agri Residue Pvt Ltd,3254.0,2427
+GRN00332,2024-10-25,Salasar Marudhar Krishi Udyog,2743.0,2370
+GRN00333,2024-10-22,Om Shyam Biomass Suppliers,736.0,2419
+GRN00334,2024-11-06,New Banas Biomass Co,1263.0,2814
+GRN00335,2024-10-13,Shree Rajputana Trading Co,2764.0,2448
+GRN00336,2024-10-28,Shri Bhagwati Trading Co,4026.0,2388
+GRN00337,2024-10-27,Shree Luni Trading Co,1742.0,2406
+GRN00338,2024-10-11,Jai Thar Fuels,1305.0,2788
+GRN00339,2024-10-19,Jai Rathore Agro Traders,4153.0,2713
+GRN00340,2024-10-28,Sanwariya Rathore Agro Company,3350.0,2452
+GRN00341,2024-10-21,Shree Luni Trading Co,1219.0,2329
+GRN00342,2024-10-10,Khatu Rathore Biomass Co,1321.0,2767
+GRN00343,2024-10-11,Khatu Jagdamba Agro Industries,3968.0,2375
+GRN00344,2024-10-13,New Bhagwati Krishi Bhandar,2505.0,2410
+GRN00345,2024-10-27,Salasar Krishna Biomass Suppliers,4191.0,2358
+GRN00346,2024-11-16,Khatu Rajputana Enterprises,2373.0,2610
+GRN00347,2024-11-11,New Rathore Krishi Bhandar,1253.0,2189
+GRN00348,2024-11-22,Nakoda Ramdev Trading Co,3794.0,2228
+GRN00349,2024-11-25,Khatu Rathore Biomass Co,4037.0,2577
+GRN00350,2024-11-18,Salasar Banas Biomass Co,2227.0,2580
+GRN00351,2024-11-17,New Rathore Krishi Bhandar,2209.0,2277
+GRN00352,2024-11-14,Jai Thar Fuels,4009.0,2584
+GRN00353,2024-11-26,Salasar Marudhar Krishi Udyog,1755.0,2257
+GRN00354,2024-11-24,Nakoda Marudhar Agri Residue Pvt Ltd,3746.0,2527
+GRN00355,2024-11-12,Maa Balaji Trading Co,3191.0,2252
+GRN00356,2024-11-28,Maa Vijay Biomass Co,3303.0,2203
+GRN00357,2024-11-28,Khatu Jagdamba Agro Industries,2560.0,2276
+GRN00358,2024-11-28,New Rathore Agro Industries,1430.0,2305
+GRN00359,2024-11-10,Sanwariya Ganesh Agri Residue Pvt Ltd,2006.0,2278
+GRN00360,2024-11-24,Khatu Rajputana Enterprises,3328.0,2541
+GRN00361,2024-11-20,Salasar Mahaveer Krishi Udyog,1900.0,2310
+GRN00362,2024-12-21,Khatu Rathore Biomass Co,3061.0,2429
+GRN00363,2024-12-22,Salasar Deepak Agri Residue Pvt Ltd,2634.0,2144
+GRN00364,2024-12-28,Shri Bhagwati Trading Co,3698.0,2144
+GRN00365,2024-12-22,Shree Ramdev Fuels,3403.0,2197
+GRN00366,2024-12-25,Om Shyam Biomass Suppliers,2185.0,2211
+GRN00367,2024-12-11,Khatu Jagdamba Agro Industries,3815.0,2107
+GRN00368,2024-12-20,Shree Luni Trading Co,2124.0,2223
+GRN00369,2024-12-27,Sanwariya Krishna Agri Residue Pvt Ltd,3217.0,2463
+GRN00370,2024-12-18,Khatu Jagdamba Agro Industries,2379.0,2133
+GRN00371,2024-12-16,Sanwariya Krishna Agri Residue Pvt Ltd,2714.0,2470
+GRN00372,2024-12-10,New Rathore Krishi Bhandar,3264.0,2154
+GRN00373,2025-01-11,Khatu Shyam Enterprises,2322.0,2135
+GRN00374,2024-12-19,Nakoda Ramdev Trading Co,3090.0,2098
+GRN00375,2024-12-25,Khatu Bhairav Biomass Suppliers,1465.0,2458
+GRN00376,2024-12-13,Khatu Rathore Biomass Co,3525.0,2473
+GRN00377,2024-12-13,Sanwariya Vijay Enterprises,1999.0,2131
+GRN00378,2025-01-28,Khatu Bhairav Biomass Suppliers,2233.0,2476
+GRN00379,2025-01-16,Maa Balaji Krishi Bhandar,2173.0,2144
+GRN00380,2025-01-18,Sanwariya Govind Agro Industries,2340.0,2175
+GRN00381,2025-01-14,Salasar Marudhar Krishi Udyog,2061.0,2121
+GRN00382,2025-02-17,Khatu Thar Agro Company,3474.0,2127
+GRN00383,2025-01-20,Maa Ganesh Biomass Co,2226.0,2090
+GRN00384,2025-01-27,Maa Vijay Biomass Co,1691.0,2159
+GRN00385,2025-01-28,Sanwariya Rathore Agro Company,3797.0,2155
+GRN00386,2025-02-12,New Banas Biomass Co,1232.0,2448
+GRN00387,2025-01-18,Sanwariya Rathore Agro Company,3505.0,2105
+GRN00388,2025-01-15,Khatu Vijay Biomass Suppliers,848.0,2117
+GRN00389,2025-02-09,Maa Krishna Fuels,2329.0,2526
+GRN00390,2025-01-15,Nakoda Marudhar Agri Residue Pvt Ltd,2314.0,2510
+GRN00391,2025-01-18,Maa Ganesh Biomass Co,3005.0,2168
+GRN00392,2025-01-22,Sanwariya Ganesh Agri Residue Pvt Ltd,2417.0,2187
+GRN00393,2025-02-07,Khatu Shyam Enterprises,3568.0,2098
+GRN00394,2025-02-20,Shree Laxmi Biomass Suppliers,3940.0,2100
+GRN00395,2025-02-13,Salasar Mahaveer Fuels,3632.0,2212
+GRN00396,2025-02-26,Shree Laxmi Biomass Suppliers,3529.0,2202
+GRN00397,2025-03-09,Salasar Saurashtra Biomass Suppliers,2442.0,2182
+GRN00398,2025-03-22,Salasar Saurashtra Biomass Suppliers,2428.0,2107
+GRN00399,2025-02-21,Jai Sardar Agro Industries,2870.0,2538
+GRN00400,2025-02-11,Khatu Rathore Biomass Co,2402.0,2554
+GRN00401,2025-02-13,Salasar Deepak Agri Residue Pvt Ltd,2514.0,2146
+GRN00402,2025-02-19,Nakoda Ramdev Trading Co,3129.0,2210
+GRN00403,2025-03-12,Salasar Saurashtra Biomass Suppliers,1287.0,2121
+GRN00404,2025-02-22,Khatu Bhairav Biomass Suppliers,2976.0,2416
+GRN00405,2025-02-20,Sanwariya Suraj Biomass Suppliers,3692.0,2163
+GRN00406,2025-02-14,Khatu Jagdamba Agro Industries,3181.0,2113
+GRN00407,2025-02-27,Shree Ramdev Fuels,3873.0,2156
+GRN00408,2025-02-22,Jai Rathore Krishi Bhandar,4110.0,2462
+GRN00409,2025-02-25,Maa Ganesh Biomass Co,1269.0,2141
+GRN00410,2025-03-12,Salasar Saurashtra Biomass Suppliers,2580.0,2168
+GRN00411,2025-02-17,Khatu Rathore Biomass Co,2518.0,2520
+GRN00412,2025-03-03,New Banas Biomass Co,2617.0,2460
+GRN00413,2025-02-18,Khatu Bhairav Biomass Suppliers,3935.0,2436
+GRN00414,2025-02-15,New Bhairav Krishi Udyog,1775.0,2130
+GRN00415,2025-02-10,Maa Kathiawad Agri Residue Pvt Ltd,2240.0,2534
+GRN00416,2025-03-23,New Rathore Krishi Bhandar,1625.0,2135
+GRN00417,2025-03-26,Jai Thar Fuels,2841.0,2376
+GRN00418,2025-04-13,Maa Krishna Fuels,2105.0,2407
+GRN00419,2025-03-12,Nakoda Ramdev Trading Co,1486.0,2123
+GRN00420,2025-03-18,Nakoda Ramdev Trading Co,2697.0,2131
+GRN00421,2025-03-13,Jai Sardar Agro Industries,2546.0,2400
+GRN00422,2025-03-25,Khatu Jagdamba Agro Industries,2439.0,2019
+GRN00423,2025-03-23,Jai Rathore Krishi Bhandar,1292.0,2449
+GRN00424,2025-03-16,New Balaji Krishi Bhandar,1540.0,2033
+GRN00425,2025-04-15,Khatu Shyam Enterprises,3185.0,2120
+GRN00426,2025-03-27,Khatu Vijay Biomass Suppliers,2915.0,2077
+GRN00427,2025-03-25,Salasar Banas Biomass Co,1563.0,2403
+GRN00428,2025-03-21,Shree Laxmi Biomass Suppliers,3812.0,2088
+GRN00429,2025-03-11,New Rathore Krishi Bhandar,1319.0,2115
+GRN00430,2025-03-11,Maa Vijay Biomass Co,2427.0,2046
+GRN00431,2025-03-27,New Bhairav Krishi Udyog,3082.0,2025
+GRN00432,2025-03-10,Salasar Banas Biomass Co,2090.0,2460
+GRN00433,2025-04-16,Shri Bhagwati Trading Co,3087.0,2144
+GRN00434,2025-04-16,Salasar Marudhar Krishi Udyog,2685.0,2192
+GRN00435,2025-04-14,Nakoda Marudhar Agri Residue Pvt Ltd,1429.0,2575
+GRN00436,2025-04-11,Shri Bhagwati Trading Co,1210.0,2166
+GRN00437,2025-04-25,Maa Balaji Krishi Bhandar,3684.0,2208
+GRN00438,2025-04-23,Salasar Mahaveer Krishi Udyog,2421.0,2118
+GRN00439,2025-04-23,Sanwariya Vijay Enterprises,1156.0,2145
+GRN00440,2025-04-17,New Balaji Krishi Bhandar,3730.0,2218
+GRN00441,2025-04-14,Khatu Marudhar Enterprises,3766.0,2127
+GRN00442,2025-04-17,Sanwariya Krishna Agri Residue Pvt Ltd,3686.0,2468
+GRN00443,2025-04-10,New Bhagwati Krishi Bhandar,2847.0,2130
+GRN00444,2025-04-28,Khatu Vijay Biomass Suppliers,1593.0,2193
+GRN00445,2025-04-10,Shree Luni Trading Co,4070.0,2207
+GRN00446,2025-04-19,Maa Balaji Krishi Bhandar,2216.0,2150
+GRN00447,2025-04-24,Maa Bhairav Krishi Udyog,2080.0,2466
+GRN00448,2025-04-14,Maa Balaji Trading Co,2642.0,2176
+GRN00449,2025-05-11,Shree Laxmi Biomass Suppliers,2745.0,2289
+GRN00450,2025-05-25,New Bhagwati Krishi Bhandar,4048.0,2241
+GRN00451,2025-05-22,Shree Laxmi Biomass Suppliers,2754.0,2223
+GRN00452,2025-05-23,Maa Balaji Trading Co,2857.0,2221
+GRN00453,2025-05-15,Khatu Marudhar Enterprises,2912.0,2267
+GRN00454,2025-05-28,New Balaji Krishi Bhandar,1456.0,2273
+GRN00455,2025-05-10,Shree Vijay Agro Traders,3549.0,2301
+GRN00456,2025-05-18,Sanwariya Krishna Agri Residue Pvt Ltd,3704.0,2507
+GRN00457,2025-05-27,New Bhairav Krishi Udyog,3705.0,2269
+GRN00458,2025-05-12,Maa Balaji Trading Co,1449.0,2181
+GRN00459,2025-05-22,New Balaji Krishi Bhandar,2046.0,2211
+GRN00460,2025-05-16,New Rajputana Agro Traders,2813.0,2212
+GRN00461,2025-05-31,Khatu Thar Agro Company,4067.0,2191
+GRN00462,2025-05-13,Sanwariya Vijay Enterprises,4131.0,2207
+GRN00463,2025-05-15,Maa Balaji Trading Co,2688.0,2250
+GRN00464,2025-05-25,Sanwariya Suraj Biomass Suppliers,3493.0,2223
+GRN00465,2025-05-21,Salasar Marudhar Krishi Udyog,4004.0,2226
+GRN00466,2025-05-24,Salasar Krishna Biomass Suppliers,3246.0,2307
+GRN00467,2025-05-20,Jai Sardar Agro Industries,2518.0,2512
+GRN00468,2025-05-16,Nakoda Banas Krishi Bhandar,2082.0,2531
+GRN00469,2025-05-20,Sanwariya Vijay Enterprises,1972.0,2223
+GRN00470,2025-06-20,Maa Balaji Trading Co,2483.0,2294
+GRN00471,2025-06-21,Shree Luni Trading Co,2720.0,2338
+GRN00472,2025-06-26,Sanwariya Rathore Agro Company,2806.0,2356
+GRN00473,2025-06-18,Sanwariya Krishna Agri Residue Pvt Ltd,2039.0,2716
+GRN00474,2025-06-20,Jai Rathore Krishi Bhandar,3677.0,2727
+GRN00475,2025-06-10,Maa Vijay Biomass Co,3999.0,2333
+GRN00476,2025-06-21,Shree Ramdev Fuels,2087.0,2372
+GRN00477,2025-07-15,Khatu Thar Agro Company,3423.0,2249
+GRN00478,2025-06-25,New Rathore Agro Industries,2643.0,2326
+GRN00479,2025-06-16,Maa Balaji Trading Co,4062.0,2318
+GRN00480,2025-06-28,Jai Rathore Agro Traders,2341.0,2702
+GRN00481,2025-06-27,Salasar Marudhar Krishi Udyog,3709.0,2380
+GRN00482,2025-06-21,Salasar Mahaveer Fuels,1503.0,2378
+GRN00483,2025-06-14,Khatu Marudhar Enterprises,3252.0,2244
+GRN00484,2025-06-22,Shree Laxmi Biomass Suppliers,2948.0,2363
+GRN00485,2025-06-14,Sanwariya Govind Agro Industries,2582.0,2342
+GRN00486,2025-06-27,Sanwariya Rathore Agro Company,1910.0,2374
+GRN00487,2025-07-12,Maa Bhairav Krishi Udyog,3831.0,2725
+GRN00488,2025-07-21,Shri Bhagwati Trading Co,4004.0,2375
+GRN00489,2025-07-13,Maa Ganesh Biomass Co,1873.0,2333
+GRN00490,2025-07-24,Maa Vijay Biomass Co,4118.0,2400
+GRN00491,2025-07-11,Nakoda Banas Krishi Bhandar,1205.0,2782
+GRN00492,2025-08-11,Salasar Saurashtra Biomass Suppliers,3864.0,2356
+GRN00493,2025-07-20,Sanwariya Krishna Agri Residue Pvt Ltd,4176.0,2726
+GRN00494,2025-07-20,New Bhairav Krishi Udyog,2505.0,2423
+GRN00495,2025-07-24,Shri Bhagwati Trading Co,2058.0,2457
+GRN00496,2025-07-18,Sanwariya Govind Agro Industries,1382.0,2462
+GRN00497,2025-07-20,Khatu Rajputana Enterprises,3419.0,2756
+GRN00498,2025-07-20,Khatu Rajputana Enterprises,1487.0,2780
+GRN00499,2025-07-21,Jai Rathore Krishi Bhandar,2787.0,2769
+GRN00500,2025-07-20,Khatu Rajputana Enterprises,2564.0,2796
+GRN00501,2025-07-26,New Balaji Krishi Bhandar,1526.0,2354
+GRN00502,2025-07-22,New Bhairav Krishi Udyog,1448.0,2365
+GRN00503,2025-07-22,Sanwariya Govind Agro Industries,4087.0,2413
+GRN00504,2025-08-22,Salasar Mahaveer Fuels,2770.0,2515
+GRN00505,2025-08-18,Salasar Krishna Biomass Suppliers,2651.0,2492
+GRN00506,2025-08-14,Salasar Banas Biomass Co,2535.0,2884
+GRN00507,2025-08-23,Jai Sardar Agro Industries,1630.0,2780
+GRN00508,2025-08-18,Maa Balaji Krishi Bhandar,1573.0,2464
+GRN00509,2025-08-17,Khatu Rathore Biomass Co,1562.0,2784
+GRN00510,2025-08-27,Nakoda Marudhar Agri Residue Pvt Ltd,3219.0,2827
+GRN00511,2025-08-28,Maa Vijay Biomass Co,3822.0,2477
+GRN00512,2025-08-27,Jai Sardar Agro Industries,3849.0,2851
+GRN00513,2025-08-10,Maa Ganesh Biomass Co,3542.0,2534
+GRN00514,2025-08-13,Salasar Mahaveer Krishi Udyog,1939.0,2480
+GRN00515,2025-08-19,Salasar Krishna Biomass Suppliers,2209.0,2535
+GRN00516,2025-08-24,Sanwariya Vijay Enterprises,2922.0,2448
+GRN00517,2025-08-19,Salasar Marudhar Krishi Udyog,1994.0,2411
+GRN00518,2025-08-21,Jai Thar Fuels,2438.0,2890
+GRN00519,2025-08-19,New Rathore Agro Industries,4078.0,2487
+GRN00520,2025-08-13,Khatu Marudhar Enterprises,1708.0,2500
+GRN00521,2025-09-10,Salasar Saurashtra Biomass Suppliers,1627.0,2534
+GRN00522,2025-08-13,New Bhairav Krishi Udyog,2625.0,2437
+GRN00523,2025-08-16,Nakoda Marudhar Agri Residue Pvt Ltd,2295.0,2855
+GRN00524,2025-09-12,Salasar Saurashtra Biomass Suppliers,3747.0,2423
+GRN00525,2025-08-20,Sanwariya Krishna Agri Residue Pvt Ltd,1321.0,2832
+GRN00526,2025-09-28,Maa Bhairav Krishi Udyog,4193.0,2845
+GRN00527,2025-09-24,Jai Sardar Agro Industries,3140.0,2969
+GRN00528,2025-09-18,Jai Rathore Agro Traders,2059.0,2870
+GRN00529,2025-09-10,Sanwariya Rathore Agro Company,1445.0,2496
+GRN00530,2025-09-15,Salasar Mahaveer Krishi Udyog,2992.0,2478
+GRN00531,2025-09-15,Maa Balaji Krishi Bhandar,3764.0,2512
+GRN00532,2025-09-13,Shree Laxmi Biomass Suppliers,3343.0,2551
+GRN00533,2025-09-10,Maa Balaji Krishi Bhandar,3263.0,2468
+GRN00534,2025-09-18,Shree Ramdev Fuels,4062.0,2565
+GRN00535,2025-09-14,Maa Bhairav Krishi Udyog,3885.0,2901
+GRN00536,2025-09-23,Sanwariya Ganesh Agri Residue Pvt Ltd,3795.0,2552
+GRN00537,2025-09-28,Salasar Banas Biomass Co,1240.0,2904
+GRN00538,2025-09-19,Maa Ganesh Biomass Co,3137.0,2490
+GRN00539,2025-09-22,Sanwariya Rathore Agro Company,3860.0,2500
+GRN00540,2025-09-11,Shree Luni Trading Co,1528.0,2587
+GRN00541,2025-10-01,Khatu Shyam Enterprises,3245.0,2487
+GRN00542,2025-09-18,Shree Luni Trading Co,2369.0,2500
+GRN00543,2025-09-11,Nakoda Marudhar Agri Residue Pvt Ltd,1069.0,2912
+GRN00544,2025-09-26,Jai Rathore Krishi Bhandar,2576.0,2863
+GRN00545,2025-11-05,Khatu Shyam Enterprises,3387.0,2524
+GRN00546,2025-10-23,Maa Balaji Trading Co,3436.0,2482
+GRN00547,2025-10-22,Shree Rajputana Trading Co,1838.0,2551
+GRN00548,2025-10-10,Sanwariya Rathore Agro Company,3534.0,2554
+GRN00549,2025-10-27,Jai Rathore Krishi Bhandar,2795.0,3005
+GRN00550,2025-11-14,Maa Krishna Fuels,1743.0,2889
+GRN00551,2025-10-10,Sanwariya Krishna Agri Residue Pvt Ltd,2648.0,2867
+GRN00552,2025-10-13,Sanwariya Ganesh Agri Residue Pvt Ltd,3372.0,2532
+GRN00553,2025-10-22,Jai Rathore Krishi Bhandar,2592.0,2966
+GRN00554,2025-10-14,Khatu Jagdamba Agro Industries,3980.0,2605
+GRN00555,2025-10-25,Sanwariya Ganesh Agri Residue Pvt Ltd,3862.0,2492
+GRN00556,2025-10-14,Sanwariya Govind Agro Industries,1552.0,2564
+GRN00557,2025-11-02,Maa Krishna Fuels,2821.0,2887
+GRN00558,2025-10-19,Shree Vijay Agro Traders,1286.0,2548
+GRN00559,2025-10-25,Sanwariya Rathore Agro Company,3737.0,2596
+GRN00560,2025-10-13,Salasar Mahaveer Krishi Udyog,1592.0,2589
+GRN00561,2025-10-19,Sanwariya Govind Agro Industries,3757.0,2610
+GRN00562,2025-11-17,Salasar Mahaveer Krishi Udyog,3128.0,2441
+GRN00563,2025-11-24,Sanwariya Govind Agro Industries,1825.0,2422
+GRN00564,2025-12-06,Maa Krishna Fuels,2810.0,2809
+GRN00565,2025-12-08,Salasar Saurashtra Biomass Suppliers,3541.0,2346
+GRN00566,2025-11-19,New Bhairav Krishi Udyog,2924.0,2355
+GRN00567,2025-11-20,Shree Vijay Agro Traders,1753.0,2320
+GRN00568,2025-11-10,Sanwariya Rathore Agro Company,3234.0,2433
+GRN00569,2025-11-28,New Balaji Krishi Bhandar,4106.0,2382
+GRN00570,2025-12-12,Khatu Shyam Enterprises,1841.0,2308
+GRN00571,2025-11-14,Sanwariya Ganesh Agri Residue Pvt Ltd,3476.0,2436
+GRN00572,2025-11-24,Khatu Bhairav Biomass Suppliers,3846.0,2808
+GRN00573,2025-11-20,New Balaji Krishi Bhandar,4000.0,2354
+GRN00574,2025-11-12,Shree Rajputana Trading Co,1410.0,2393
+GRN00575,2025-11-26,New Rathore Krishi Bhandar,3355.0,2440
+GRN00576,2025-11-26,Maa Vijay Biomass Co,2386.0,2416
+GRN00577,2025-11-17,Maa Ganesh Biomass Co,4168.0,2419
+GRN00578,2025-11-27,Jai Rathore Agro Traders,2798.0,2769
+GRN00579,2025-11-22,Salasar Krishna Biomass Suppliers,2175.0,2441
+GRN00580,2025-11-23,Salasar Krishna Biomass Suppliers,1691.0,2415
+GRN00581,2025-11-12,Khatu Jagdamba Agro Industries,3493.0,2391
+GRN00582,2025-11-24,Maa Bhairav Krishi Udyog,832.0,2759
+GRN00583,2025-12-10,Maa Ganesh Biomass Co,2325.0,2276
+GRN00584,2025-12-20,Sanwariya Suraj Biomass Suppliers,2103.0,2272
+GRN00585,2025-12-25,Shri Bhagwati Trading Co,3139.0,2247
+GRN00586,2025-12-20,Khatu Rathore Biomass Co,2848.0,2704
+GRN00587,2026-01-03,Salasar Saurashtra Biomass Suppliers,3243.0,2261
+GRN00588,2025-12-22,Maa Balaji Krishi Bhandar,3013.0,2286
+GRN00589,2025-12-21,Sanwariya Govind Agro Industries,2023.0,2232
+GRN00590,2025-12-27,Shree Rajputana Trading Co,4056.0,2293
+GRN00591,2025-12-19,Shree Laxmi Biomass Suppliers,2735.0,2283
+GRN00592,2025-12-12,Sanwariya Ganesh Agri Residue Pvt Ltd,2515.0,2357
+GRN00593,2025-12-31,Salasar Saurashtra Biomass Suppliers,4119.0,2238
+GRN00594,2025-12-21,Sanwariya Vijay Enterprises,2084.0,2308
+GRN00595,2025-12-18,Nakoda Ramdev Trading Co,3076.0,2304
+GRN00596,2025-12-11,Sanwariya Govind Agro Industries,3206.0,2229
+GRN00597,2025-12-28,Sanwariya Govind Agro Industries,3338.0,2311
+GRN00598,2025-12-12,Shree Vijay Agro Traders,2189.0,2260
+GRN00599,2025-12-11,New Rathore Agro Industries,2569.0,2284
+GRN00600,2025-12-26,Om Shyam Biomass Suppliers,738.0,2326
+GRN00601,2026-01-18,Maa Kathiawad Agri Residue Pvt Ltd,1938.0,2619
+GRN00602,2026-01-26,Salasar Krishna Biomass Suppliers,3184.0,2282
+GRN00603,2026-01-19,Khatu Jagdamba Agro Industries,3208.0,2304
+GRN00604,2026-01-12,New Rathore Agro Industries,1668.0,2252
+GRN00605,2026-01-23,New Rathore Krishi Bhandar,3781.0,2206
+GRN00606,2026-01-14,Om Shyam Biomass Suppliers,2008.0,2267
+GRN00607,2026-01-27,Khatu Marudhar Enterprises,1588.0,2232
+GRN00608,2026-02-18,Khatu Shyam Enterprises,1642.0,2306
+GRN00609,2026-01-21,Nakoda Marudhar Agri Residue Pvt Ltd,3925.0,2615
+GRN00610,2026-01-25,Jai Rathore Agro Traders,3196.0,2618
+GRN00611,2026-02-04,Khatu Thar Agro Company,4069.0,2245
+GRN00612,2026-01-24,Sanwariya Govind Agro Industries,1605.0,2223
+GRN00613,2026-01-27,Sanwariya Govind Agro Industries,2758.0,2261
+GRN00614,2026-01-12,Sanwariya Krishna Agri Residue Pvt Ltd,1635.0,2563
+GRN00615,2026-01-14,Nakoda Marudhar Agri Residue Pvt Ltd,3073.0,2599
+GRN00616,2026-01-28,Salasar Banas Biomass Co,3075.0,2639
+GRN00617,2026-01-24,Shri Bhagwati Trading Co,2280.0,2226
+GRN00618,2026-01-16,Jai Rathore Krishi Bhandar,3827.0,2617
+GRN00619,2026-01-25,Sanwariya Govind Agro Industries,2553.0,2221
+GRN00620,2026-01-26,Salasar Mahaveer Krishi Udyog,2598.0,2302
+GRN00621,2026-02-23,Shree Rajputana Trading Co,3112.0,2277
+GRN00622,2026-03-17,Salasar Saurashtra Biomass Suppliers,2876.0,2286
+GRN00623,2026-02-10,Salasar Marudhar Krishi Udyog,1913.0,2260
+GRN00624,2026-02-26,Maa Bhairav Krishi Udyog,1484.0,2598
+GRN00625,2026-02-24,Shree Ramdev Fuels,1869.0,2229
+GRN00626,2026-02-21,Maa Ganesh Biomass Co,3573.0,2279
+GRN00627,2026-02-13,Shree Vijay Agro Traders,3745.0,2334
+GRN00628,2026-02-16,Maa Kathiawad Agri Residue Pvt Ltd,2400.0,2564
+GRN00629,2026-02-14,Jai Rathore Krishi Bhandar,3598.0,2578
+GRN00630,2026-02-18,Khatu Rathore Biomass Co,3017.0,2580
+GRN00631,2026-02-22,Sanwariya Krishna Agri Residue Pvt Ltd,2909.0,2639
+GRN00632,2026-02-26,Shree Vijay Agro Traders,1931.0,2319
+GRN00633,2026-02-20,Shree Vijay Agro Traders,2637.0,2281
+GRN00634,2026-02-11,Khatu Bhairav Biomass Suppliers,2003.0,2694
+GRN00635,2026-03-13,Maa Krishna Fuels,3732.0,2653
+GRN00636,2026-02-15,Maa Ganesh Biomass Co,1622.0,2252
+GRN00637,2026-03-13,Khatu Shyam Enterprises,2319.0,2276
+GRN00638,2026-02-20,Jai Rathore Agro Traders,2754.0,2696
+GRN00639,2026-02-13,Om Shyam Biomass Suppliers,1298.0,2235
+GRN00640,2026-02-18,Shri Bhagwati Trading Co,3471.0,2353
+GRN00641,2026-02-15,Sanwariya Suraj Biomass Suppliers,3842.0,2264
+GRN00642,2026-02-13,New Bhagwati Krishi Bhandar,3955.0,2245
+GRN00643,2026-03-27,New Rajputana Agro Traders,3122.0,2250
+GRN00644,2026-03-16,Salasar Banas Biomass Co,2883.0,2588
+GRN00645,2026-04-01,Khatu Thar Agro Company,2799.0,2150
+GRN00646,2026-03-24,Om Shyam Biomass Suppliers,3884.0,2211
+GRN00647,2026-04-08,New Banas Biomass Co,3103.0,2469
+GRN00648,2026-04-04,Khatu Shyam Enterprises,3089.0,2151
+GRN00649,2026-03-14,Sanwariya Ganesh Agri Residue Pvt Ltd,3635.0,2149
+GRN00650,2026-03-26,Salasar Deepak Agri Residue Pvt Ltd,1458.0,2234
+GRN00651,2026-03-21,Maa Bhairav Krishi Udyog,1707.0,2520
+GRN00652,2026-03-17,New Bhairav Krishi Udyog,2398.0,2238
+GRN00653,2026-03-28,Salasar Banas Biomass Co,1301.0,2554
+GRN00654,2026-03-22,Sanwariya Krishna Agri Residue Pvt Ltd,3007.0,2488
+GRN00655,2026-03-16,Salasar Mahaveer Fuels,1228.0,2243
+GRN00656,2026-03-10,New Bhairav Krishi Udyog,2441.0,2136
+GRN00657,2026-03-23,Khatu Rajputana Enterprises,1966.0,2542
+GRN00658,2026-04-19,Maa Krishna Fuels,1494.0,2476
+GRN00659,2026-03-18,Salasar Mahaveer Krishi Udyog,2741.0,2205
+GRN00660,2026-04-14,Khatu Thar Agro Company,3046.0,2170
+GRN00661,2026-04-07,Khatu Shyam Enterprises,1796.0,2152
+GRN00662,2026-04-22,Salasar Mahaveer Fuels,3105.0,2231
+GRN00663,2026-04-10,New Balaji Krishi Bhandar,1854.0,2285
+GRN00664,2026-04-21,Maa Balaji Krishi Bhandar,4179.0,2327
+GRN00665,2026-05-25,Maa Krishna Fuels,2367.0,2693
+GRN00666,2026-04-22,Sanwariya Rathore Agro Company,3086.0,2281
+GRN00667,2026-04-12,Salasar Mahaveer Krishi Udyog,3696.0,2296
+GRN00668,2026-04-15,New Rajputana Agro Traders,1488.0,2347
+GRN00669,2026-04-26,New Bhairav Krishi Udyog,1782.0,2274
+GRN00670,2026-05-11,Maa Krishna Fuels,2938.0,2667
+GRN00671,2026-04-26,Maa Balaji Krishi Bhandar,3615.0,2320
+GRN00672,2026-04-26,Khatu Jagdamba Agro Industries,3829.0,2285
+GRN00673,2026-04-12,Khatu Vijay Biomass Suppliers,646.0,2263
+GRN00674,2026-04-17,Maa Balaji Trading Co,4077.0,2311
+GRN00675,2026-04-28,Jai Sardar Agro Industries,2241.0,2656
+GRN00676,2026-04-21,Jai Rathore Agro Traders,1521.0,2683
+GRN00677,2026-04-28,Salasar Mahaveer Fuels,1266.0,2227
+GRN00678,2026-04-24,New Rathore Krishi Bhandar,1499.0,2335
+GRN00679,2026-04-15,New Rathore Krishi Bhandar,3230.0,2300
+GRN00680,2026-05-04,Khatu Shyam Enterprises,3561.0,2292
+GRN00681,2026-04-17,New Rathore Krishi Bhandar,2180.0,2227
+GRN00682,2026-05-22,Maa Balaji Krishi Bhandar,3540.0,2376
+GRN00683,2026-05-28,Shri Bhagwati Trading Co,2109.0,2305
+GRN00684,2026-05-19,Khatu Jagdamba Agro Industries,2310.0,2386
+GRN00685,2026-05-15,Maa Balaji Krishi Bhandar,3158.0,2296
+GRN00686,2026-05-12,Nakoda Marudhar Agri Residue Pvt Ltd,3660.0,2680
+GRN00687,2026-05-25,Salasar Mahaveer Fuels,1600.0,2344
+GRN00688,2026-05-19,Shree Luni Trading Co,1942.0,2357
+GRN00689,2026-05-10,Jai Sardar Agro Industries,1973.0,2711
+GRN00690,2026-05-17,Khatu Rajputana Enterprises,3530.0,2776
+GRN00691,2026-05-11,Khatu Rathore Biomass Co,2090.0,2748
+GRN00692,2026-05-25,Om Shyam Biomass Suppliers,3793.0,2312
+GRN00693,2026-05-10,Shree Luni Trading Co,2143.0,2381
+GRN00694,2026-05-26,Shree Vijay Agro Traders,3456.0,2366
+GRN00695,2026-05-22,Khatu Vijay Biomass Suppliers,2208.0,2424
+GRN00696,2026-05-11,Maa Kathiawad Agri Residue Pvt Ltd,1242.0,2712
+GRN00697,2026-05-19,Nakoda Banas Krishi Bhandar,3425.0,2743
+GRN00698,2026-07-10,Maa Krishna Fuels,2808.0,2796
+GRN00699,2026-06-20,Salasar Deepak Agri Residue Pvt Ltd,1261.0,2434
+GRN00700,2026-06-28,Jai Thar Fuels,2595.0,2776
+GRN00701,2026-06-19,New Rathore Krishi Bhandar,2189.0,2500
+GRN00702,2026-06-27,Salasar Mahaveer Krishi Udyog,3258.0,2422
+GRN00703,2026-06-28,Sanwariya Govind Agro Industries,3437.0,2409
+GRN00704,2026-06-20,Shree Ramdev Fuels,1970.0,2379
+GRN00705,2026-06-24,New Balaji Krishi Bhandar,1400.0,2401
+GRN00706,2026-06-23,Khatu Bhairav Biomass Suppliers,3408.0,2733
+GRN00707,2026-07-03,Khatu Shyam Enterprises,3535.0,2412
+GRN00708,2026-06-12,Salasar Mahaveer Fuels,4010.0,2364
+GRN00709,2026-06-10,Jai Rathore Agro Traders,4195.0,2810
+GRN00710,2026-07-08,Salasar Saurashtra Biomass Suppliers,3553.0,2450
+GRN00711,2026-06-18,Sanwariya Vijay Enterprises,2494.0,2422
+GRN00712,2026-06-16,Shree Rajputana Trading Co,2032.0,2435
+GRN00713,2026-06-20,New Rathore Krishi Bhandar,1218.0,2403
+GRN00714,2026-07-05,New Banas Biomass Co,2740.0,2738
+GRN00715,2026-07-24,Jai Thar Fuels,2591.0,2962
+GRN00716,2026-07-18,Khatu Vijay Biomass Suppliers,2844.0,2506
+GRN00717,2026-07-22,Sanwariya Suraj Biomass Suppliers,3009.0,2570
+GRN00718,2026-07-15,New Rathore Agro Industries,4034.0,2455
+GRN00719,2026-07-17,Maa Balaji Krishi Bhandar,2008.0,2574
+GRN00720,2026-07-20,Salasar Krishna Biomass Suppliers,3670.0,2560
+GRN00721,2026-07-24,Sanwariya Govind Agro Industries,1652.0,2484
+GRN00722,2026-07-11,Nakoda Banas Krishi Bhandar,2276.0,2829
+GRN00723,2026-07-17,New Rajputana Agro Traders,3254.0,2446
+GRN00724,2026-07-23,Salasar Banas Biomass Co,2935.0,2826
+GRN00725,2026-07-12,Om Shyam Biomass Suppliers,2275.0,2560
+GRN00726,2026-07-12,Salasar Marudhar Krishi Udyog,1844.0,2461
+GRN00727,2026-07-12,Shree Rajputana Trading Co,3192.0,2542
+GRN00728,2026-07-10,Maa Bhairav Krishi Udyog,2477.0,2950
+GRN00729,2026-07-10,Maa Balaji Trading Co,2427.0,2586
+GRN00730,2026-07-14,Shree Laxmi Biomass Suppliers,3456.0,2477
+GRN00731,2026-07-23,Nakoda Banas Krishi Bhandar,3863.0,2819
+GRN00732,2026-08-13,Sanwariya Govind Agro Industries,2480.0,2611
+GRN00733,2026-08-11,Nakoda Banas Krishi Bhandar,2194.0,2914
+GRN00734,2026-08-15,Shree Ramdev Fuels,1315.0,2655
+GRN00735,2026-08-18,Sanwariya Ganesh Agri Residue Pvt Ltd,3531.0,2577
+GRN00736,2026-08-11,Salasar Krishna Biomass Suppliers,1969.0,2622
+GRN00737,2026-08-25,Jai Rathore Krishi Bhandar,3757.0,2894
+GRN00738,2026-08-24,Sanwariya Krishna Agri Residue Pvt Ltd,3672.0,2994
+GRN00739,2026-08-10,Nakoda Ramdev Trading Co,2576.0,2534
+GRN00740,2026-08-19,Jai Thar Fuels,3461.0,2908
+GRN00741,2026-08-24,Sanwariya Vijay Enterprises,4022.0,2551
+GRN00742,2026-08-16,New Bhagwati Krishi Bhandar,3375.0,2573
+GRN00743,2026-08-15,New Bhagwati Krishi Bhandar,2700.0,2527
+GRN00744,2026-08-23,Salasar Marudhar Krishi Udyog,2849.0,2601
+GRN00745,2026-08-15,Nakoda Marudhar Agri Residue Pvt Ltd,2800.0,2996
+GRN00746,2026-08-28,Khatu Vijay Biomass Suppliers,1696.0,2571
+GRN00747,2026-08-11,Salasar Deepak Agri Residue Pvt Ltd,953.0,2582
+GRN00748,2026-08-18,Maa Vijay Biomass Co,2817.0,2553
+GRN00749,2024-05-20,Salasar Luni Agro Company,2467.0,2091
+GRN00750,2025-11-20,Salasar Luni Agro Company,2307.0,2428

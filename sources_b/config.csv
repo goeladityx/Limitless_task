@@ -1,0 +1,17 @@
+key,value,note
+feed_per_pellet,1.28,tonnes of residue per tonne of pellets. CHECK THIS
+conversion_cost,3320,"rupees per tonne, conversion plus overhead. CHECK THIS"
+stalk_discount,1.08,stalk costs 15 percent MORE per tonne than husk (collection and baling) but carries more energy
+finished_pellet_base,7180,rupees per tonne for bought-in finished pellets
+gcv_floor_full,2800,below this a further 25 percent comes off
+gcv_reject,2000,below this the load is rejected outright
+gcv_penalty,0.25,the cut applied between 2000 and 2800
+psu_payment_days,30,NTPC settles within 30 days of the acceptance certificate
+private_payment_days_min,48,
+private_payment_days_max,115,
+private_unpaid_share,0.24,share of private invoices still open
+private_part_pay_share,0.42,share of private invoices settled in 2 or 3 parts
+wastage,1.04,feedstock bought over feedstock used
+consignment_min_t,700,smallest consignment. A rake
+consignment_max_t,1200,largest consignment
+gcv_quote_step,100,the step a bidder actually moves his quoted GCV in
