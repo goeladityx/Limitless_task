@@ -1,0 +1,6 @@
+material,buys_as,gcv_min,gcv_typical,gcv_max,note
+rice husk,husk,3000,3150,3300,"steady, high silica"
+mustard stalk,stalk,3100,3350,3600,"good energy, varies with how dry it was baled"
+groundnut shell,stalk,3400,3650,3900,the best of the three
+bought-in pellets,pellets,3200,3600,3900,finished product from another producer
+contaminated,husk,2300,2650,3000,"mud or soil mixed in. Same material, GCV collapses"

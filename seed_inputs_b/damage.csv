@@ -1,0 +1,12 @@
+code,what,where,size,note
+D1,purchases that cannot be classified as feedstock or finished pellets,"2025-07,2025-08,2026-03..05",19,different months from tenant A
+D2,tonnage out exceeds opening plus produced plus purchased,2025-07=140;2026-04=210,350,caused by D1
+D3,item code PLT-C3 reused for a different product,2025-04-01,1,a different code and a different date from tenant A
+D4,purchase vouchers back-dated three weeks,June 2024 and June 2025,3,"three of them here, not two"
+D5,dispatches with no sales voucher,FY24-25,4,
+D6,advances not linked to any invoice,spread,7,
+D7,invoices settled in two or three parts,private buyers,0.42,worse than tenant A
+D8,dispatch rows with no tender reference,spread,38,worse record keeping than tenant A
+D9,vendor with too few commitments to judge,W30,2,a different vendor id from tenant A
+D10,vendor capacity never recorded anywhere,all vendors,0,same everywhere
+D11,loads delivered after the contract closed,spread,5,"went out in the extension period. No window is open on that day, so a person has to say which contract it belonged to"

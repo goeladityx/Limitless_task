@@ -1,0 +1,4 @@
+grade_id,code,valid_from,valid_to,made_from,kcal,description
+H1,PLT-C3,2023-04-01,2025-03-31,cotton stalk,3200,100% cotton stalk
+H2,PLT-C3,2025-04-01,2028-03-31,cotton stalk + groundnut shell,3425,"blend, same code, different product"
+H3,PLT-D4,2023-04-01,2028-03-31,mixed residue,3150,whatever came in

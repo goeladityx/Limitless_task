@@ -1,0 +1,56 @@
+vendor_id,name,town,region,supplies,behaviour,gstin,material_gcv
+V01,New Rathore Agro Industries,Sikar,Rajasthan,husk,reliable,08AAAAA2000A1Z0,3231
+V02,New Rajputana Agro Traders,Tonk,Rajasthan,husk,reliable,08BHAAA2001A1Z1,3286
+V03,Sanwariya Krishna Agri Residue Pvt Ltd,Nagaur,Rajasthan,stalk,reliable,08COAAA2002A1Z2,3538
+V04,Nakoda Marudhar Agri Residue Pvt Ltd,Sikar,Rajasthan,stalk,diverter,08DVAAA2003A1Z3,3573
+V05,Maa Ganesh Biomass Co,Churu,Rajasthan,husk,reliable,08ECAAA2004A1Z4,3238
+V06,Shree Rajputana Trading Co,Jhunjhunu,Rajasthan,husk,reliable,08FJAAA2005A1Z5,3231
+V07,Maa Bhairav Krishi Udyog,Nagaur,Rajasthan,stalk,diverter,08GQAAA2006A1Z6,3360
+V08,Salasar Banas Biomass Co,Bundi,Rajasthan,stalk,reliable,08HXAAA2007A1Z7,3537
+V09,Salasar Bhairav Trading Co,Bhilwara,Rajasthan,finished,late,08IEAAA2008A1Z8,3500
+V10,Maa Krishna Fuels,Jodhpur,Rajasthan,stalk,late,08JLAAA2009A1Z9,3197
+V11,Salasar Mahaveer Fuels,Nagaur,Rajasthan,husk,reliable,08KSAAA2010A1Z0,3094
+V12,New Rathore Krishi Bhandar,Bundi,Rajasthan,husk,erratic,08LZAAA2011A1Z1,3262
+V13,Khatu Rajputana Enterprises,Barmer,Rajasthan,stalk,erratic,08MGAAA2012A1Z2,3343
+V14,Nakoda Kathiawad Krishi Bhandar,Nagaur,Rajasthan,finished,diverter,08NNAAA2013A1Z3,3522
+V15,Salasar Luni Agro Company,Nagaur,Rajasthan,husk,thin,08OUAAA2014A1Z4,3095
+V16,Nakoda Banas Krishi Bhandar,Jodhpur,Rajasthan,stalk,diverter,08PBAAA2015A1Z5,3148
+V17,New Balaji Krishi Bhandar,Hanumangarh,Rajasthan,husk,reliable,08QIAAA2016A1Z6,3228
+V18,Shri Bhagwati Trading Co,Churu,Rajasthan,both,reliable,08RPAAA2017A1Z7,3310
+V19,Salasar Krishna Biomass Suppliers,Jaipur,Rajasthan,husk,reliable,08SWAAA2018A1Z8,3072
+V20,Jai Sardar Agro Industries,Pali,Rajasthan,stalk,diverter,08TDAAA2019A1Z9,3146
+V21,Sanwariya Suraj Biomass Suppliers,Nagaur,Rajasthan,husk,reliable,08UKAAA2020A1Z0,3275
+V22,Maa Balaji Krishi Bhandar,Jhunjhunu,Rajasthan,husk,reliable,08VRAAA2021A1Z1,3021
+V23,Sanwariya Vijay Enterprises,Barmer,Rajasthan,both,erratic,08WYAAA2022A1Z2,3405
+V24,Khatu Thar Agro Company,Sikar,Rajasthan,husk,late,08XFAAA2023A1Z3,3231
+V25,Khatu Jagdamba Agro Industries,Kota,Rajasthan,husk,reliable,08YMAAA2024A1Z4,3080
+V26,Sanwariya Ganesh Agri Residue Pvt Ltd,Nagaur,Rajasthan,both,reliable,08ZTAAA2025A1Z5,3015
+V27,Shree Ramdev Fuels,Sikar,Rajasthan,husk,reliable,08AAAAA2026A1Z6,3270
+V28,Khatu Marudhar Enterprises,Bikaner,Rajasthan,husk,reliable,08BHAAA2027A1Z7,3032
+V29,Sanwariya Rathore Agro Company,Pali,Rajasthan,both,erratic,08COAAA2028A1Z8,3060
+V30,Salasar Marudhar Krishi Udyog,Sirohi,Rajasthan,both,reliable,08DVAAA2029A1Z9,3036
+V31,Salasar Mahaveer Krishi Udyog,Churu,Rajasthan,husk,reliable,08ECAAA2030A1Z0,3097
+V32,Om Shyam Biomass Suppliers,Tonk,Rajasthan,husk,diverter,08FJAAA2031A1Z1,3123
+V33,Khatu Bhairav Biomass Suppliers,Bikaner,Rajasthan,stalk,reliable,08GQAAA2032A1Z2,3407
+V34,Shree Luni Trading Co,Tonk,Rajasthan,husk,reliable,08HXAAA2033A1Z3,3015
+V35,Maa Vijay Biomass Co,Tonk,Rajasthan,husk,reliable,08IEAAA2034A1Z4,3237
+V36,Maa Kathiawad Agri Residue Pvt Ltd,Kota,Rajasthan,stalk,reliable,08JLAAA2035A1Z5,3267
+V37,Khatu Shyam Enterprises,Bikaner,Rajasthan,both,late,08KSAAA2036A1Z6,3451
+V38,Salasar Deepak Agri Residue Pvt Ltd,Hanumangarh,Rajasthan,husk,diverter,08LZAAA2037A1Z7,3100
+V39,New Bhairav Krishi Udyog,Bhilwara,Rajasthan,husk,reliable,08MGAAA2038A1Z8,3265
+V40,New Bhagwati Krishi Bhandar,Bikaner,Rajasthan,husk,erratic,08NNAAA2039A1Z9,3119
+V41,Shree Sardar Agro Company,Ganganagar,Rajasthan,finished,late,08OUAAA2040A1Z0,3527
+V42,Maa Shyam Biomass Suppliers,Bhavnagar,Gujarat,finished,reliable,24PBAAA2041A1Z1,3350
+V43,Sanwariya Govind Agro Industries,Surendranagar,Gujarat,both,erratic,24QIAAA2042A1Z2,3511
+V44,Jai Rathore Agro Traders,Junagadh,Gujarat,stalk,reliable,24RPAAA2043A1Z3,3102
+V45,Jai Thar Fuels,Bhavnagar,Gujarat,stalk,reliable,24SWAAA2044A1Z4,3439
+V46,Khatu Vijay Biomass Suppliers,Rajkot,Gujarat,husk,diverter,24TDAAA2045A1Z5,3043
+V47,Shree Laxmi Biomass Suppliers,Bhavnagar,Gujarat,both,reliable,24UKAAA2046A1Z6,3468
+V48,Maa Balaji Trading Co,Junagadh,Gujarat,husk,reliable,24VRAAA2047A1Z7,3142
+V49,Nakoda Ramdev Trading Co,Morbi,Gujarat,husk,reliable,24WYAAA2048A1Z8,3208
+V50,New Govind Agro Company,Morbi,Gujarat,finished,reliable,24XFAAA2049A1Z9,3482
+V51,Khatu Rathore Biomass Co,Junagadh,Gujarat,stalk,reliable,24YMAAA2050A1Z0,3577
+V52,Salasar Saurashtra Biomass Suppliers,Morbi,Gujarat,husk,late,24ZTAAA2051A1Z1,3042
+V53,Jai Rathore Krishi Bhandar,Morbi,Gujarat,stalk,reliable,24AAAAA2052A1Z2,3462
+V54,New Banas Biomass Co,Morbi,Gujarat,stalk,late,24BHAAA2053A1Z3,3230
+V55,Shree Vijay Agro Traders,Junagadh,Gujarat,husk,reliable,24COAAA2054A1Z4,3161

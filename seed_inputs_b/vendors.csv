@@ -1,0 +1,39 @@
+vendor_id,name,town,region,supplies,behaviour,gstin,material_gcv
+W01,Shree Gohil Biofuels,Rajkot,Gujarat,finished,reliable,24AABBB3000B1Z0,3458
+W02,Maa Kathiawad Biomass LLP,Amreli,Gujarat,husk,late,24BFBBB3001B1Z1,3216
+W03,Shree Girnar Krishi Udyog,Botad,Gujarat,husk,late,24CKBBB3002B1Z2,3151
+W04,Somnath Sabar Biofuels,Gondal,Gujarat,husk,late,24DPBBB3003B1Z3,3173
+W05,Sardar Sabar Agri Residue LLP,Bhavnagar,Gujarat,husk,reliable,24EUBBB3004B1Z4,3148
+W06,Om Sabar Agro Exports,Rajkot,Gujarat,finished,erratic,24FZBBB3005B1Z5,3317
+W07,Maa Solanki Krishi Udyog,Gondal,Gujarat,husk,late,24GEBBB3006B1Z6,3199
+W08,Shree Saurashtra Biomass LLP,Bhavnagar,Gujarat,both,erratic,24HJBBB3007B1Z7,3487
+W09,Om Chudasama Bioenergy,Bhavnagar,Gujarat,husk,erratic,24IOBBB3008B1Z8,3335
+W10,Dwarka Girnar Trading Company,Gondal,Gujarat,husk,reliable,24JTBBB3009B1Z9,3363
+W11,Dwarka Desai Agri Residue LLP,Morbi,Gujarat,both,diverter,24KYBBB3010B1Z0,3243
+W12,Maa Kutch Biomass LLP,Amreli,Gujarat,finished,reliable,24LDBBB3011B1Z1,3348
+W13,Om Ambaji Bioenergy,Gondal,Gujarat,finished,reliable,24MIBBB3012B1Z2,3769
+W14,New Patel Agri Residue LLP,Surendranagar,Gujarat,husk,reliable,24NNBBB3013B1Z3,3372
+W15,Dwarka Jadeja Agro Traders,Junagadh,Gujarat,finished,reliable,24OSBBB3014B1Z4,3712
+W16,Jay Sabar Agri Residue LLP,Amreli,Gujarat,husk,erratic,24PXBBB3015B1Z5,3051
+W17,Dwarka Girnar Pellet Works,Surendranagar,Gujarat,finished,late,24QCBBB3016B1Z6,3486
+W18,Dwarka Bhal Agro Traders,Nadiad,Gujarat,finished,reliable,24RHBBB3017B1Z7,3229
+W19,Dwarka Ambaji Trading Company,Jamnagar,Gujarat,stalk,late,24SMBBB3018B1Z8,3827
+W20,Sardar Bhadar Agro Traders,Jamnagar,Gujarat,husk,erratic,24TRBBB3019B1Z9,3304
+W21,Maa Girnar Krishi Udyog,Rajkot,Gujarat,husk,diverter,24UWBBB3020B1Z0,3138
+W22,Om Sabar Trading Company,Botad,Gujarat,finished,diverter,24VBBBB3021B1Z1,3395
+W23,Somnath Bhadar Biomass LLP,Morbi,Gujarat,husk,erratic,24WGBBB3022B1Z2,3309
+W24,Dwarka Desai Krishi Udyog,Surendranagar,Gujarat,stalk,erratic,24XLBBB3023B1Z3,3827
+W25,Om Patel Agro Exports,Anand,Gujarat,finished,reliable,24YQBBB3024B1Z4,3597
+W26,Jay Chudasama Agri Residue LLP,Morbi,Gujarat,husk,reliable,24ZVBBB3025B1Z5,3143
+W27,Om Chudasama Trading Company,Morbi,Gujarat,finished,reliable,24AABBB3026B1Z6,3539
+W28,Shree Girnar Pellet Works,Morbi,Gujarat,finished,diverter,24BFBBB3027B1Z7,3529
+W29,Om Jadeja Agro Traders,Bhavnagar,Gujarat,finished,reliable,24CKBBB3028B1Z8,3320
+W30,Om Sabar Bioenergy,Surendranagar,Gujarat,stalk,thin,24DPBBB3029B1Z9,3444
+W31,Jay Sabar Biofuels,Nadiad,Gujarat,both,diverter,24EUBBB3030B1Z0,3564
+W32,Dwarka Gohil Pellet Works,Amreli,Gujarat,both,reliable,24FZBBB3031B1Z1,3266
+W33,Somnath Girnar Biofuels,Jamnagar,Gujarat,stalk,reliable,24GEBBB3032B1Z2,3673
+W34,Shree Ambaji Trading Company,Morbi,Gujarat,stalk,late,24HJBBB3033B1Z3,3640
+W35,Om Bhal Trading Company,Bhavnagar,Gujarat,stalk,late,24IOBBB3034B1Z4,3504
+W36,Om Charotar Krishi Udyog,Surendranagar,Gujarat,finished,erratic,24JTBBB3035B1Z5,3431
+W37,Jay Bhal Agri Residue LLP,Jamnagar,Gujarat,husk,diverter,24KYBBB3036B1Z6,3148
+W38,New Gohil Biomass LLP,Gondal,Gujarat,both,reliable,24LDBBB3037B1Z7,3073

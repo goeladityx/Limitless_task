@@ -1,0 +1,13 @@
+plant_id,buyer_id,name,state,quoted_gcv
+P1,B01,NTPC Sipat,Chhattisgarh,3200
+P2,B01,NTPC Korba,Chhattisgarh,3200
+P3,B01,NTPC Mouda,Maharashtra,3200
+P4,B01,NTPC North Karanpura,Jharkhand,3200
+P5,B01,NTPC Darlipali,Odisha,3200
+P6,B01,NTPC Lara,Chhattisgarh,3200
+P7,B01,NTPC Gadarwara,Madhya Pradesh,3200
+P8,B02,Suratgarh STPS,Rajasthan,3100
+P9,B03,Nagaur Cement,Rajasthan,3100
+P10,B04,Jaipur Bottling,Rajasthan,3300
+P11,B05,Bhilwara Paper,Rajasthan,3000
+P12,B06,Kota Textile,Rajasthan,3000

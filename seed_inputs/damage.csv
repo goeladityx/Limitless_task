@@ -1,0 +1,12 @@
+code,what,where,size,note
+D1,purchases that cannot be classified as feedstock or finished pellets,"2025-11,2026-02,2026-06..08",28,rate lands in the dead zone between husk and pellets
+D2,tonnage out exceeds opening plus produced plus purchased,2025-11=180;2026-02=95,275,caused by D1
+D3,item code PLT-A1 reused for a different product,2024-04-01,1,boundary sits on a financial year end
+D4,purchase vouchers back-dated three weeks,October 2024 and October 2025,2,"entered mid November, so October moves after month end"
+D5,dispatches with no sales voucher,FY25-26,6,plus 2 credit notes with no matching dispatch
+D6,advances not linked to any invoice,spread,5,"4 paid to vendors, 1 received from a buyer"
+D7,invoices settled in two or three parts,private buyers,0.3,
+D8,dispatch rows with no tender reference,spread,60,"recoverable by asking the dispatch team, not ambiguous"
+D9,vendor with too few commitments to judge,V15,2,"thin evidence, R4 refuses"
+D10,vendor capacity never recorded anywhere,all vendors,0,"permanently unanswerable, R3 refuses"
+D11,loads delivered after the contract closed,spread,7,"went out in the extension period. No window is open on that day, so a person has to say which contract it belonged to"

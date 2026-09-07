@@ -1,0 +1,7 @@
+buyer_id,name,kind,pay_days
+B01,NTPC Limited,psu,30
+B02,Rajasthan Rajya Vidyut Utpadan Nigam,psu,45
+B03,Nagaur Cement Works,private,21
+B04,Jaipur Bottling Plant,private,15
+B05,Bhilwara Paper Mills,private,30
+B06,Kota Textile Processors,private,45
