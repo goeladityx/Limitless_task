@@ -1,0 +1,8 @@
+# Three things, and nothing else. No ORM, no dataframe library, no vector store.
+#
+# Lower bounds rather than exact pins, deliberately. An exact pin is the better choice when
+# you control the machine. Here it means the clone fails on any Python that has no wheel for
+# that exact release, which is what happened first time on 3.14.
+psycopg[binary]>=3.2
+fastapi>=0.115
+uvicorn[standard]>=0.32
