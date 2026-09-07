@@ -1,0 +1,45 @@
+# Optional. The repository runs on a laptop with run.bat or run.sh and needs none of this.
+#
+# It exists so a reviewer who would rather not install anything can be handed a URL. Render
+# reads this file if you point a Blueprint at the repo; the same three settings work typed
+# into the dashboard by hand.
+#
+# One thing deliberately NOT here: building the data. setup.py loads 17,000 rows and then
+# runs every test, which takes minutes. Doing that at container start would mean the site is
+# slow every time it wakes, and a failing test would surface inside a deploy log instead of
+# in front of you. Seed the database once from your own machine:
+#
+#     DATABASE_URL=<the external url>  ADMIN_DATABASE_URL=<the same url>  python setup.py
+#
+# and the service only ever has to run uvicorn.
+
+services:
+  - type: web
+    name: pellet-console
+    runtime: python
+    plan: starter            # free sleeps after inactivity and wakes in about a minute
+    region: singapore        # put the database in the same region or every query crosses an ocean
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/tenants
+    envVars:
+      # Both point at the same managed database. On a managed Postgres you are given an
+      # ordinary owner rather than a superuser, so there is no second role to connect as,
+      # and there does not need to be: FORCE ROW LEVEL SECURITY applies to the owner too.
+      # tests/test_tenant_isolation.py passes against exactly this arrangement.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pellet-db
+          property: connectionString
+      - key: ADMIN_DATABASE_URL
+        fromDatabase:
+          name: pellet-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+
+databases:
+  - name: pellet-db
+    databaseName: pellet
+    plan: basic-256mb
+    region: singapore
