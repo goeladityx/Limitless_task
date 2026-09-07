@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A tender just landed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --wash:#F7F9FC; --line:#E3E9F2; --line2:#CFD9E8;
+  --ink:#0B1220; --ink2:#3D4C63; --muted:#7B8AA3;
+  --blue:#1B4FD8; --blue-d:#123AA6; --blue-s:#E9EFFF;
+  --hold:#C8770B; --hold-s:#FFF3E0; --ok:#0E7A5A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink2);
+  font:16px/1.6 "Instrument Sans",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a,button{font:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+header{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(255,255,255,.88);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:13px}
+.glyph{width:26px;height:26px;border-radius:7px;background:var(--ink);position:relative;flex:none}
+.glyph::after{content:"";position:absolute;inset:6px 5px;border-radius:2px;
+  background:linear-gradient(to top,var(--hold) 0 24%,var(--blue) 24% 100%)}
+.bar h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:16px;color:var(--ink);margin:0}
+.bar .sp{margin-left:auto}
+.cta{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:9px 17px;
+  font-weight:600;font-size:14px;text-decoration:none;display:inline-block;cursor:pointer}
+.cta:hover{background:var(--blue)}
+.cta.big{padding:15px 30px;font-size:16.5px;border-radius:10px}
+.cta.ghost{background:none;color:var(--blue-d);border:1px solid var(--line2)}
+.cta.ghost:hover{background:var(--blue-s)}
+
+.rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;
+  display:flex;flex-direction:column;gap:10px}
+.rail i{width:7px;height:7px;border-radius:99px;background:var(--line2);transition:.35s;display:block}
+.rail i.on{background:var(--blue);transform:scale(1.5)}
+@media (max-width:980px){.rail{display:none}}
+
+/* the thread, fixed beside the film so it is continuous rather than per beat */
+.thread{position:fixed;left:0;top:0;bottom:0;width:52px;z-index:50;pointer-events:none}
+.thread svg{position:absolute;left:0;top:0;overflow:visible}
+.thread .tline{fill:none;stroke:var(--line);stroke-width:2}
+.thread .tline.done{stroke:var(--blue);stroke-width:2.5;stroke-linecap:round}
+.thread i{position:absolute;width:10px;height:10px;border-radius:50%;
+  background:#fff;border:2px solid var(--line2);transition:.3s}
+.thread i.on{border-color:var(--blue);background:var(--blue)}
+.thread i.now{transform:scale(1.55);box-shadow:0 0 0 5px rgba(27,79,216,.14)}
+@media (max-width:980px){.thread{display:none}}
+
+.film{position:relative}
+.stage{position:sticky;top:0;height:100vh;display:grid;
+  grid-template-columns:minmax(0,40%) minmax(0,60%);align-items:center;gap:28px;
+  max-width:1160px;margin:0 auto;padding:64px 24px 24px}
+.words{position:relative;height:min(60vh,470px)}
+.beat{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  opacity:0;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+.beat.on{opacity:1;transform:none;pointer-events:auto}
+.step{font:500 11px/1 "JetBrains Mono",monospace;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 15px;display:flex;align-items:center;gap:10px}
+.step::before{content:"";width:20px;height:1.5px;background:var(--blue)}
+.beat h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(26px,3.2vw,42px);
+  line-height:1.12;letter-spacing:-.022em;color:var(--ink);margin:0 0 12px}
+.beat p{margin:0;font-size:16.5px;max-width:38ch;color:var(--ink2)}
+.beat .big{font:500 clamp(32px,4.4vw,54px)/1 "JetBrains Mono",monospace;color:var(--ink);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:0 0 8px}
+.beat .big.warn{color:var(--hold)}
+.beat .ask{margin-top:14px;padding-left:14px;border-left:2px solid var(--blue);
+  font-size:15.5px;color:var(--blue-d);font-weight:500;max-width:36ch}
+.canvaswrap{position:relative;height:min(66vh,560px)}
+canvas{width:100%;height:100%;display:block}
+.scenespace{height:180vh}
+
+.end{background:var(--wash);border-top:1px solid var(--line);text-align:center}
+.end .in{max-width:760px;margin:0 auto;padding:82px 24px 92px}
+.end h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(28px,4vw,42px);
+  color:var(--ink);margin:0 0 14px;letter-spacing:-.02em}
+.end p{font-size:17.5px;margin:0 auto 28px;max-width:54ch}
+.btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap}
+footer{max-width:1160px;margin:0 auto;padding:22px 24px 44px;
+  font:400 12px/1.6 "JetBrains Mono",monospace;color:var(--muted);text-align:center}
+.load{height:100vh;display:grid;place-items:center;color:var(--muted)}
+@media (max-width:900px){
+  .stage{grid-template-columns:1fr;height:auto;position:relative;padding:92px 20px 30px;gap:20px}
+  .words{height:auto}.beat{position:relative;opacity:1;transform:none;margin-bottom:30px}
+  .canvaswrap{height:50vh}.scenespace{height:auto}
+}
+@media (prefers-reduced-motion:reduce){.beat{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="glyph" aria-hidden="true"></div>
+    <h1>Pellet Console</h1>
+    <span class="sp"></span>
+    <a class="cta" href="/console">Skip to the console</a>
+  </div>
+</header>
+
+<div id="app"><div class="load">Reading the books…</div></div>
+
+<script>
+const el=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;
+  if(x!==undefined&&x!==null)n.textContent=x;return n;};
+const add=(p,...k)=>{k.forEach(x=>x&&p.appendChild(x));return p;};
+const fmt=v=>(v===null||v===undefined)?'':Math.round(v).toLocaleString();
+const MON=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const C={ink:'#0B1220',ink2:'#3D4C63',muted:'#9AA7BC',line:'#E3E9F2',wash:'#F1F5FB',
+         blue:'#1B4FD8',blueL:'#A9C0F7',hold:'#C8770B',holdL:'#F2CE9B',ok:'#0E7A5A',okL:'#9CCFBC'};
+
+(async()=>{
+  const app=document.getElementById('app');
+  let d;
+  try{ d=await (await fetch('/api/story?tenant=a')).json(); }
+  catch(e){ app.innerHTML='<div class="load">Cannot reach the database. Start Postgres, run <code>python db/load.py</code>, then reload.</div>'; return; }
+  app.innerHTML='';
+
+  const nt=d.new_tender||{}, perGcv=nt.rate_per_t&&nt.quoted_gcv?nt.rate_per_t/nt.quoted_gcv:0;
+  const delivered=d.contracts.reduce((a,c)=>a+(+c.delivered||0),0);
+  const stillOwed=d.contracts.reduce((a,c)=>a+Math.max(0,(+c.tonnes||0)-(+c.delivered||0)),0);
+  const bookedShare=d.months.length
+    ? d.months.reduce((a,m)=>a+m.committed_t,0)/Math.max(1,d.months.reduce((a,m)=>a+m.capacity_t,0)) : 0;
+
+  const BEATS=[
+    {step:'Monday morning', h:'A tender lands on his desk.',
+     big:fmt(nt.tonnes)+' t', p:'To '+(nt.plant||'')+'. He has ten days.',
+     ask:'Can I fill this? And what do I bid?'},
+
+    {step:'How he gets paid', h:'On energy, not on weight.',
+     big:'Rs '+perGcv.toFixed(2), p:'Per unit of GCV. Above 2,800 he is paid on whatever energy actually arrives. Between 2,000 and 2,800 a quarter comes off. Below 2,000 the load is rejected outright.',
+     ask:'So the GCV I quote decides my margin, before I have made a single tonne.'},
+
+    {step:'What he is already carrying', h:'He is holding '+fmt(d.committed_t)+' tonnes of live contracts.',
+     big:fmt(stillOwed)+' t', p:'Across '+d.live_contracts+' contracts. Some are nearly finished. Some have barely started. Solid is delivered, hollow is still owed.',
+     ask:'How much of this is actually still on me?'},
+
+    {step:'What the plant can do', h:'He knows roughly what he can make each month.',
+     big:Math.round(bookedShare*100)+'%', p:'Of the next year’s production is already spoken for by contracts he has yet to finish. What is left is what a new tender would have to fit into.',
+     ask:'How much of my capacity is already booked?'},
+
+    {step:'And what he cannot see', h:'Labour, weather, moisture, and the vendors.',
+     big:'unknown', warn:true, p:'A wet month drops GCV. A vendor who promised in April sells elsewhere in October. None of that is in a system, and none of it is in the plan.',
+     ask:'How much do I need to buy in, and from whom?'},
+
+    {step:'The actual problem', h:'He wants more tenders. He cannot see what he is already carrying.',
+     big:d.blocked_loads+' loads', warn:true,
+     p:fmt(d.blocked_t)+' tonnes went out with no contract written against them, and '+
+       d.unclassified+' purchases could be raw material or bought-in pellets. So even the total is a guess.',
+     ask:'That is where the questions start.'},
+  ];
+
+  const film=el('div','film'), stage=el('div','stage'), words=el('div','words');
+  BEATS.forEach((b,i)=>{
+    const w=el('div','beat'+(i===0?' on':''));
+    add(w, el('p','step',b.step), el('h2',null,b.h),
+        b.big?el('div','big'+(b.warn?' warn':''),b.big):null,
+        el('p',null,b.p), b.ask?el('p','ask','“'+b.ask+'”'):null);
+    words.appendChild(w);
+  });
+  const cw=el('div','canvaswrap'), cv=el('canvas'); cw.appendChild(cv);
+  add(stage, words, cw); film.appendChild(stage);
+  BEATS.forEach(()=>film.appendChild(el('div','scenespace')));
+  app.appendChild(film);
+
+  const rail=el('div','rail'); BEATS.forEach((_,i)=>rail.appendChild(el('i',i===0?'on':null)));
+  document.body.appendChild(rail);
+
+  const end=el('section','end'), inr=el('div','in');
+  add(inr, el('h2',null,'Now ask it yourself.'),
+      el('p',null,'Twenty questions with the choices inside the sentence. The answer on the left, the SQL that produced it on the right. Clear one item from the queue and watch a number tighten.'));
+  const btns=el('div','btns');
+  const a1=el('a','cta big','Open the console'); a1.href='/console';
+  const a2=el('a','cta big ghost','Browse the raw tables'); a2.href='/console';
+  add(btns,a1,a2); inr.appendChild(btns); end.appendChild(inr); app.appendChild(end);
+  app.appendChild(el('footer',null,
+    'Seeded data for two fictional producers. Every figure on this page is read live from the database.'));
+
+  /* ------------------------------------------------ canvas */
+  const ctx=cv.getContext('2d'); let W=0,H=0;
+  function size(){ const dpr=Math.min(2,devicePixelRatio||1), r=cw.getBoundingClientRect();
+    W=r.width; H=r.height; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  const rr=(x,y,w,h,r)=>{ctx.beginPath();ctx.roundRect(x,y,Math.max(0,w),Math.max(0,h),r);};
+  const txt=(s,x,y,sz,col,wt='400',al='left')=>{ctx.fillStyle=col;ctx.textAlign=al;
+    ctx.font=wt+' '+sz+'px "JetBrains Mono", monospace';ctx.fillText(s,x,y);};
+
+  /* 1. the tender arrives and fills itself in */
+  function s1(p){
+    const w=Math.min(360,W*.7), h=w*1.22, x=(W-w)/2, y=(H-h)/2+(1-ease(clamp(p*1.7)))*110;
+    ctx.globalAlpha=clamp(p*2.4);
+    ctx.fillStyle='rgba(11,18,32,.07)'; rr(x+6,y+12,w,h,12); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.strokeStyle=C.line; ctx.lineWidth=1; rr(x,y,w,h,12); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=C.blue; rr(x,y,w,5,[12,12,0,0]); ctx.fill();
+    txt('TENDER DOCUMENT',x+24,y+40,10.5,C.muted,'500');
+    txt(nt.tender_ref||'',x+24,y+68,20,C.ink,'500');
+    ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(x+24,y+86);ctx.lineTo(x+w-24,y+86);ctx.stroke();
+    [['Plant',nt.plant||''],['Quantity',fmt(nt.tonnes)+' t'],
+     ['Rate','Rs '+fmt(nt.rate_per_t)+' /t'],['Quoted GCV',fmt(nt.quoted_gcv)],
+     ['Delivery',(nt.window_start||'').slice(0,7)+' → '+(nt.window_end||'').slice(0,7)]]
+     .forEach((r,i)=>{const a2=clamp((p-.22-i*.09)*7); if(a2<=0)return;
+      ctx.globalAlpha=a2*clamp(p*2.4); const ry=y+116+i*30;
+      txt(r[0],x+24,ry,11.5,C.muted); txt(r[1],x+w-24,ry,13.5,C.ink,'500','right');});
+    const q=clamp((p-.72)*4);
+    if(q>0){ctx.globalAlpha=q;
+      txt('Can I fill it?',x+24,y+h-52,14,C.blue,'500');
+      txt('What do I bid?',x+24,y+h-28,14,C.blue,'500');}
+    ctx.globalAlpha=1;
+  }
+
+  /* 2. the pay scale, with a marker sweeping it and the money changing */
+  function s2(p){
+    const w=Math.min(W*.82,460), x=(W-w)/2, y=H/2-24, hgt=58;
+    const lo=1800, hi=4200, at=v=>x+(v-lo)/(hi-lo)*w;
+    ctx.globalAlpha=clamp(p*2.6);
+    ctx.fillStyle='#F2D4D4'; rr(x,y,at(2000)-x,hgt,[8,0,0,8]); ctx.fill();
+    ctx.fillStyle=C.holdL; rr(at(2000),y,at(2800)-at(2000),hgt,0); ctx.fill();
+    ctx.fillStyle=C.blueL; rr(at(2800),y,x+w-at(2800),hgt,[0,8,8,0]); ctx.fill();
+    txt('rejected',(x+at(2000))/2,y+hgt/2+4,11,'#9A4444','500','center');
+    txt('25% off',(at(2000)+at(2800))/2,y+hgt/2+4,11,'#8A5A12','500','center');
+    txt('paid on delivered GCV',(at(2800)+x+w)/2,y+hgt/2+4,11,C.blue,'500','center');
+    [2000,2800,4000].forEach(v=>{ctx.strokeStyle=C.ink2;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(at(v),y-7);ctx.lineTo(at(v),y+hgt+7);ctx.stroke();
+      txt(String(v),at(v),y-15,11.5,C.ink,'500','center');});
+    const sweep=clamp((p-.18)*1.5), g=2000+sweep*2000, gx=at(g);
+    if(sweep>0){
+      ctx.fillStyle=C.ink; ctx.beginPath(); ctx.arc(gx,y+hgt/2,8,0,7); ctx.fill();
+      ctx.strokeStyle=C.ink; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(gx,y-30); ctx.lineTo(gx,y+hgt+30); ctx.stroke();
+      const pay=g<2000?0:(g<2800?g*perGcv*.75:g*perGcv);
+      txt('delivered '+fmt(g)+' GCV',gx,y-40,12.5,C.ink,'500','center');
+      txt(pay?('Rs '+fmt(pay)+' a tonne'):'nothing',gx,y+hgt+50,17,pay?C.ok:'#9A4444','500','center');
+      const qx=at(nt.quoted_gcv||3200);
+      ctx.setLineDash([4,4]);ctx.strokeStyle=C.blue;ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(qx,y-30);ctx.lineTo(qx,y+hgt+16);ctx.stroke();ctx.setLineDash([]);
+      txt('quoted '+fmt(nt.quoted_gcv),qx,y+hgt+32,11.5,C.blue,'500','center');
+    }
+    ctx.globalAlpha=1;
+  }
+
+  /* 3. every live contract: solid delivered, hollow still owed */
+  function s3(p){
+    const rows=d.contracts.slice(0,20), n=rows.length;
+    const bh=Math.min(16,(H*.7)/n), gap=5, top=(H-(bh+gap)*n)/2;
+    const L=W*.10, R=W*.86, maxT=Math.max(...rows.map(c=>+c.tonnes),1);
+    rows.forEach((c,i)=>{
+      const a=clamp((p-i*(.5/n))*10); if(a<=0)return;
+      const y=top+i*(bh+gap), full=(+c.tonnes/maxT)*(R-L);
+      const done=Math.min(1,(+c.delivered||0)/(+c.tonnes||1))*full*ease(clamp(a));
+      ctx.globalAlpha=a;
+      ctx.fillStyle=C.wash; rr(L,y,full,bh,3); ctx.fill();
+      ctx.strokeStyle=C.line2; ctx.lineWidth=1; rr(L,y,full,bh,3); ctx.stroke();
+      ctx.fillStyle=C.blue; rr(L,y,done,bh,3); ctx.fill();
+    });
+    const la=clamp((p-.55)*4);
+    if(la>0){ctx.globalAlpha=la;
+      ctx.fillStyle=C.blue;rr(L,top-34,11,11,2);ctx.fill();
+      txt('delivered  '+fmt(delivered)+' t',L+18,top-25,12.5,C.ink2,'400');
+      ctx.fillStyle=C.wash;rr(L+190,top-34,11,11,2);ctx.fill();
+      ctx.strokeStyle=C.line2;rr(L+190,top-34,11,11,2);ctx.stroke();
+      txt('still owed  '+fmt(stillOwed)+' t',L+208,top-25,12.5,C.ink2,'400');}
+    ctx.globalAlpha=1;
+  }
+
+  /* 4. monthly capacity, with the already-booked portion filling from the bottom */
+  function s4(p){
+    const ms=d.months, n=ms.length, L=W*.09, R=W*.93;
+    const gapw=(R-L)/n, bw=gapw*.6, base=H*.76, top=H*.16;
+    const peak=Math.max(...ms.map(m=>Math.max(m.committed_t,m.capacity_t)),1);
+    const hOf=v=>(v/peak)*(base-top);
+    ms.forEach((m,i)=>{
+      const a=clamp((p-i*(.42/n))*11); if(a<=0)return;
+      const x=L+i*gapw+(gapw-bw)/2;
+      const capH=hOf(m.capacity_t), bookH=Math.min(capH*1.35,hOf(m.committed_t))*ease(clamp(a));
+      ctx.globalAlpha=1;
+      ctx.fillStyle=C.wash; rr(x,base-capH,bw,capH,[3,3,0,0]); ctx.fill();
+      ctx.strokeStyle=C.line2; ctx.lineWidth=1; rr(x,base-capH,bw,capH,[3,3,0,0]); ctx.stroke();
+      ctx.fillStyle=m.spare_t<0?C.hold:C.blue;
+      rr(x,base-bookH,bw,bookH,[3,3,0,0]); ctx.fill();
+      if(i%2===0)txt(MON[+m.month.slice(5,7)],x+bw/2,base+18,10,C.muted,'400','center');
+    });
+    ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(L,base);ctx.lineTo(R,base);ctx.stroke();
+    const la=clamp((p-.5)*4);
+    if(la>0){ctx.globalAlpha=la;
+      ctx.fillStyle=C.blue;rr(L,top-30,11,11,2);ctx.fill();
+      txt('already booked by contracts he has not finished',L+18,top-21,12.5,C.ink2,'400');
+      ctx.fillStyle=C.wash;rr(L,top-10,11,11,2);ctx.fill();
+      ctx.strokeStyle=C.line2;rr(L,top-10,11,11,2);ctx.stroke();
+      txt('what the plant has actually managed before',L+18,top-1,12.5,C.ink2,'400');
+      ctx.globalAlpha=1;}
+  }
+
+  /* 5. the variables nobody records */
+  function s5(p){
+    const items=[['weather','a wet month drops GCV'],
+                 ['labour','a short shift drops output'],
+                 ['moisture','decides which pay band you land in'],
+                 ['vendors','promised in April, sold elsewhere in October']];
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*.30;
+    ctx.globalAlpha=clamp(p*2.5);
+    ctx.strokeStyle=C.line2; ctx.setLineDash([3,5]); ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=C.wash; ctx.beginPath(); ctx.arc(cx,cy,R*.52,0,7); ctx.fill();
+    ctx.strokeStyle=C.line2; ctx.stroke();
+    txt('the plan',cx,cy-4,14,C.ink,'500','center');
+    txt(Math.round(bookedShare*100)+'% booked',cx,cy+18,12,C.muted,'400','center');
+    items.forEach((it,i)=>{
+      const a=clamp((p-.15-i*.14)*6); if(a<=0)return;
+      const ang=(-Math.PI/2)+i*(Math.PI*2/items.length);
+      const dist=R*(1+.28*(1-ease(clamp(a))));
+      const x=cx+Math.cos(ang)*dist, y=cy+Math.sin(ang)*dist;
+      ctx.globalAlpha=a*clamp(p*2.5);
+      ctx.fillStyle=C.holdL; ctx.beginPath(); ctx.arc(x,y,26,0,7); ctx.fill();
+      ctx.fillStyle=C.hold; txt(it[0],x,y+4,11.5,C.hold,'500','center');
+      txt(it[1],x,y+44,11,C.muted,'400','center');
+    });
+    ctx.globalAlpha=1;
+  }
+
+  /* 6. the total splits into a range */
+  function s6(p){
+    const cx=W/2, cy=H/2, spread=ease(clamp(p*1.4))*Math.min(160,W*.25);
+    ctx.globalAlpha=clamp(p*3);
+    ctx.strokeStyle=C.line;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx-spread-46,cy);ctx.lineTo(cx+spread+46,cy);ctx.stroke();
+    ctx.fillStyle='rgba(200,119,11,.13)'; rr(cx-spread,cy-28,spread*2,56,5); ctx.fill();
+    [[-1,d.committed_t],[1,d.committed_t+d.blocked_t]].forEach(([s,v])=>{
+      const x=cx+s*spread;
+      ctx.strokeStyle=C.hold;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(x,cy-28);ctx.lineTo(x,cy+28);ctx.stroke();
+      txt(fmt(v)+' t',x,cy+54,13.5,C.ink,'500','center');});
+    const f=clamp((p-.42)*3);
+    ctx.globalAlpha=clamp(p*3)*(1-f*.8);
+    txt('one confident number',cx,cy-48,13,C.muted,'400','center');
+    ctx.globalAlpha=clamp(p*3)*f;
+    txt('an honest range, and the rows behind it',cx,cy-48,14,C.hold,'500','center');
+    ctx.globalAlpha=1;
+  }
+
+  /* The thread. One line down the whole page, drawn as far as you have read, with a node
+     at each beat. Six pictures with nothing between them read as six slides; a line that
+     carries on through all of them reads as one story. */
+  const thread=el('div','thread');
+  const tsvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  tsvg.setAttribute('preserveAspectRatio','none');
+  const tpath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  tpath.setAttribute('class','tline');
+  const tdone=document.createElementNS('http://www.w3.org/2000/svg','path');
+  tdone.setAttribute('class','tline done');
+  tsvg.appendChild(tpath); tsvg.appendChild(tdone);
+  thread.appendChild(tsvg);
+  document.body.appendChild(thread);
+  const nodes=[];
+  for(let i=0;i<6;i++){const n=el('i');thread.appendChild(n);nodes.push(n);}
+
+  function drawThread(idx,prog,n){
+    const H2=innerHeight, x=26;
+    // a gentle wave rather than a ruled line, so it reads as drawn and not as a border
+    const top=90, bot=H2-70, span=bot-top;
+    let d='M '+x+' '+top;
+    for(let k=1;k<=8;k++){
+      const y=top+span*k/8;
+      const bend=x+Math.sin((k/8)*Math.PI*1.5+idx)*9;
+      d+=' Q '+bend+' '+(y-span/16)+' '+x+' '+y;
+    }
+    tsvg.setAttribute('viewBox','0 0 52 '+H2);
+    tsvg.setAttribute('width',52); tsvg.setAttribute('height',H2);
+    tpath.setAttribute('d',d); tdone.setAttribute('d',d);
+    const len=tdone.getTotalLength();
+    const through=(idx+clamp(prog))/n;
+    tdone.style.strokeDasharray=len;
+    tdone.style.strokeDashoffset=len*(1-through);
+    nodes.forEach((el2,i)=>{
+      el2.style.top=(top+span*(i/(n-1))-5)+'px';
+      el2.style.left=(x-5)+'px';
+      el2.classList.toggle('on',i<=idx);
+      el2.classList.toggle('now',i===idx);
+    });
+  }
+
+  const SCENES=[s1,s2,s3,s4,s5,s6];
+  let cur=-1;
+  function frame(){
+    const spaces=[...film.querySelectorAll('.scenespace')], mid=innerHeight*.5;
+    let idx=0, prog=0;
+    spaces.forEach((sp,i)=>{const r=sp.getBoundingClientRect();
+      if(r.top<=mid&&r.bottom>mid){idx=i;prog=clamp((mid-r.top)/r.height);}
+      else if(r.bottom<=mid){idx=Math.min(spaces.length-1,i+1);prog=0;}});
+    if(idx!==cur){cur=idx;
+      [...words.children].forEach((w,i)=>w.classList.toggle('on',i===idx));
+      [...rail.children].forEach((n,i)=>n.classList.toggle('on',i===idx));}
+    ctx.clearRect(0,0,W,H);
+    // A scene reaches full strength in the first fifth of its beat and then holds. Drawing
+    // it in proportion to scroll meant the picture was still assembling while the words
+    // beside it were already being read, and only finished as you left.
+    (SCENES[idx]||s1)(clamp(prog / 0.2));
+    drawThread(idx, prog, spaces.length);
+    requestAnimationFrame(frame);
+  }
+  new ResizeObserver(size).observe(cw);
+  size(); requestAnimationFrame(frame);
+  if(matchMedia('(max-width:900px)').matches)
+    [...words.children].forEach(w=>w.classList.add('on'));
+})();
+</script>
+</body>
+</html>

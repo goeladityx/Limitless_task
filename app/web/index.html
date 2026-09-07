@@ -1,0 +1,2729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pellet Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --wash:#F7F9FC; --wash2:#EEF3FA;
+  --line:#E3E9F2; --line2:#CFD9E8;
+  --ink:#0B1220; --ink2:#3D4C63; --muted:#7B8AA3;
+  --blue:#1B4FD8; --blue-d:#123AA6; --blue-s:#E9EFFF;
+  --hold:#B26B00; --hold-s:#FFF5E4;
+  --ok:#0E7A5A; --ok-s:#E4F5EE;
+  --r:10px; --rs:6px;
+  --sh:0 1px 2px rgba(11,18,32,.04), 0 8px 24px -12px rgba(11,18,32,.10);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink2);
+  font:15px/1.6 "Instrument Sans",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:3px}
+
+/* ---------------- top bar ---------------- */
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1440px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:11px;margin-right:auto}
+.glyph{width:30px;height:30px;border-radius:8px;background:var(--ink);position:relative;flex:none}
+.glyph::after{content:"";position:absolute;inset:7px 6px;border-radius:2px;
+  background:linear-gradient(to top,var(--hold) 0 22%,var(--blue) 22% 100%)}
+.mark h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:19px;color:var(--ink);
+  margin:0;letter-spacing:-.01em;line-height:1.1}
+.mark p{margin:0;font-size:12px;color:var(--muted)}
+.pick{display:flex;align-items:center;gap:8px}
+.pick label{font-size:12px;color:var(--muted)}
+select.co{background:var(--paper);border:1px solid var(--line2);border-radius:var(--rs);
+  padding:7px 10px;color:var(--ink);font-size:14px;max-width:230px}
+nav.tabs{max-width:1440px;margin:0 auto;padding:0 32px;display:flex;gap:4px;overflow-x:auto}
+nav.tabs button{background:none;border:0;padding:10px 13px 12px;color:var(--muted);font-size:14.5px;
+  border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button[aria-current="true"]{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+nav.tabs .cnt{font:500 11px/1 "JetBrains Mono",monospace;background:var(--blue-s);color:var(--blue);
+  border-radius:99px;padding:2px 6px;margin-left:6px}
+
+main{max-width:1440px;margin:0 auto;padding:28px 32px 80px}
+h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:27px;color:var(--ink);
+  margin:0 0 6px;letter-spacing:-.015em}
+.lede{margin:0 0 22px;color:var(--muted);max-width:64ch}
+
+/* ---------------- stat strip ---------------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh)}
+.stat b{display:block;font:500 23px/1.15 "JetBrains Mono",monospace;color:var(--ink);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat span{font-size:12px;color:var(--muted)}
+.stat.flag b{color:var(--hold)}
+
+/* ---------------- question rows ---------------- */
+.qcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  margin-bottom:12px;box-shadow:var(--sh);overflow:hidden}
+.qhead{display:flex;gap:14px;align-items:flex-start;padding:16px 18px}
+.qtag{font:500 10.5px/1.7 "JetBrains Mono",monospace;color:var(--muted);background:var(--wash2);
+  border-radius:99px;padding:2px 9px;flex:none}
+.sentence{flex:1;font-size:16.5px;color:var(--ink);line-height:2.1}
+.sentence select{appearance:none;background:var(--blue-s);border:0;border-bottom:1.5px solid var(--blue);
+  color:var(--blue-d);font-weight:600;font-size:15.5px;padding:2px 22px 2px 8px;border-radius:5px 5px 0 0;
+  cursor:pointer;max-width:270px;text-overflow:ellipsis}
+.sentence select:hover{background:#DDE7FF}
+.sentence .wrapsel{position:relative;display:inline-block}
+.sentence .wrapsel::after{content:"";position:absolute;right:8px;top:50%;margin-top:-2px;
+  border:4px solid transparent;border-top-color:var(--blue-d);pointer-events:none}
+.sentence input{background:var(--blue-s);border:0;border-bottom:1.5px solid var(--blue);width:88px;
+  color:var(--blue-d);font-weight:600;padding:2px 8px;border-radius:5px 5px 0 0;text-align:center}
+.run{background:var(--ink);color:#fff;border:0;border-radius:var(--rs);padding:8px 16px;
+  font-weight:600;font-size:14px;flex:none;align-self:center}
+.run:hover{background:var(--blue)}
+.run.busy{opacity:.5;pointer-events:none}
+.why{padding:0 18px 14px;margin:-6px 0 0;font-size:13px;color:var(--muted)}
+
+/* ---------------- answer ---------------- */
+.ans{border-top:1px solid var(--line);animation:fade .2s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ans .vtop{display:flex;align-items:center;gap:10px;padding:11px 18px;flex-wrap:wrap}
+.ans.a .vtop{background:var(--ok-s)} .ans.w .vtop{background:var(--hold-s)}
+.badge{font:600 10.5px/1 "Instrument Sans",sans-serif;letter-spacing:.13em;text-transform:uppercase;
+  padding:5px 9px;border-radius:99px}
+.ans.a .badge{background:var(--ok);color:#fff} .ans.w .badge{background:var(--hold);color:#fff}
+.vtop .rs{font-size:13px;color:var(--ink2)}
+.body{padding:16px 18px;white-space:pre-wrap;color:var(--ink);font-size:16px;line-height:1.65}
+.fix{margin:0;padding:12px 18px;background:var(--blue-s);border-top:1px solid var(--line);
+  color:var(--blue-d);font-size:14px;font-weight:500}
+.prov{padding:9px 18px;border-top:1px solid var(--line);background:var(--wash);
+  font:400 11.5px/1.6 "JetBrains Mono",monospace;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap}
+
+/* ---------------- charts ---------------- */
+.chart h4{margin:0 0 10px;font:500 11px/1 "Instrument Sans",sans-serif;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.bars{display:grid;gap:7px}
+.brow{display:grid;grid-template-columns:minmax(88px,150px) 1fr minmax(76px,auto);gap:11px;align-items:center;font-size:13.5px}
+.brow .nm{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{background:var(--wash2);border-radius:3px;height:20px;position:relative;overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--blue);border-radius:3px}
+.fill.neg{background:var(--hold)}
+.brow .vl{font:500 12.5px/1 "JetBrains Mono",monospace;text-align:right;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.split{display:flex;height:26px;border-radius:5px;overflow:hidden;border:1px solid var(--line2)}
+.split i{display:block;height:100%}
+.legend{display:flex;gap:16px;margin-top:9px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.legend b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+
+
+/* -------- split answer: the person on the left, the evidence on the right -------- */
+.split2{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.left{padding:22px 24px 20px;min-width:0}
+/* On a wide screen the sentence and the picture sit side by side rather than
+   the picture being pushed a screen down from the number it illustrates. */
+.lsplit{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+@media (min-width:1100px){.lsplit{grid-template-columns:minmax(260px,0.8fr) minmax(0,1.2fr);align-items:start}}
+.lsplit .lwords{min-width:0}.lsplit .lvis{min-width:0}
+.right{border-left:1px solid var(--line);background:#0B1220;min-width:0;overflow:hidden}
+.right .rh{padding:9px 16px;border-bottom:1px solid #1E2A3E;display:flex;gap:9px;align-items:center;
+  font:500 10.5px/1 "Instrument Sans";letter-spacing:.13em;text-transform:uppercase;color:#7FA0E8}
+.right .rh b{background:#16233A;color:#93B0F5;border-radius:99px;padding:3px 8px;
+  font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.04em}
+.sqlwrap{max-height:360px;overflow:auto;padding:12px 16px 16px}
+.sqlwrap pre{margin:0 0 14px;font:400 11.5px/1.6 "JetBrains Mono",monospace;color:#C6D4EE;
+  white-space:pre-wrap;word-break:break-word}
+.sqlwrap .kw{color:#7FA0E8;font-weight:500}
+.sqlwrap .pm{color:#E0A458}
+.sqlwrap .cap{font:500 10px/1 "Instrument Sans";letter-spacing:.12em;text-transform:uppercase;
+  color:#5C7194;margin:0 0 6px}
+.defbox{padding:11px 16px;border-top:1px solid #1E2A3E;background:#0E1929}
+.defbox .dl{font:400 11.5px/1.8 "JetBrains Mono",monospace;color:#8FA8CC}
+.defbox .dl b{color:#E0A458;font-weight:500}
+.headnum{font:500 clamp(30px,4vw,42px)/1.05 "JetBrains Mono",monospace;color:var(--ink);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:0 0 4px}
+.ans.w .headnum{color:var(--hold)}
+.headsub{font-size:15px;color:var(--muted);margin:0 0 14px;max-width:46ch}
+.detail{font-size:14.5px;color:var(--ink2);white-space:pre-wrap;line-height:1.62;
+  margin:0;max-width:62ch}
+.mchart{margin:16px 0 6px}
+.mchart svg{width:100%;height:190px;display:block;overflow:visible}
+.mchart .gl{stroke:var(--line);stroke-width:1}
+.mchart .lbl{font:400 10px "JetBrains Mono",monospace;fill:var(--muted)}
+.mchart rect.seg{cursor:pointer}
+.mchart rect.seg:hover{opacity:.75}
+.keys{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.keys span{display:flex;align-items:center;gap:7px}
+.keys i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.vend{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+.vend h5{margin:0 0 3px;font:600 13.5px/1.3 "Instrument Sans";color:var(--ink)}
+.vend .cap{margin:0 0 11px;font-size:12.5px;color:var(--muted)}
+.vrow{display:grid;grid-template-columns:1fr 92px 88px;gap:12px;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.vrow:last-child{border-bottom:0}
+.vrow .vn{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vrow .vq{font:500 13px/1 "JetBrains Mono",monospace;text-align:right;color:var(--ink2);
+  font-variant-numeric:tabular-nums}
+.cred{font:600 10.5px/1 "Instrument Sans";letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 8px;border-radius:99px;text-align:center}
+.cred.high{background:var(--ok-s);color:var(--ok)}
+.cred.moderate{background:var(--blue-s);color:var(--blue-d)}
+.cred.low{background:var(--hold-s);color:var(--hold)}
+@media (max-width:1000px){.split2{grid-template-columns:1fr}
+  .right{border-left:0;border-top:1px solid var(--line)}}
+
+/* ---------------- tables ---------------- */
+.scroll{overflow:auto;max-height:440px;border-top:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font:400 13px/1.5 "JetBrains Mono",monospace}
+th{position:sticky;top:0;background:var(--wash);text-align:left;padding:9px 14px;
+  border-bottom:1px solid var(--line);color:var(--muted);font-weight:500;font-size:11px;
+  letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+td{padding:8px 14px;border-bottom:1px solid var(--line);white-space:nowrap;
+  font-variant-numeric:tabular-nums;color:var(--ink2)}
+tbody tr:hover td{background:var(--wash)}
+td.nil{color:var(--hold);font-style:italic}
+
+/* ---------------- misc panels ---------------- */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:12px;box-shadow:var(--sh)}
+.panel .ph{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:3px}
+.ref{font:500 13.5px/1 "JetBrains Mono",monospace;color:var(--ink)}
+.qn{font-size:14px;color:var(--ink2)}
+.meta{font:400 12.5px/1.7 "JetBrains Mono",monospace;color:var(--muted);margin-bottom:10px}
+.opts{display:flex;gap:7px;flex-wrap:wrap}
+.opt{background:var(--paper);border:1px solid var(--line2);border-radius:var(--rs);padding:6px 12px;
+  font:500 13px/1 "JetBrains Mono",monospace;color:var(--ink2)}
+.opt:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-s)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.qchip{background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:6px 14px;
+  cursor:pointer;transition:.13s;
+  font-size:13.5px;color:var(--ink2)}
+.qchip[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-s);color:var(--blue-d);font-weight:600}
+.qchip:hover{border-color:var(--line2);background:var(--wash)}
+.empty{padding:40px;text-align:center;background:var(--paper);border:1px dashed var(--line2);
+  border-radius:var(--r);color:var(--muted)}
+.note{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:4px 0 12px}
+.dfield label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.dfield select,.dfield input{width:100%;background:var(--paper);border:1px solid var(--line2);
+  border-radius:var(--rs);padding:8px 10px;color:var(--ink)}
+.save{background:var(--blue);color:#fff;border:0;border-radius:var(--rs);padding:8px 16px;font-weight:600;font-size:14px}
+.save:hover{background:var(--blue-d)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:11px 20px;border-radius:99px;font-size:14px;z-index:60;box-shadow:var(--sh)}
+
+@media (max-width:700px){
+  .qhead{flex-wrap:wrap}.run{width:100%}.sentence{font-size:16px;line-height:2.2}
+  main{padding:20px 16px 60px}.bar{padding:12px 16px}nav.tabs{padding:0 16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------------------------------------------------------------- figures */
+.fig{margin:0 0 18px;border:1px solid var(--line);border-radius:12px;padding:16px 18px 14px;
+  background:linear-gradient(180deg,#fff,var(--wash))}
+.fig figcaption{font:600 14px/1.3 "Instrument Sans",system-ui;color:var(--ink);
+  letter-spacing:-.005em;margin-bottom:12px}
+.fignote{margin:8px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
+.svgbox{position:relative}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+/* Column charts want vertical room. Row charts size themselves to their rows,
+   and forcing a floor on those only adds dead space around a small drawing. */
+.capchart,.heatsvg{min-height:280px}
+.chart .grid{stroke:#EDF1F7;stroke-width:1}
+.chart .ytick{font:400 11px "JetBrains Mono",monospace;fill:var(--muted);text-anchor:end}
+.chart .yr{fill:#B9C3D2}
+.chart .mark{pointer-events:none}
+.chart .mark.fl{fill:var(--blue)}.chart .mark.ex{fill:#7FA0EE}.chart .mark.ce{fill:#C9D8F8}
+.chart .mark.rule{stroke:var(--line2);stroke-width:1;stroke-dasharray:3 3;fill:none}
+.chart .axis{stroke:var(--line2);stroke-width:1}
+.chart .tick{font:400 11px "JetBrains Mono",monospace;fill:var(--muted);text-anchor:middle}
+.chart .hit{fill:transparent;cursor:crosshair}
+/* One tooltip for the whole console. It wraps, because a chart readout is a sentence and
+   a sentence set on one line runs off the side of the screen. */
+.tip{position:fixed;z-index:9999;width:max-content;max-width:min(320px,44vw);
+  pointer-events:none;white-space:normal;overflow-wrap:break-word;
+  background:var(--ink);color:#fff;border-radius:9px;padding:10px 13px;
+  font:400 12.5px/1.55 "Instrument Sans",system-ui;
+  box-shadow:0 10px 32px rgba(11,18,32,.32);opacity:0;transform:translateY(3px);
+  transition:opacity .1s ease,transform .1s ease}
+.tip.on{opacity:1;transform:none}
+.key{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;
+  font:400 11.5px "Instrument Sans",system-ui;color:var(--muted)}
+.key .k{display:inline-flex;align-items:center;gap:6px}
+.key .k i{width:11px;height:11px;border-radius:3px;background:var(--line2);display:block}
+.key .fl i{background:var(--blue)}.key .ex i{background:#7FA0EE}.key .ce i{background:#C9D8F8}
+
+/* headroom: a month with room and a month that is oversold must never look alike */
+.hchart .cap{fill:#EEF2F9;stroke:#DCE4F0;stroke-width:1}
+.hchart .free{fill:var(--blue)}
+.hchart .sch{fill:#EFC188}
+.hchart .spill{fill:rgba(200,119,11,.30);stroke:var(--hold);stroke-width:1.5;
+  stroke-dasharray:4 3}
+.hchart .blab{font:500 10px "JetBrains Mono",monospace;fill:#fff;text-anchor:middle}
+.hchart .yr{fill:var(--line2)}
+.hg{cursor:crosshair}
+.hg:hover .free{fill:var(--blue-d)}
+.key .hk.free i{background:var(--blue)}
+.key .hk.sch i{background:#EFC188}
+.key .hk.cap i{background:#EEF2F9;border:1px solid #DCE4F0}
+
+/* runway */
+.runway{display:flex;flex-direction:column;gap:7px}
+.rw{display:grid;grid-template-columns:170px 1fr 96px;gap:11px;align-items:center;
+  padding:3px 0;cursor:default}
+.rw:hover{background:var(--blue-s);border-radius:6px}
+.rwn{overflow:hidden}
+.rwn b{display:block;font:600 12.5px/1.3 "Instrument Sans";color:var(--ink);
+  white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.rwn span{font:400 10.5px "JetBrains Mono",monospace;color:var(--muted)}
+.rwt{position:relative;height:17px;background:var(--wash);border-radius:4px;overflow:hidden}
+.rwt i{position:absolute;left:0;top:0;bottom:0;display:block;border-radius:4px}
+.rwt .room{background:#D7E2FA}
+.rwt .need{background:var(--blue);height:9px;top:4px}
+.rw.bad .rwt .need{background:var(--hold)}
+.rwv{font:500 11.5px "JetBrains Mono",monospace;color:var(--ink2);text-align:right}
+.rw.bad .rwv{color:var(--hold)}
+
+/* heat grid, drawn at its own size and allowed to scroll rather than squashed */
+.hscroll{overflow-x:auto;overflow-y:hidden;padding-bottom:6px;margin:0 -2px}
+.heatsvg{display:block;max-width:none}
+.heatsvg .hlab{font:500 11px "Instrument Sans";fill:var(--muted);text-anchor:middle}
+.heatsvg .hmat{font:600 12.5px "Instrument Sans";fill:var(--ink);text-anchor:end}
+.heatsvg .hval{font:500 12px "JetBrains Mono",monospace;fill:var(--ink);text-anchor:middle;
+  pointer-events:none}
+.heatsvg .hnil{fill:#F4F6FA;stroke:#E7ECF4;stroke-width:1;stroke-dasharray:3 3}
+.heatsvg .hcell{cursor:crosshair}
+.heatsvg .hcell:hover rect{stroke:var(--ink);stroke-width:2}
+.hkey{display:flex;align-items:center;gap:10px;margin-top:12px}
+.hke{font:400 11px "JetBrains Mono",monospace;color:var(--muted);white-space:nowrap}
+.hramp{display:flex;flex:1;height:9px;border-radius:99px;overflow:hidden;max-width:260px}
+.hramp i{flex:1;display:block}
+
+/* supply band */
+.band{fill:rgba(27,79,216,.10)}
+.ln{fill:none;stroke-width:2;stroke-linejoin:round}
+.ln.fl{stroke:var(--blue)}
+.ln.ex{stroke:#7FA0EE;stroke-dasharray:4 3}
+.ln.ce{stroke:#C9D8F8}
+
+/* cash strip */
+.cash{display:flex;gap:6px;align-items:flex-end;overflow-x:auto;padding-bottom:4px}
+.cw{flex:1 0 62px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:7px 4px;border-radius:8px;cursor:default;transition:background .12s}
+.cw:hover{background:var(--blue-s)}
+.cw i{width:100%;background:var(--blue);border-radius:3px;display:block;align-self:stretch}
+.cw b{font:500 11.5px "JetBrains Mono",monospace;color:var(--ink)}
+.cw span{font:400 10px "JetBrains Mono",monospace;color:var(--muted)}
+.cw.nil i{background:var(--line)}
+.cw.nil b{color:var(--muted)}
+.cw.late{background:var(--hold-s);border:1px dashed #E2B570}
+.cw.late i{background:var(--hold)}
+.cw.late b{color:var(--hold)}
+
+/* donut */
+.donut{width:180px;height:180px;display:block;margin:0 auto}
+.donut circle{cursor:crosshair;transition:opacity .12s}
+.donut circle:hover{opacity:.8}
+.donut .dn{text-anchor:middle;font:500 17px "JetBrains Mono",monospace;fill:var(--ink)}
+.donut .ds{text-anchor:middle;font:400 11px "Instrument Sans";fill:var(--muted)}
+
+/* treemap */
+.tree{display:flex;flex-wrap:wrap;gap:4px}
+.tc{min-height:56px;border-radius:6px;padding:8px 9px;display:flex;flex-direction:column;
+  justify-content:flex-end;cursor:default;transition:transform .1s}
+.tc:hover{transform:translateY(-2px)}
+.tc b{font:600 11.5px/1.25 "Instrument Sans";color:var(--ink);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tc span{font:500 11px "JetBrains Mono",monospace;color:var(--ink2);margin-top:3px}
+
+/* ---------------------------------------------------------------- follow-ups */
+.next{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.next .nl{font:500 11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-right:2px}
+.chip{background:#fff;border:1px solid var(--line2);color:var(--blue-d);border-radius:99px;
+  padding:6px 14px;font:500 12.5px "Instrument Sans";cursor:pointer;transition:.13s}
+.chip:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.qcard.focus{border-color:var(--blue);box-shadow:0 6px 24px rgba(27,79,216,.13)}
+.fbar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--blue-s);margin:-15px -16px 13px;padding:8px 16px;
+  border-radius:11px 11px 0 0;font:500 11.5px "JetBrains Mono",monospace;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--blue-d)}
+.xf{background:none;border:0;color:var(--blue-d);cursor:pointer;
+  font:500 11.5px "Instrument Sans";text-decoration:underline}
+
+/* ---------------------------------------------------------------- definitions */
+.dwrap{display:flex;flex-direction:column;gap:18px;padding:2px 0 4px}
+.dsec{padding:2px 0}
+.dq{margin:0 0 9px;font:500 13px "Instrument Sans";color:var(--ink2)}
+.dopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}
+.dopt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);
+  border-radius:9px;padding:11px 12px;cursor:pointer;background:#fff;transition:.13s}
+.dopt:hover{border-color:var(--line2);background:var(--wash)}
+.dopt.on{border-color:var(--blue);background:var(--blue-s);
+  box-shadow:inset 0 0 0 1px var(--blue)}
+.dopt input{margin-top:2px;accent-color:var(--blue);flex:none}
+.dopt .ob b{display:block;font:600 13px/1.35 "Instrument Sans";color:var(--ink);margin-bottom:4px}
+.dopt .ob span{font:400 12px/1.5 "Instrument Sans";color:var(--muted)}
+.dopt.on .ob span{color:var(--ink2)}
+.dnum{display:flex;align-items:center;gap:10px}
+.dnum input{width:120px;border:1px solid var(--line2);border-radius:7px;padding:7px 10px;
+  font:500 13px "JetBrains Mono",monospace}
+.dnum span{font:400 12px "JetBrains Mono",monospace;color:var(--muted)}
+
+/* ---------------------------------------------------------------- definition diff */
+.diff{border:1px solid var(--blue);background:var(--blue-s);border-radius:11px;
+  padding:14px 16px;margin-bottom:18px;opacity:0;transform:translateY(-8px);
+  transition:opacity .35s ease,transform .35s ease}
+.diff.in{opacity:1;transform:none}
+.diff .dh{margin-bottom:10px}
+.diff .dh b{display:block;font:600 13.5px "Instrument Sans";color:var(--ink)}
+.diff .dh span{font:400 12px "Instrument Sans";color:var(--ink2)}
+.diff .dr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:5px 0;
+  opacity:0;animation:dslide .45s ease forwards}
+@keyframes dslide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.diff .w{font:500 11px "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--blue-d);min-width:130px}
+.diff .was{font:400 12.5px "Instrument Sans";color:var(--muted);
+  text-decoration:line-through;text-decoration-color:#B9C6DA}
+.diff .arw{color:var(--blue)}
+.diff .now{font:600 12.5px "Instrument Sans";color:var(--ink);
+  background:#fff;border-radius:5px;padding:2px 8px;box-shadow:0 1px 3px rgba(27,79,216,.14)}
+@media (prefers-reduced-motion:reduce){.diff,.diff .dr{transition:none;animation:none;opacity:1}}
+@media (max-width:760px){
+  .rw{grid-template-columns:120px 1fr 74px}
+  .heat{font-size:9px}
+  .dopts{grid-template-columns:1fr}
+}
+
+/* ---------------------------------------------------------------- resolve in place */
+.inq{margin-top:14px;border:1px solid #E2B570;background:var(--hold-s);
+  border-radius:10px;padding:13px 14px}
+.inqh b{display:block;font:600 13px "Instrument Sans";color:var(--ink);margin-bottom:2px}
+.inqh span{font:400 12px "Instrument Sans";color:var(--ink2)}
+.inqr{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding:10px 0;border-top:1px solid rgba(200,119,11,.24);margin-top:10px}
+.inqq b{display:block;font:500 12.5px/1.4 "Instrument Sans";color:var(--ink)}
+.inqq span{font:400 11px "JetBrains Mono",monospace;color:#8A6118}
+.inqo{display:flex;flex-wrap:wrap;gap:7px}
+.inqb{background:#fff;border:1px solid #E2B570;color:#8A5A12;border-radius:7px;
+  padding:7px 13px;font:500 12.5px "Instrument Sans";cursor:pointer;transition:.13s}
+.inqb:hover:not(:disabled){background:var(--hold);border-color:var(--hold);color:#fff}
+.inqb:disabled{opacity:.55;cursor:default}
+.inqm{margin:9px 0 0;font:400 11.5px "Instrument Sans";color:#8A6118}
+.flash{animation:fl .9s ease}
+@keyframes fl{0%{background:var(--blue-s)}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.flash{animation:none}}
+
+/* ---------------------------------------------------------------- follow-up in place */
+.nextwrap{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2)}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.chainhost .chain{margin-top:12px;border-left:2px solid var(--blue);padding-left:14px}
+.chainhost .qcard{margin:0;border-color:var(--line2);box-shadow:none}
+.chainhost .qtag{background:var(--blue);color:#fff}
+
+/* ---------------------------------------------------------------- headline */
+/* A figure is the thing the eye should land on, so it gets the display size. A phrase
+   like "Every month" set at 46px just fills the column and buries the answer under it. */
+.headnum.word{font:600 27px/1.15 "Fraunces",Georgia,serif;letter-spacing:-.01em}
+.headnum.long{font-size:23px;line-height:1.2}
+.headnum.word.long{font-size:21px}
+
+/* ---------------------------------------------------------------- tables */
+.tbl{margin-top:16px;border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  background:#fff}
+.tcap{font:600 11px/1 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);padding:11px 13px 10px;border-bottom:1px solid var(--line);
+  background:var(--wash)}
+.tbl .scroll{max-height:330px;overflow:auto}
+.tbl table{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{position:sticky;top:0;background:#fff;text-align:left;font:600 11px "Instrument Sans";
+  color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
+  z-index:1}
+.tbl th.num{text-align:right}
+.tbl td{padding:8px 12px;border-bottom:1px solid #F1F4F9;color:var(--ink2);white-space:nowrap}
+.tbl td.num{text-align:right;font:500 12px "JetBrains Mono",monospace;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.tbl td.num.neg{color:var(--hold)}
+.tbl td.nil{color:#B9C3D2;font-style:italic}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:var(--blue-s)}
+
+/* the detail paragraph wants a comfortable measure, not a gutter */
+
+/* ---------------------------------------------------------------- audit trail */
+.work{margin-top:18px;border:1px solid var(--line);border-radius:11px;overflow:hidden;
+  background:linear-gradient(180deg,#fff,var(--wash))}
+.workh{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:none;border:0;cursor:pointer;padding:12px 14px;text-align:left;
+  border-bottom:1px solid var(--line)}
+.workh .wt{font:600 12.5px "Instrument Sans";color:var(--ink)}
+.workh .wc{font:500 10.5px "JetBrains Mono",monospace;color:var(--blue-d);
+  background:var(--blue-s);border-radius:99px;padding:3px 9px}
+.workh.shut{border-bottom-color:transparent}
+.workh::after{content:"";width:7px;height:7px;border-right:1.5px solid var(--muted);
+  border-bottom:1.5px solid var(--muted);transform:rotate(45deg) translateY(-2px);
+  margin-left:2px;transition:transform .16s}
+.workh.shut::after{transform:rotate(-45deg) translateY(1px)}
+.workb{padding:6px 14px 12px}
+.wsteps{margin:0;padding:0;list-style:none;counter-reset:w}
+.wsteps li{counter-increment:w;padding:9px 0 9px 30px;position:relative;
+  border-bottom:1px solid #F1F4F9}
+.wsteps li:last-child{border-bottom:0}
+.wsteps li::before{content:counter(w);position:absolute;left:0;top:10px;
+  width:19px;height:19px;border-radius:50%;background:var(--blue-s);color:var(--blue-d);
+  font:600 10.5px/19px "JetBrains Mono",monospace;text-align:center}
+.wsteps li:last-child::before{background:var(--blue);color:#fff}
+.wline{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+.wlab{font:500 12.5px/1.4 "Instrument Sans";color:var(--ink2)}
+.wval{font:500 13.5px "JetBrains Mono",monospace;color:var(--ink);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.wval i{font:400 10.5px "Instrument Sans";color:var(--muted);font-style:normal}
+.wsteps li:last-child .wval{font-size:15px;color:var(--blue-d)}
+.wdet{margin:3px 0 0;font:400 11.5px/1.5 "Instrument Sans";color:var(--muted)}
+.wfoot{margin:11px 0 0;font:400 11px/1.5 "Instrument Sans";color:var(--muted);
+  border-top:1px dashed var(--line2);padding-top:9px}
+.wnums{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px}
+.wn{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.wn b{display:block;font:500 13px "JetBrains Mono",monospace;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.wn span{font:400 10.5px "Instrument Sans";color:var(--muted)}
+
+/* ---------------------------------------------------------------- capacity chart */
+.capchart .cap{fill:#F6F8FC;stroke:#D7DFEC;stroke-width:1.2}
+.capchart .free{fill:#fff;stroke:var(--blue);stroke-width:1.2;stroke-dasharray:4 3}
+.capchart .req{fill:var(--blue)}
+.capchart .sch{fill:#E9A94F}
+.capchart .spill{fill:rgba(203,58,58,.26);stroke:#C33;stroke-width:1.5;stroke-dasharray:4 3}
+.capchart .blab{font:600 12px "JetBrains Mono",monospace;text-anchor:middle}
+.capchart .blab.in{fill:var(--blue-d)}
+.capchart .blab.full{fill:var(--muted)}
+.capchart .blab.over{fill:#C33}
+.capchart .state{font:500 10.5px "Instrument Sans";text-anchor:middle;fill:var(--muted)}
+.capchart .state.oversold{fill:#C33;font-weight:700}
+.capchart .state.full{fill:var(--hold)}
+.capchart .state.room{fill:var(--blue)}
+.cg{cursor:crosshair}
+.cg:hover .cap{fill:#EDF2FA}
+.key .ck.free i{background:#fff;border:1.2px dashed var(--blue)}
+.key .ck.req i{background:var(--blue)}
+.key .ck.sch i{background:#E9A94F}
+.key .ck.spill i{background:rgba(203,58,58,.26);border:1px dashed #C33}
+
+/* what can move */
+.movel{display:flex;flex-direction:column;gap:6px}
+.mv{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:baseline;
+  padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.mv.can{border-left:3px solid var(--blue)}
+.mv.cant{border-left:3px solid var(--hold);background:var(--wash)}
+.mv b{font:600 12.5px "Instrument Sans";color:var(--ink)}
+.mvw{font:500 12.5px "JetBrains Mono",monospace;color:var(--ink)}
+.mvt{font:400 11px "Instrument Sans";color:var(--muted);white-space:nowrap}
+
+/* ---------------------------------------------------------------- spread + make/buy */
+.spread .stem{stroke:#DDE4F0;stroke-width:3}
+.spread .dot{fill:var(--blue)}
+.spread .slab{font:500 15px "Instrument Sans";fill:var(--ink2);text-anchor:end}
+.spread .sval{font:500 15px "JetBrains Mono",monospace;fill:var(--ink);text-anchor:start}
+.spread .stag{font:600 11px "Instrument Sans";text-anchor:middle;fill:var(--muted)}
+.spread .best .dot{fill:#0E7A5A}
+.spread .best .stag{fill:#0E7A5A}
+.spread .best .sval{fill:#0E7A5A}
+.spread .worst .dot{fill:var(--hold)}
+.spread .worst .stag{fill:var(--hold)}
+.spread .worst .sval{fill:var(--hold)}
+.sp{cursor:crosshair}
+.sp:hover .dot{r:8}
+
+.mbchart .gap{stroke:#CBD6E8;stroke-width:4;stroke-linecap:round}
+.mbchart .make{fill:var(--blue)}
+.mbchart .buy{fill:#0E7A5A}
+.mbchart .buywins .gap{stroke:#A8D6C4}
+.mbchart .makewins .gap{stroke:#F0CFA0}
+.mbchart .slab{font:500 15px "Instrument Sans";fill:var(--ink2);text-anchor:end}
+.mbchart .sval{font:500 15px "JetBrains Mono",monospace;text-anchor:start}
+.mbchart .sval.good{fill:#0E7A5A}
+.mbchart .sval.bad{fill:var(--hold)}
+.mb{cursor:crosshair}
+.mb:hover .make,.mb:hover .buy{r:8}
+.key .mk.make i{background:var(--blue);border-radius:50%}
+.key .mk.buy i{background:#0E7A5A;border-radius:50%}
+
+.headnum.md{font-size:38px}
+.headnum.sm{font-size:31px;line-height:1.12}
+.headnum.xs{font-size:25px;line-height:1.18}
+.headnum.word.md{font-size:25px}
+.headnum.word.sm{font-size:22px}
+.headnum.word.xs{font-size:19px}
+
+.mbmoney .buy{fill:#0E7A5A}
+.mbmoney .make{fill:var(--blue)}
+.mbmoney .slab{font:600 14px "Instrument Sans";fill:var(--ink);text-anchor:end}
+.mbmoney .sval{font:500 14px "JetBrains Mono",monospace;fill:var(--ink)}
+.mbmoney .gaplab{font:600 14px "Instrument Sans"}
+.mbmoney .gaplab.bad{fill:var(--hold)}
+.mbmoney .gaplab.good{fill:#0E7A5A}
+.mm{cursor:crosshair}
+.mm:hover rect{opacity:.85}
+
+.qchart .qb rect{fill:#9DB8F2}
+.qchart .qb.tot rect{fill:var(--blue)}
+.qchart .qb.final rect{fill:var(--ink)}
+.qchart .qlab{font:500 14px "Instrument Sans";fill:var(--ink2);text-anchor:end}
+.qchart .qlab.tot{font-weight:700;fill:var(--ink)}
+.qchart .qval{font:500 14px "JetBrains Mono",monospace;fill:var(--ink2)}
+.qchart .qval.tot{font-weight:600;fill:var(--ink)}
+.qb{cursor:crosshair}
+.qb:hover rect{opacity:.85}
+
+.capchart .planline{stroke:var(--ink2);stroke-width:2;stroke-dasharray:5 3}
+.key .ck.planline i{background:none;border-top:2px dashed var(--ink2);height:0;
+  border-radius:0;align-self:center}
+.split i.empty{background:var(--line);width:100%}
+
+/* ---------------------------------------------------------------- finish the story */
+.sintro{margin-bottom:34px;max-width:60ch}
+.skicker{margin:0 0 8px;font:500 11.5px "JetBrains Mono",monospace;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue)}
+.sintro h2{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-weight:600;
+  font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.022em;color:var(--ink)}
+.slede{margin:0;font-size:15.5px;color:var(--muted)}
+
+/* one line down the page, unlit ahead of you and filled behind, so five answers read as
+   one argument with a direction rather than five cards in a column */
+.thread{position:relative;padding-left:52px;counter-reset:beat}
+.thread::before{content:"";position:absolute;left:15px;top:6px;bottom:70px;width:2px;
+  background:var(--line)}
+.sstep{position:relative;margin-bottom:52px}
+.sstep::before{content:"";position:absolute;left:-37px;top:6px;height:0;width:2px;
+  background:var(--blue);transition:height .7s ease}
+.sstep.lit::before{height:calc(100% + 52px)}
+.sbeat{display:flex;align-items:center;gap:11px;margin-bottom:7px}
+.sn{position:absolute;left:-52px;top:-3px;width:32px;height:32px;border-radius:50%;
+  background:#fff;border:2px solid var(--line2);color:var(--muted);
+  display:grid;place-items:center;font:600 13px "JetBrains Mono",monospace;
+  transition:.45s ease;z-index:1}
+.sstep.lit .sn{background:var(--blue);border-color:var(--blue);color:#fff;
+  box-shadow:0 0 0 6px rgba(27,79,216,.12)}
+.sbt{font:500 12.5px "JetBrains Mono",monospace;letter-spacing:.05em;color:var(--muted);
+  text-transform:uppercase}
+.sq{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(21px,2.4vw,29px);
+  line-height:1.2;color:var(--ink);letter-spacing:-.02em;margin-bottom:16px;max-width:24ch}
+.sstep{opacity:.45;transform:translateY(10px);
+  transition:opacity .55s ease,transform .55s ease}
+.sstep.lit{opacity:1;transform:none}
+.safter{margin:16px 0 0;padding:0 0 0 16px;border-left:3px solid var(--blue);
+  font-size:15px;line-height:1.65;color:var(--ink2);max-width:64ch}
+.send{margin-top:10px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#fff,var(--wash))}
+.send h3{margin:0 0 8px;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:22px;
+  color:var(--ink)}
+.send p{margin:0 0 16px;color:var(--ink2);max-width:70ch}
+.cta{background:var(--ink);color:#fff;border:0;border-radius:9px;padding:11px 22px;
+  font:600 14px "Instrument Sans";cursor:pointer}
+.cta:hover{background:var(--blue)}
+@media (prefers-reduced-motion:reduce){
+  .sstep{opacity:1;transform:none;transition:none}
+  .sstep::before{transition:none}}
+@media (max-width:700px){.thread{padding-left:36px}.thread::before{left:11px}
+  .sn{left:-36px;width:26px;height:26px;font-size:11px}
+  .sstep::before{left:-24px}
+  .sq{font-size:19px}}
+
+.scard{margin:0;border:1px solid var(--line);box-shadow:none}
+.scard .qtag{display:none}
+.scard .qhead{padding:14px 16px}
+.scard .sentence{font-size:15px}
+
+.runchart .runarea{fill:rgba(27,79,216,.10)}
+.runchart .runline{fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round}
+.runchart .runwant{stroke:var(--hold);stroke-width:2;stroke-dasharray:6 4}
+.runchart .runwantlab{font:600 11px "Instrument Sans";fill:var(--hold)}
+.runchart .runhit{stroke:#0E7A5A;stroke-width:1.5;stroke-dasharray:3 3}
+.runchart .runcross{fill:#0E7A5A;stroke:#fff;stroke-width:2}
+.runchart .runcrosslab{font:600 11px "JetBrains Mono",monospace;fill:#0E7A5A;
+  text-anchor:middle}
+.runchart .rmark{pointer-events:none}
+.runchart .rmark.rule{stroke:var(--line2);stroke-width:1;stroke-dasharray:3 3}
+.runchart .rmark.dot{fill:var(--blue);stroke:#fff;stroke-width:2}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="mark">
+      <div class="glyph" aria-hidden="true"></div>
+      <div><h1>Pellet Console</h1><p>Answers you can check, or a reason you cannot</p></div>
+    </div>
+    <div class="pick">
+      <label for="tenant">Company</label>
+      <select class="co" id="tenant"></select>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<main id="view"></main>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+function el(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;
+  if(txt!==undefined&&txt!==null)n.textContent=txt;return n;}
+function add(parent,...kids){kids.forEach(k=>k&&parent.appendChild(k));return parent;}
+const api=async(p,o)=>{const r=await fetch(p,o);
+  if(!r.ok){let m=r.statusText;try{m=(await r.json()).detail||m}catch(e){}throw new Error(m)}return r.json()};
+const post=(p,b)=>api(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+/* This is India. Money is read in lakhs and crores, and a nine figure number written as
+   163,824,466 is a number nobody in the room can say out loud. Every rupee figure gets a
+   short form beside it, and the digits themselves group 2-1-2 the way they do here. */
+const IN=(v,d)=>Number(v).toLocaleString('en-IN',{maximumFractionDigits:d===undefined?2:d,
+                                                  minimumFractionDigits:0});
+const fmt=v=>v===null||v===undefined?'':typeof v==='number'?IN(v):String(v);
+function shortIN(v){
+  const a=Math.abs(v),sg=v<0?'-':'';
+  if(a>=1e7) return sg+IN(a/1e7,2).replace(/\.00$/,'')+' Cr';
+  if(a>=1e5) return sg+IN(a/1e5,2).replace(/\.00$/,'')+' L';
+  if(a>=1e3) return sg+IN(Math.round(a),0);
+  return sg+IN(a,a<10?2:0);
+}
+/* Rupees, written the way an owner would say them. */
+const rs=v=>'\u20b9'+shortIN(v);
+const rsFull=v=>'\u20b9'+IN(Math.round(v),0);
+const tn=v=>IN(v,v<100?1:0)+' t';
+function toast(m){const t=el('div','toast',m);document.body.appendChild(t);setTimeout(()=>t.remove(),2200);}
+
+const S={tenant:null,page:'story',questions:[],metrics:[],options:{},summary:{},answers:{},defs:null,lastTenant:null,focus:null};
+
+/* Each question is a sentence with the choices sitting inside it. Change a dropdown and it
+   becomes your own question, which is why there is no separate "custom query" screen. */
+const SENT={
+  open_commitment:[t=>'How much is left to deliver on ',{p:'tender_ref'},'?'],
+  order_book:['What have we contracted to deliver, and how much of it is left?'],
+  capacity_free:['When have I got capacity free over the next ',{p:'months'},' months?'],
+  month_pressure:['What is sitting in ',{p:'month'},', and what could move?'],
+  capacity_compare:['Why can I make less in ',{p:'month_a'},' than in ',{p:'month_b'},'?'],
+  fit_new_tender:['If I sell ',{p:'tonnes'},' tonnes for delivery by ',{p:'by_month'},
+                  ', can I make it?'],
+  delivery_runway:['The tender on my desk is ',{p:'tonnes'},' tonnes. By when '+
+                   'could I have it made?'],
+  material_by_month:['Which raw material can I get in which month, and at what cost per unit of energy?'],
+  buy_in_cost:['What does it cost to buy ',{p:'grade_code'},
+               ' in ready made, from whom, and in which months?'],
+  supply_outlook:['How much material can I count on over the next ',{p:'months'},' months?'],
+  cash_calendar:['How much money is due to land over the next ',{p:'weeks'},' weeks?'],
+  material_cost_per_gcv:['Which raw material is cheaper per unit of energy?'],
+  production_cost:['What does a tonne of ',{p:'grade_code'},' cost me to make?'],
+  quote_for_tender:['What should I quote for ',{p:'grade_code'},' at ',{p:'quoted_gcv'},
+                    ' GCV, wanting ',{p:'margin_per_gcv'},' per GCV of margin, delivering ',
+                    {p:'deliver_from'},' to ',{p:'deliver_to'},'?'],
+  vendor_reliability:['Which vendors have kept their word?'],
+  vendor_capacity:['How much more could ',{p:'vendor'},' supply us?'],
+  realised_price:['What did we actually get per tonne on ',{p:'plant'},' in ',{p:'fy'},'?'],
+  outstanding:['Who owes us money, and how much?'],
+  channel_split:['How much of ',{p:'fy'},' did we make ourselves rather than buy in?'],
+  item_period_comparison:['How did ',{p:'grade_code'},' compare between ',{p:'fy_a'},
+                          ' and ',{p:'fy_b'},'?'],
+  dispatch_total:['What did we dispatch to ',{p:'plant'},' in ',{p:'fy'},'?'],
+};
+const KIND={months:'int',quoted_gcv:'int',margin_per_gcv:'float',weeks:'int',tonnes:'int',
+  tender_ref:'tender',grade_code:'grade',plant:'plant',vendor:'vendor',
+  // every parameter that is a month has to say so, or it falls through to a number box
+  // and the sentence sends 2026 where it meant 2026-10
+  month:'month',month_a:'month',month_b:'month',by_month:'month',
+  deliver_from:'month',deliver_to:'month',
+  material:'material',
+  fy:'fy',fy_a:'fy',fy_b:'fy'};
+/* Sensible starting values, so a follow-up opens with something already in it rather than
+   a zero the owner has to correct before he can press Run. */
+const DEFAULTV={months:12,weeks:8,tonnes:3000,quoted_gcv:3200,margin_per_gcv:0.3};
+
+const PAGES=[{id:'story',label:'Finish the story'},{id:'ask',label:'Ask'},
+             {id:'review',label:'Review queue'},
+             {id:'data',label:'The data'},{id:'defs',label:'Definitions'}];
+
+function drawTabs(){
+  const n=$('#tabs');n.innerHTML='';
+  PAGES.forEach(p=>{
+    const b=el('button',null,p.label);
+    b.setAttribute('aria-current',String(S.page===p.id));
+    if(p.id==='review'&&S.summary.open_reviews) b.appendChild(el('span','cnt',String(S.summary.open_reviews)));
+    if(p.id==='ask') b.appendChild(el('span','cnt',String(S.questions.length)));
+    b.onclick=()=>{S.page=p.id;drawTabs();draw();};
+    n.appendChild(b);
+  });
+}
+
+/* ---------------------------------------------------------------- charts (inline svg-free) */
+function barChart(title,rows,opts={}){
+  const box=el('div','chart');box.appendChild(el('h4',null,title));
+  const wrap=el('div','bars');
+  const max=Math.max(...rows.map(r=>Math.abs(r.value)),1);
+  rows.forEach(r=>{
+    const row=el('div','brow');
+    row.appendChild(el('div','nm',r.label));
+    const tr=el('div','track');
+    const f=el('div','fill'+(r.value<0?' neg':''));
+    f.style.width=(Math.abs(r.value)/max*100).toFixed(1)+'%';
+    tr.appendChild(f);row.appendChild(tr);
+    row.appendChild(el('div','vl',opts.format?opts.format(r.value):fmt(Math.round(r.value))));
+    wrap.appendChild(row);
+  });
+  box.appendChild(wrap);
+  return box;
+}
+function splitBar(title,parts){
+  /* An empty title is no title, rather than an empty heading holding open ten pixels of
+     margin. And a part worth nothing gets no legend entry: sixteen of the eighteen
+     dispatch answers were carrying a permanent "loads with nothing raised  0". */
+  const box=el('div','chart');
+  if(title)box.appendChild(el('h4',null,title));
+  const shown=parts.filter(p=>Number(p.value)>0);
+  const total=shown.reduce((a,p)=>a+Number(p.value),0)||1;
+  const bar=el('div','split');
+  shown.forEach(p=>{const i=el('i');
+    i.style.width=(p.value/total*100)+'%';i.style.background=p.color;
+    i.title=p.label+': '+IN(Math.round(p.value));bar.appendChild(i);});
+  if(!shown.length)bar.appendChild(el('i','empty'));
+  box.appendChild(bar);
+  const lg=el('div','legend');
+  shown.forEach(p=>{const s=el('span');const b=el('b');b.style.background=p.color;
+    s.appendChild(b);
+    s.appendChild(document.createTextNode(p.label+'  '+IN(Math.round(p.value))));
+    lg.appendChild(s);});
+  box.appendChild(lg);return box;
+}
+function tipEl(){let t=document.getElementById('tip');
+  if(!t){t=el('div','tip');t.id='tip';document.body.appendChild(t);}return t;}
+
+/* Promised tonnage per month, stacked by product, hover a block for the exact figure. */
+function monthChart(rows){
+  const months=[...new Set(rows.map(r=>r.month))].sort();
+  const grades=[...new Set(rows.map(r=>r.grade_code))].sort();
+  const byM={};months.forEach(m=>byM[m]={});
+  rows.forEach(r=>byM[r.month][r.grade_code]=(byM[r.month][r.grade_code]||0)+r.tonnes);
+  const tot=m=>grades.reduce((a,g)=>a+(byM[m][g]||0),0);
+  const peak=Math.max(...months.map(tot),1);
+  const W=680,H=170,PL=46,PB=24,gap=(W-PL)/months.length,bw=gap*0.62;
+  const NS='http://www.w3.org/2000/svg';
+  const mk=(t,a)=>{const n=document.createElementNS(NS,t);
+    Object.entries(a).forEach(([k,v])=>n.setAttribute(k,v));return n;};
+  const box=el('div','mchart');
+  const svg=mk('svg',{viewBox:'0 0 '+W+' '+(H+PB),preserveAspectRatio:'none'});
+  [0,0.5,1].forEach(f=>{const y=H-f*H;
+    svg.appendChild(mk('line',{x1:PL,x2:W,y1:y,y2:y,class:'gl'}));
+    const tx=mk('text',{x:PL-8,y:y+3,'text-anchor':'end',class:'lbl'});
+    tx.textContent=fmt(Math.round(peak*f));svg.appendChild(tx);});
+  const tip=tipEl();
+  months.forEach((m,i)=>{
+    let acc=0;
+    grades.forEach((g,gi)=>{
+      const v=byM[m][g]||0;if(!v)return;
+      const h=v/peak*H,x=PL+i*gap+(gap-bw)/2,y=H-acc-h;acc+=h;
+      const r=mk('rect',{x:x,y:y,width:bw,height:Math.max(1,h),
+        fill:GRADE_COL[gi%5],rx:2,class:'seg'});
+      r.addEventListener('mousemove',function(e){tip.classList.add('on');
+        tip.textContent=m+'   '+g+'   '+fmt(Math.round(v))+' t     month total '+fmt(Math.round(tot(m)))+' t';
+        tip.style.left=Math.min(innerWidth-320,e.clientX+14)+'px';
+        tip.style.top=(e.clientY-40)+'px';});
+      r.addEventListener('mouseleave',function(){tip.classList.remove('on');});
+      svg.appendChild(r);
+    });
+    if(i%2===0){const tx=mk('text',{x:PL+i*gap+gap/2,y:H+16,'text-anchor':'middle',class:'lbl'});
+      tx.textContent=m.slice(5)+'/'+m.slice(2,4);svg.appendChild(tx);}
+  });
+  box.appendChild(svg);
+  const keys=el('div','keys');
+  grades.forEach((g,gi)=>{const sp=el('span'),ic=el('i');
+    ic.style.background=GRADE_COL[gi%5];add(sp,ic,el('span',null,g));keys.appendChild(sp);});
+  box.appendChild(keys);
+  return box;
+}
+
+/* Who keeps their word.
+   This read promised_t and credibility off a row set that carries neither, so it would
+   have printed "NaN t" and the literal word "undefined" the first time a commitment was
+   confirmed and the chart became reachable. It now reads what the metric returns and
+   leaves out a column it has no data for. */
+function vendorList(vs){
+  const box=el('div','vend');
+  box.appendChild(el('p','cap','Taken out of email threads, not from purchase orders. '+
+    'Only promises somebody has confirmed are counted.'));
+  const has=k=>vs.some(v=>v&&v[k]!==undefined&&v[k]!==null);
+  const showT=has('promised_t'),showBand=has('credibility')||has('kept_pct');
+  vs.slice(0,12).forEach(function(v){
+    const r=el('div','vrow');
+    const promised=v.promises!==undefined?v.promises:v.promised_times;
+    const nm=el('div','vn');
+    nm.appendChild(el('b',null,v.vendor));
+    nm.appendChild(el('span',null,plural(promised||0,'promise')
+      +(v.confirmed?', '+v.confirmed+' confirmed':'')));
+    r.appendChild(nm);
+    if(showT)r.appendChild(el('div','vq',tn(v.promised_t)));
+    if(showBand){
+      const band=v.credibility
+        ||(v.kept_pct>=97?'high':v.kept_pct>=85?'moderate':'low');
+      r.appendChild(el('div','cred '+band,band));
+    }
+    box.appendChild(r);
+  });
+  if(vs.length>12)box.appendChild(el('p','cap',
+    'and '+(vs.length-12)+' more, smaller than these.'));
+  return box;
+}
+
+const NS='http://www.w3.org/2000/svg';
+const sv=(t,a)=>{const n=document.createElementNS(NS,t);
+  Object.entries(a||{}).forEach(([k,v])=>n.setAttribute(k,v));return n;};
+function figure(title,node,note){
+  const box=el('figure','fig');
+  box.appendChild(el('figcaption',null,title));
+  box.appendChild(node);
+  if(note)box.appendChild(el('p','fignote',note));
+  return box;
+}
+/* One tooltip for the whole console, following the cursor, so every chart explains itself
+   in the same voice and in the place the eye already is. */
+let TIP=null;
+function tipNode(){
+  if(!TIP){TIP=el('div','tip');document.body.appendChild(TIP);}
+  return TIP;
+}
+/* One tooltip for the whole console, following the cursor, so every chart explains itself
+   in the same voice and in the place the eye already is.
+
+   It is placed after the text is set, not before, because its width depends on what it
+   says. And it is kept inside the window on both axes: a readout that runs off the right
+   edge, or under the panel beside it, is a readout nobody can finish reading. */
+function readout(box){
+  let mx=0,my=0;
+  function place(){
+    const n=tipNode();
+    if(!n.classList.contains('on'))return;
+    const pad=16,w=n.offsetWidth,h=n.offsetHeight;
+    let x=mx+pad,y=my+pad;
+    if(x+w>innerWidth-10)x=Math.max(10,mx-w-pad);
+    if(y+h>innerHeight-10)y=Math.max(10,my-h-pad);
+    n.style.left=Math.max(10,x)+'px';
+    n.style.top=Math.max(10,y)+'px';
+  }
+  box.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;place();});
+  box.addEventListener('mouseleave',()=>{tipNode().classList.remove('on');});
+  return t=>{
+    const n=tipNode();
+    n.textContent=t||'';
+    n.classList.toggle('on',!!t);
+    if(t)requestAnimationFrame(place);   // measure it once it holds the text
+  };
+}
+
+/* ---- one column per month, standing for what the plant can make. It fills from the
+   bottom with what is already spoken for and the empty part at the top is the answer.
+   A column that fills past its own frame is oversold and is drawn breaking out of it. */
+function capacityChart(rows){
+  const W=660,H=400,PT=32,PB=52,LX=54,GAP=6;
+  const peak=niceTop(Math.max(1,...rows.map(r=>Math.max(r.capacity_t,r.committed_t))));
+  const plot=H-PT-PB, bw=(W-LX-10)/rows.length;
+  const hOf=v=>Math.max(0,v)/peak*plot;
+  const base=PT+plot;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart capchart'});
+  gridY(svg,LX,W-6,PT,base,peak,4);
+
+  rows.forEach((r,i)=>{
+    const x=LX+i*bw+GAP/2, w=bw-GAP;
+    const cap=hOf(r.capacity_t), sch=hOf(r.scheduled_t), req=hOf(r.required_t);
+    const g=sv('g',{class:'cg '+r.state});
+
+    // the frame is the month's own capacity. Everything is read against it.
+    g.appendChild(sv('rect',{x:x,y:base-cap,width:w,height:Math.max(2,cap),rx:4,class:'cap'}));
+    // contracted to a private buyer for this month, which cannot move
+    if(sch>0)g.appendChild(sv('rect',
+      {x:x,y:base-sch,width:w,height:sch,rx:3,class:'sch'}));
+    // the pace the tender deadlines need, which can move inside its window
+    if(req>0)g.appendChild(sv('rect',
+      {x:x,y:base-sch-req,width:w,height:req,rx:3,class:'req'}));
+    // and what is left, which is the answer to the question
+    if(r.free_t>0)g.appendChild(sv('rect',
+      {x:x+1,y:base-cap,width:w-2,height:hOf(r.free_t),rx:3,class:'free'}));
+    if(r.state==='oversold')g.appendChild(sv('rect',
+      {x:x-2,y:base-sch-req,width:w+4,height:(sch+req)-cap,rx:3,class:'spill'}));
+
+    // the figure the eye is hunting for, on the bar
+    if(r.state==='room'&&hOf(r.free_t)>20){
+      const lb=sv('text',{x:x+w/2,y:base-cap+16,class:'blab in'});
+      lb.textContent=IN(Math.round(r.free_t),0);
+      g.appendChild(lb);
+    }else if(r.state==='oversold'){
+      const lb=sv('text',{x:x+w/2,y:base-(sch+req)-8,class:'blab over'});
+      lb.textContent='\u2212'+IN(Math.round(r.oversold_t),0);
+      g.appendChild(lb);
+    }else{
+      const lb=sv('text',{x:x+w/2,y:base-cap-8,class:'blab full'});
+      lb.textContent=Math.round(r.used_pct)+'%';
+      g.appendChild(lb);
+    }
+
+    g.addEventListener('mouseenter',()=>say(
+      MONTHNAME(r.month)+'  \u00b7  the plant has managed '+tn(r.capacity_t)+
+      '.  Contracted to private buyers '+tn(r.scheduled_t)+
+      ', tender pace '+tn(r.required_t)+
+      (r.state==='oversold'?'.  Oversold by '+tn(r.oversold_t)+'.'
+       :r.state==='full'?'.  Only '+tn(r.free_t)+' left, which is '+
+         Math.round(100-r.used_pct)+'% of the month.'
+       :'.  '+tn(r.free_t)+' free, '+Math.round(100-r.used_pct)+'% of the month.')));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+
+    const tk=sv('text',{x:x+w/2,y:H-30,class:'tick'});
+    tk.textContent=MONTHSHORT(r.month);
+    svg.appendChild(tk);
+    if(r.month.slice(5)==='01'||i===0){
+      const yr=sv('text',{x:x+w/2,y:H-17,class:'tick yr'});
+      yr.textContent=r.month.slice(0,4);
+      svg.appendChild(yr);
+    }
+    const st=sv('text',{x:x+w/2,y:H-4,class:'state '+r.state});
+    st.textContent=r.state==='oversold'?'over':r.state==='full'?'full':'room';
+    svg.appendChild(st);
+  });
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['free','room to sell'],['req','pace the tender deadlines need'],
+   ['sch','contracted to a private buyer that month'],
+   ['spill','more than the plant can make']].forEach(([c,t])=>{
+    const k=el('span','k ck '+c);k.appendChild(el('i'));
+    k.appendChild(document.createTextNode(t));key.appendChild(k);});
+  box.appendChild(key);
+  return figure('Every month against what the plant can make',box,
+    'Each column is one month at full capacity. It fills from the bottom with what is '+
+    'already spoken for, and the white space at the top is what you could still sell.');
+}
+
+/* What can be slowed down and what cannot. A list, because it is a list. */
+function moveList(movable,pinned){
+  const box=el('div','svgbox'),say=readout(box);
+  const g=el('div','movel');
+  movable.forEach(x=>{
+    const row=el('div','mv can');
+    add(row,el('b',null,x.plant),
+            el('span','mvw',tn(x.tonnes)),
+            el('span','mvt','due '+MONTHNAME(x.deadline)+', can slow down'));
+    row.addEventListener('mouseenter',()=>say(
+      x.plant+': '+tn(x.tonnes)+' of this month\u2019s pace comes from a tender due '+
+      MONTHNAME(x.deadline)+'. Push it later and the deadline still holds.'));
+    row.addEventListener('mouseleave',()=>say(''));
+    g.appendChild(row);
+  });
+  (pinned||[]).forEach(x=>{
+    const row=el('div','mv cant');
+    add(row,el('b',null,x.plant),
+            el('span','mvw',tn(x.tonnes)),
+            el('span','mvt','due this month, cannot move'));
+    g.appendChild(row);
+  });
+  box.appendChild(g);
+  return box;
+}
+
+/* ---- the order book: one row per contract, showing how far along it is. */
+function bookChart(rows){
+  const box=el('div','svgbox'),say=readout(box);
+  const list=el('div','runway');
+  const peak=Math.max(1,...rows.map(r=>r.awarded_t));
+  rows.slice(0,12).forEach(r=>{
+    const row=el('div','rw');
+    const nm=el('div','rwn');
+    nm.appendChild(el('b',null,r.plant));
+    nm.appendChild(el('span',null,r.grade_code+'  '+r.tender_ref));
+    const track=el('div','rwt');
+    const all=el('i','room');all.style.width=(r.awarded_t/peak*100)+'%';
+    const done=el('i','need');done.style.width=(r.delivered_t/peak*100)+'%';
+    add(track,all,done);
+    const val=el('div','rwv',IN(Math.round(r.done_pct),0)+'%');
+    add(row,nm,track,val);
+    row.addEventListener('mouseenter',()=>say(
+      r.plant+', '+r.tender_ref+': '+tn(r.delivered_t)+' of '+tn(r.awarded_t)+
+      ' delivered, so '+tn(r.remaining_t)+' still to go.'));
+    row.addEventListener('mouseleave',()=>say(''));
+    list.appendChild(row);
+  });
+  box.appendChild(list);
+  return figure('Every live contract, and how far along it is',box,
+    'The pale bar is what was awarded, the solid bar what has gone out.');
+}
+
+/* ---- the wall of deadlines. One column per month a contract falls due in, and the
+   height is what is still to deliver by then, because that is the question. The old
+   version drew the awarded tonnage as the bar and what had shipped as a sliver inside it,
+   which made every future month look like an empty box, and split the axis by product so
+   "Mar 27" appeared three times running. */
+function deadlineChart(rows){
+  const byMonth={};
+  rows.forEach(r=>{
+    const m=byMonth[r.month]||(byMonth[r.month]={month:r.month,remaining:0,awarded:0,
+                                                delivered:0,contracts:0,grades:{}});
+    m.remaining+=r.remaining; m.awarded+=r.awarded; m.delivered+=r.delivered;
+    m.contracts+=r.contracts;
+    m.grades[r.grade_code]=(m.grades[r.grade_code]||0)+r.remaining;
+  });
+  const months=Object.values(byMonth).sort((x,y)=>x.month<y.month?-1:1);
+  const W=600,H=310,PT=32,PB=48,LX=54,GAP=Math.min(16,220/months.length);
+  const peak=niceTop(Math.max(1,...months.map(m=>m.remaining)));
+  const plot=H-PT-PB,bw=(W-LX-12)/months.length,base=PT+plot;
+  const hOf=v=>Math.max(0,v)/peak*plot;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart capchart'});
+  gridY(svg,LX,W-6,PT,base,peak,4);
+  months.forEach((m,i)=>{
+    const x=LX+i*bw+GAP/2,w=Math.max(10,bw-GAP);
+    const h=hOf(m.remaining);
+    const g=sv('g',{class:'cg'});
+    g.appendChild(sv('rect',{x:x,y:base-h,width:w,height:Math.max(2,h),rx:4,class:'req'}));
+    const lb=sv('text',{x:x+w/2,y:base-h-8,class:'blab in'});
+    lb.textContent=IN(Math.round(m.remaining),0);
+    g.appendChild(lb);
+    const gr=Object.entries(m.grades).sort((p,q)=>q[1]-p[1]);
+    g.addEventListener('mouseenter',()=>say(
+      MONTHNAME(m.month)+': '+(m.contracts===1?'one contract closes':
+        m.contracts+' contracts close')+' that month with '+tn(m.remaining)+
+      ' still to deliver, out of '+tn(m.awarded)+' contracted.  '+
+      gr.map(([k,v])=>k+' '+tn(v)).join(',  ')));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+    const tk=sv('text',{x:x+w/2,y:H-28,class:'tick'});
+    tk.textContent=MONTHSHORT(m.month);
+    svg.appendChild(tk);
+    const yr=sv('text',{x:x+w/2,y:H-15,class:'tick yr'});
+    yr.textContent=m.month.slice(0,4);
+    svg.appendChild(yr);
+    const ct=sv('text',{x:x+w/2,y:H-3,class:'state room'});
+    ct.textContent=m.contracts===1?'1 contract':m.contracts+' contracts';
+    svg.appendChild(ct);
+  });
+  box.appendChild(svg);
+  return figure('When it all falls due',box,
+    'Each column is one month, and its height is the tonnage that has to be out of the '+
+    'gate by then. Hover for the products and the contracts behind it.');
+}
+
+/* ---- one month, split into what is a promise about it and what is only a pace. Drawn as
+   a bar against capacity rather than a ring, because a ring cannot show an overshoot. */
+function monthSplit(r){
+  const W=560,H=170,PT=44,LX=18,BH=58;
+  const peak=niceTop(Math.max(r.capacity_t,r.scheduled_t+r.required_t));
+  const wOf=v=>Math.max(0,v)/peak*(W-LX*2);
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart capchart'});
+  const cap=wOf(r.capacity_t),sch=wOf(r.scheduled_t),req=wOf(r.required_t);
+  svg.appendChild(sv('rect',{x:LX,y:PT,width:cap,height:BH,rx:5,class:'cap'}));
+  const g1=sv('g',{class:'cg'});
+  g1.appendChild(sv('rect',{x:LX,y:PT,width:sch,height:BH,rx:5,class:'sch'}));
+  g1.addEventListener('mouseenter',()=>say('Contracted to private buyers for this month: '+
+    tn(r.scheduled_t)+', which is '+Math.round(r.scheduled_t/r.capacity_t*100)+
+    '% of what the plant can make. This cannot move without their agreement.'));
+  g1.addEventListener('mouseleave',()=>say(''));
+  svg.appendChild(g1);
+  const g2=sv('g',{class:'cg'});
+  g2.appendChild(sv('rect',{x:LX+sch,y:PT,width:req,height:BH,rx:5,class:'req'}));
+  g2.addEventListener('mouseenter',()=>say('Pace the tender deadlines need: '+
+    tn(r.required_t)+', which is '+Math.round(r.required_t/r.capacity_t*100)+
+    '% of what the plant can make. Nobody promised this month, so it can move.'));
+  g2.addEventListener('mouseleave',()=>say(''));
+  svg.appendChild(g2);
+  if(r.over_t>0)
+    svg.appendChild(sv('rect',{x:LX+cap,y:PT-4,width:(sch+req)-cap,height:BH+8,rx:4,
+      class:'spill'}));
+  const cl=sv('line',{x1:LX+cap,x2:LX+cap,y1:PT-14,y2:PT+BH+14,class:'axis'});
+  svg.appendChild(cl);
+  const ct=sv('text',{x:LX+cap,y:PT-20,class:'tick'});
+  ct.textContent='plant can make '+IN(Math.round(r.capacity_t),0);
+  svg.appendChild(ct);
+  const st=sv('text',{x:LX,y:PT+BH+26,class:'tick'});
+  st.setAttribute('text-anchor','start');
+  st.textContent=r.over_t>0?('oversold by '+IN(Math.round(r.over_t),0)+' t')
+                           :(IN(Math.round(r.free_t),0)+' t still free');
+  svg.appendChild(st);
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['sch','contracted for this month, cannot move'],
+   ['req','tender pace, can move'],['spill','more than the plant can make']]
+    .forEach(([c,t])=>{const k=el('span','k ck '+c);k.appendChild(el('i'));
+      k.appendChild(document.createTextNode(t));key.appendChild(k);});
+  box.appendChild(key);
+  return figure('Where '+MONTHNAME(r.month)+' goes',box,
+    'Measured against what the plant has managed in that month, not against a nameplate.');
+}
+
+/* ---- two calendar months, every year the register holds, side by side. */
+function compareChart(r){
+  const rows=[].concat(r.a.rows.map(x=>({...x,side:'a'})),
+                       r.b.rows.map(x=>({...x,side:'b'})));
+  const W=600,H=310,PT=30,PB=48,LX=54,GAP=7;
+  const peak=niceTop(Math.max(1,...rows.map(x=>Math.max(x.actual_t,x.planned_t))));
+  const plot=H-PT-PB,bw=(W-LX-10)/rows.length,base=PT+plot;
+  const hOf=v=>Math.max(0,v)/peak*plot;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart capchart'});
+  gridY(svg,LX,W-6,PT,base,peak,4);
+  rows.forEach((x,i)=>{
+    const px=LX+i*bw+GAP/2,w=bw-GAP;
+    const g=sv('g',{class:'cg'});
+    // the plan is a marker across the bar, not a bar behind it. Behind it, it is
+    // completely hidden every month the plant met or beat plan, which is most of them.
+    g.appendChild(sv('rect',{x:px,y:base-hOf(x.actual_t),width:w,height:hOf(x.actual_t),
+      rx:3,class:x.side==='a'?'sch':'req'}));
+    g.appendChild(sv('line',{x1:px-3,x2:px+w+3,y1:base-hOf(x.planned_t),
+      y2:base-hOf(x.planned_t),class:'planline'}));
+    g.addEventListener('mouseenter',()=>say(
+      MONTHNAME(x.month)+': planned '+tn(x.planned_t)+', made '+tn(x.actual_t)+
+      ', which is '+Math.round(x.actual_t/(x.planned_t||1)*100)+'% of plan.'));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+    const tk=sv('text',{x:px+w/2,y:H-28,class:'tick'});
+    tk.textContent=x.month.slice(0,4);
+    svg.appendChild(tk);
+  });
+  const la=sv('text',{x:LX+((W-LX-10)/rows.length)*r.a.rows.length/2,y:H-10,class:'tick'});
+  la.textContent=MONS[+r.month_a.slice(5,7)];
+  svg.appendChild(la);
+  const lb=sv('text',{x:LX+((W-LX-10)/rows.length)*(r.a.rows.length+r.b.rows.length/2),
+    y:H-10,class:'tick'});
+  lb.textContent=MONS[+r.month_b.slice(5,7)];
+  svg.appendChild(lb);
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['sch',MONS[+r.month_a.slice(5,7)]],['req',MONS[+r.month_b.slice(5,7)]],
+   ['planline','what the plan said']].forEach(([c,t])=>{
+    const k=el('span','k ck '+c);k.appendChild(el('i'));
+    k.appendChild(document.createTextNode(t));key.appendChild(k);});
+  box.appendChild(key);
+  return figure('Every year the register holds for these two months',box,
+    'The pale bar is the plan, the solid bar what the plant actually made.');
+}
+
+/* ---- how much could be made by each month, running total, with the order drawn across
+   it. Read the date off where the curve crosses the line. This is the answer to "can I
+   make it", which is a date and not a yes. */
+function runwayChart(r){
+  const rows=r.rows.slice(0,18);
+  const W=680,H=340,PT=30,PB=48,LX=64,RX=14;
+  const peak=niceTop(Math.max(r.tonnes*1.25,rows[rows.length-1].cumulative_t));
+  const plot=H-PT-PB,base=PT+plot;
+  const x=i=>LX+i*((W-LX-RX)/Math.max(1,rows.length-1));
+  const y=v=>base-Math.max(0,v)/peak*plot;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart runchart'});
+  gridY(svg,LX,W-RX,PT,base,peak,4);
+
+  // the running total, as an area so the shape of the year is visible
+  svg.appendChild(sv('polygon',{class:'runarea',
+    points:rows.map((m,i)=>x(i)+','+y(m.cumulative_t)).join(' ')+' '+
+           x(rows.length-1)+','+base+' '+x(0)+','+base}));
+  svg.appendChild(sv('polyline',{class:'runline',
+    points:rows.map((m,i)=>x(i)+','+y(m.cumulative_t)).join(' ')}));
+
+  // the order itself, drawn across
+  svg.appendChild(sv('line',{x1:LX,x2:W-RX,y1:y(r.tonnes),y2:y(r.tonnes),class:'runwant'}));
+  const wl=sv('text',{x:LX+6,y:y(r.tonnes)-8,class:'runwantlab'});
+  wl.textContent='the order, '+tn(r.tonnes);
+  svg.appendChild(wl);
+
+  rows.forEach((m,i)=>{
+    const hit=sv('rect',{x:x(i)-((W-LX-RX)/rows.length)/2,y:PT,
+      width:(W-LX-RX)/rows.length,height:plot,class:'hit'});
+    hit.addEventListener('mouseenter',()=>{
+      svg.querySelectorAll('.rmark').forEach(n=>n.remove());
+      svg.appendChild(sv('line',{x1:x(i),x2:x(i),y1:PT,y2:base,class:'rmark rule'}));
+      svg.appendChild(sv('circle',{cx:x(i),cy:y(m.cumulative_t),r:5,class:'rmark dot'}));
+      say(MONTHNAME(m.month)+': '+tn(m.room_t)+' of room that month, '+
+          tn(m.cumulative_t)+' made in total by then'+
+          (m.covers?'. That covers the order.'
+                   :', still '+tn(m.still_short_t)+' short.'));
+    });
+    hit.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(hit);
+    if(i%2===0){const tk=sv('text',{x:x(i),y:H-28,class:'tick'});
+      tk.textContent=MONTHSHORT(m.month);svg.appendChild(tk);}
+    if(m.month.slice(5)==='01'||i===0){
+      const yr=sv('text',{x:x(i),y:H-14,class:'tick yr'});
+      yr.textContent=m.month.slice(0,4);svg.appendChild(yr);}
+  });
+
+  // where the curve crosses, which is the date to quote
+  if(r.ready){
+    const i=rows.findIndex(m=>m.month===r.ready.month);
+    if(i>=0){
+      svg.appendChild(sv('line',{x1:x(i),x2:x(i),y1:y(r.tonnes),y2:base,class:'runhit'}));
+      svg.appendChild(sv('circle',{cx:x(i),cy:y(r.tonnes),r:7,class:'runcross'}));
+      const lab=sv('text',{x:x(i),y:base+16,class:'runcrosslab'});
+      lab.textContent=MONTHSHORT(r.ready.month)+' '+r.ready.month.slice(2,4);
+      svg.appendChild(lab);
+    }
+  }
+  svg.addEventListener('mouseleave',()=>
+    svg.querySelectorAll('.rmark').forEach(n=>n.remove()));
+  box.appendChild(svg);
+  return figure('How much could be made by when',box,
+    r.ready
+      ? 'The curve is everything the plant could have made by that month, added up. Where '+
+        'it crosses the line is the earliest date worth quoting.'
+      : 'The curve never reaches the line inside this window, so no date works on the '+
+        'plant alone.');
+}
+
+/* ---- where a new order would go, against the room that is actually there. */
+function fitChart(r){
+  const rows=r.fill;
+  const W=620,H=330,PT=30,PB=44,LX=54,GAP=7;
+  const peak=niceTop(Math.max(1,...rows.map(x=>x.room_t)));
+  const plot=H-PT-PB,bw=(W-LX-10)/rows.length,base=PT+plot;
+  const hOf=v=>Math.max(0,v)/peak*plot;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart capchart'});
+  gridY(svg,LX,W-6,PT,base,peak,4);
+  rows.forEach((x,i)=>{
+    const px=LX+i*bw+GAP/2,w=bw-GAP;
+    const g=sv('g',{class:'cg'});
+    g.appendChild(sv('rect',{x:px,y:base-hOf(x.room_t),width:w,
+      height:Math.max(2,hOf(x.room_t)),rx:4,class:'cap'}));
+    if(x.take_t>0)g.appendChild(sv('rect',{x:px,y:base-hOf(x.take_t),width:w,
+      height:hOf(x.take_t),rx:3,class:'req'}));
+    if(x.take_t>0&&hOf(x.take_t)>16){
+      const lb=sv('text',{x:px+w/2,y:base-hOf(x.take_t)+14,class:'blab'});
+      lb.setAttribute('fill','#fff');
+      lb.textContent=IN(Math.round(x.take_t),0);
+      g.appendChild(lb);
+    }
+    g.addEventListener('mouseenter',()=>say(
+      MONTHNAME(x.month)+': '+(x.room_t<=0?'no room at all, it is already oversold.'
+        :tn(x.room_t)+' of room, of which this order would take '+tn(x.take_t)+
+         ' ('+Math.round(x.eats_pct)+'% of it), leaving '+tn(x.after_t)+'.')));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+    const tk=sv('text',{x:px+w/2,y:H-26,class:'tick'});
+    tk.textContent=MONTHSHORT(x.month);
+    svg.appendChild(tk);
+  });
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['cap','room that month has'],['req','what this order would take']].forEach(([c,t])=>{
+    const k=el('span','k ck '+c);k.appendChild(el('i'));
+    k.appendChild(document.createTextNode(t));key.appendChild(k);});
+  box.appendChild(key);
+  return figure('Where the '+tn(r.tonnes)+' would come from',box,
+    'Filled in order, month by month. A month whose bar is nearly all solid is giving up '+
+    'everything it had.');
+}
+
+/* ---- the quote, built up. A stack rather than three peer bars, because a quote is not
+   three independent quantities: it is a cost with a margin on top, and drawing the total
+   next to its own components makes the same rupee appear twice. */
+function quoteChart(r){
+  const build=r.build||[];
+  const W=560,rowH=46,PT=26,PB=20,LX=178,RX=104;
+  const H=PT+rowH*build.length+PB;
+  const peak=Math.max(...build.map(b=>b.value))||1;
+  const wOf=v=>Math.max(3,(v/peak)*(W-LX-RX));
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart qchart'});
+  let run=0;
+  build.forEach((b,i)=>{
+    const y=PT+i*rowH,bh=rowH-16;
+    const total=!!b.total;
+    // A component starts where the running total left off; a subtotal starts at the left
+    // and shows the whole of what has accumulated. Resetting the accumulator on every
+    // subtotal made the margin bar restart at the left edge, underneath the cost bar, so
+    // nothing on screen showed that the quote is the cost plus the margin.
+    const x0=total?LX:LX+wOf(run);
+    const w=wOf(b.value);
+    const g=sv('g',{class:'qb'+(total?' tot':'')+(b.label==='Quote'?' final':'')});
+    g.appendChild(sv('rect',{x:x0,y:y,width:w,height:bh,rx:4}));
+    const lab=sv('text',{x:LX-14,y:y+bh/2+5,class:'qlab'+(total?' tot':'')});
+    lab.textContent=b.label;
+    g.appendChild(lab);
+    const val=sv('text',{x:x0+w+12,y:y+bh/2+5,class:'qval'+(total?' tot':'')});
+    val.textContent='₹'+IN(Math.round(b.value),0);
+    g.appendChild(val);
+    g.addEventListener('mouseenter',()=>say(b.label+': '+rsFull(b.value)+' a tonne. '+b.note));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+    run=total?b.value:run+b.value;
+  });
+  box.appendChild(svg);
+  const w=el('div');
+  w.appendChild(figure('How the quote is built, per tonne',box,
+    'Feedstock and conversion stack into the cost, and the margin you chose sits on top. '+
+    'Everything is scaled to the '+IN(r.quoted_gcv,0)+' GCV you are quoting.'));
+  if(r.window&&r.window.length>1)
+    w.appendChild(spreadChart(r.window.map(x=>({label:x.month,value:x.cost_per_t,
+      note:x.month+': feedstock at '+rs(x.feed_rate_per_t)+' a tonne makes a tonne of '+
+           'product cost '+rs(x.cost_per_t)+'.'})),
+      {title:'Cost to make a tonne, in each month of this window',
+       format:v=>'₹'+IN(Math.round(v),0),
+       note:'Shift the window and the quote moves with it. That is why the window is part '+
+            'of the question.'}));
+  return w;
+}
+
+/* ---- what was billed against what came in. */
+function realisedChart(r){
+  const net=r.billed-r.deducted;
+  const box=el('div','svgbox');
+  box.appendChild(splitBar('Of '+rs(r.billed)+' billed',[
+    {label:'kept',value:net,color:'#1B4FD8'},
+    {label:'lost to quality deductions',value:r.deducted,color:'#C8770B'}]));
+  return figure('What was billed, and what survived the deductions',box,
+    r.net_of_recoveries
+      ? 'This tenant divides the kept figure by tonnes accepted, so the deductions are in '+
+        'the price per tonne.'
+      : 'This tenant divides the billed figure by tonnes dispatched, so the deductions are '+
+        'reported but not taken off the price per tonne.');
+}
+
+/* ---- vendors we bought finished pellets from, by rate per unit of energy. */
+function vendorRates(vendors,gcv){
+  return spreadChart(vendors.map(v=>({label:v.vendor,value:v.cost_per_gcv,
+    note:v.vendor+': '+tn(v.tonnes)+' across '+v.lots+' lots in '+v.months+
+         ' months, at '+rs(v.rate_per_t)+' a tonne.'})),
+    {title:'Every vendor we bought finished pellets from',
+     format:v=>'\u20b9'+v.toFixed(2),
+     note:'Priced per unit of energy at '+IN(gcv,0)+' GCV, so the rates are comparable.'});
+}
+
+/* ---- made here against bought in, in the same unit. */
+function channelChart(r){
+  const box=el('div','svgbox');
+  const parts=[{label:'made here',value:r.made_here_t||0,color:'#1B4FD8'},
+               {label:'bought in ready made',value:r.finished_t||0,color:'#0E7A5A'}];
+  if(r.unknown_t>0)parts.push({label:'cannot tell',value:r.unknown_t,color:'#C8770B'});
+  box.appendChild(splitBar('Tonnes of pellets',parts));
+  return figure('Made here against bought in',box,
+    'Both figures are tonnes of pellets. The residue bought is not shown here, because '+
+    IN(r.feed_per_pellet||0,2)+' tonnes of residue makes one tonne of product and putting '+
+    'the two side by side compares different things.');
+}
+
+/* ---- the two systems that should agree. */
+function reconChart(r,ok){
+  /* Drawn in tonnes, because the question is in tonnes. Titling this with a tonnage while
+     the answer refused to give one was a panel arguing with itself, and splitting the bar
+     by load count under a tonnage title invited the width to be read as the wrong thing. */
+  const doubt=r.uninvoiced_t||0, conf=r.tonnes-doubt;
+  const parts=[{label:'confirmed by both',value:conf,color:'#1B4FD8'}];
+  if(doubt>0)parts.push(
+    {label:'in the register, not in the books',value:doubt,color:'#C8770B'});
+  const box=el('div','svgbox');
+  box.appendChild(splitBar(ok?tn(r.tonnes)+' dispatched'
+                             :'Somewhere between '+tn(conf)+' and '+tn(r.tonnes),parts));
+  return figure('The register against the books',box,
+    r.register_loads===r.book_vouchers
+      ? 'The register counts '+plural(r.register_loads,'load')+' and the books '+
+        plural(r.book_vouchers,'sales voucher')+'. They agree on the count.'
+      : 'The register counts '+plural(r.register_loads,'load')+' and the books '+
+        plural(r.book_vouchers,'sales voucher')+'. They do not agree, which is why the '+
+        'figure above is a range.');
+}
+
+/* ---- one bar per live tender: how much is done, how much is left, and whether the
+   months before the deadline hold enough room. Not a stack. A runway. */
+function runwayChart(rows){
+  const box=el('div','svgbox'),say=readout(box);
+  const list=el('div','runway');
+  const peak=Math.max(1,...rows.map(r=>Math.max(r.remaining_t,r.room_t)));
+  rows.slice(0,10).forEach(r=>{
+    const row=el('div','rw'+(r.fits?'':' bad'));
+    const nm=el('div','rwn');
+    nm.appendChild(el('b',null,r.plant));
+    nm.appendChild(el('span',null,'by '+MONTHNAME(r.deadline)));
+    const track=el('div','rwt');
+    const room=el('i','room');room.style.width=(r.room_t/peak*100)+'%';
+    const need=el('i','need');need.style.width=(r.remaining_t/peak*100)+'%';
+    add(track,room,need);
+    const val=el('div','rwv',r.fits?tn(r.remaining_t):tn(r.shortfall_t)+' short');
+    add(row,nm,track,val);
+    row.addEventListener('mouseenter',()=>say(
+      r.plant+': '+tn(r.remaining_t)+' still owed by '+MONTHNAME(r.deadline)+
+      ', and '+tn(r.room_t)+' of headroom between now and then across '+
+      r.months_left+' months. That is '+tn(r.needed_per_month)+' a month.'));
+    row.addEventListener('mouseleave',()=>say(''));
+    list.appendChild(row);
+  });
+  box.appendChild(list);
+  return figure('Every live tender against the months it has left',box,
+    'The pale bar is the headroom before the deadline. The solid bar is what is still owed.');
+}
+
+/* ---- where each month sits between the cheapest and the dearest. A bar from zero is
+   useless when the spread is seven percent: every bar looks the same and the answer is in
+   the last few pixels. Here the axis is the spread itself. */
+function spreadChart(rows,opt){
+  opt=opt||{};
+  // narrow viewBox, so scaling it to the column makes the type bigger rather
+  // than smaller, and a row height that stays legible at three rows or twelve
+  const W=470,rowH=Math.max(26,Math.min(38,300/Math.max(3,rows.length))),
+        PT=30,PB=26,LX=118,RX=86;
+  const H=PT+rowH*rows.length+PB;
+  const vals=rows.map(r=>r.value);
+  const lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo)*0.16||1;
+  const a=lo-pad,b=hi+pad;
+  const x=v=>LX+((v-a)/(b-a))*(W-LX-RX);
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart spread'});
+
+  // the scale, labelled at the two ends and in the middle
+  // label the real extremes, not the padded ends. The caption says the scale runs
+  // from cheapest to dearest, and it should be telling the truth.
+  [lo,(lo+hi)/2,hi].forEach((v,i)=>{
+    svg.appendChild(sv('line',{x1:x(v),x2:x(v),y1:PT-10,y2:H-PB+4,class:'grid'}));
+    const t=sv('text',{x:x(v),y:PT-16,class:'tick'});
+    t.textContent=opt.format?opt.format(v):IN(v,2);
+    svg.appendChild(t);
+  });
+
+  rows.forEach((r,i)=>{
+    const y=PT+i*rowH+rowH/2;
+    const best=r.value===lo,worst=r.value===hi;
+    const g=sv('g',{class:'sp'+(best?' best':'')+(worst?' worst':'')});
+    g.appendChild(sv('line',{x1:LX,x2:x(r.value),y1:y,y2:y,class:'stem'}));
+    g.appendChild(sv('circle',{cx:x(r.value),cy:y,r:best||worst?8:6.5,class:'dot'}));
+    const lb=sv('text',{x:LX-12,y:y+4,class:'slab'});
+    lb.textContent=r.label;
+    g.appendChild(lb);
+    const vl=sv('text',{x:W-RX+12,y:y+4,class:'sval'});
+    vl.textContent=opt.format?opt.format(r.value):IN(r.value,2);
+    g.appendChild(vl);
+    if(best||worst){
+      const tag=sv('text',{x:x(r.value),y:y-13,class:'stag'});
+      tag.textContent=best?'cheapest':'dearest';
+      g.appendChild(tag);
+    }
+    if(r.note){
+      g.addEventListener('mouseenter',()=>say(r.note));
+      g.addEventListener('mouseleave',()=>say(''));
+    }
+    svg.appendChild(g);
+  });
+  box.appendChild(svg);
+  return figure(opt.title||'Where each month sits',box,opt.note||
+    'The scale runs from the cheapest month to the dearest, not from zero, because a seven '+
+    'percent spread drawn from zero is twelve identical bars.');
+}
+
+/* ---- the decision in money. Two bars: what buying it in actually cost, and what making
+   the same amount of energy would have cost. The gap between them is the answer, and it is
+   the thing the rates per unit of energy were only ever a route to. */
+function makeBuyMoney(r){
+  const W=560,H=210,PT=40,LX=150,BH=42,GAP=26;
+  const hi=Math.max(r.spent,r.would_have_cost_to_make)||1;
+  const lo=Math.min(r.spent,r.would_have_cost_to_make);
+  // The gap is the answer, and here it is four percent of either bar. Drawn from zero that
+  // is fourteen pixels out of three hundred and forty, so the axis starts below the
+  // smaller figure and says so instead of pretending to be zero.
+  const base=Math.max(0,lo-(hi-lo)*1.6);
+  const wOf=v=>Math.max(3,(v-base)/((hi-base)||1)*(W-LX-90));
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart mbmoney'});
+  [['Bought it in',r.spent,'buy',0],
+   ['Made it here',r.would_have_cost_to_make,'make',1]].forEach(([lab,v,cls,i])=>{
+    const y=PT+i*(BH+GAP);
+    const g=sv('g',{class:'mm'});
+    g.appendChild(sv('rect',{x:LX,y:y,width:wOf(v),height:BH,rx:5,class:cls}));
+    const l=sv('text',{x:LX-14,y:y+BH/2+5,class:'slab'});
+    l.textContent=lab;
+    g.appendChild(l);
+    const t2=sv('text',{x:LX+wOf(v)+12,y:y+BH/2+5,class:'sval'});
+    t2.textContent=rs(v);
+    g.appendChild(t2);
+    g.addEventListener('mouseenter',()=>say(lab+': '+rsFull(v)+
+      (cls==='make'?'. That is what the same '+IN(Math.round(r.energy_gcal),0)+
+       ' Gcal would have cost at this plant’s own costs, month by month.'
+       :'. That is what actually left the bank for '+tn(r.tonnes)+'.')));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+  });
+  const worse=r.extra_spent>0;
+  const gl=sv('text',{x:LX+Math.max(wOf(r.spent),wOf(r.would_have_cost_to_make))/2,
+    y:H-16,class:'gaplab '+(worse?'bad':'good')});
+  gl.textContent=(worse?'buying cost ':'buying saved ')+rs(Math.abs(r.extra_spent))+
+    (worse?' more':'');
+  gl.setAttribute('text-anchor','middle');
+  svg.appendChild(gl);
+  const b0=sv('text',{x:LX,y:PT-16,class:'tick'});
+  b0.setAttribute('text-anchor','start');
+  b0.textContent='scale starts at '+rs(base)+', not zero';
+  svg.appendChild(b0);
+  box.appendChild(svg);
+  return figure('What the decision was worth',box,
+    'Both bars are the same amount of energy, because a bought-in tonne and one of yours '+
+    'do not carry the same heat. The scale does not start at zero, or a four percent '+
+    'difference would be invisible.');
+}
+
+/* ---- make against buy, which is one decision and so is one picture. Two dots a month,
+   joined. The gap between them is the answer and the colour says which way it falls. */
+function makeBuyChart(rows,opt){
+  const months=[...new Set(rows.map(r=>r.mm))].sort();
+  const W=470,rowH=Math.max(30,Math.min(46,320/Math.max(3,months.length))),
+        PT=34,PB=26,LX=96,RX=96;
+  const H=PT+rowH*months.length+PB;
+  const all=[];
+  rows.forEach(r=>{all.push(r.cost_per_gcv);if(r.make_per_gcv)all.push(r.make_per_gcv);});
+  const lo=Math.min(...all),hi=Math.max(...all),pad=(hi-lo)*0.18||0.1;
+  const a=lo-pad,b=hi+pad;
+  const x=v=>LX+((v-a)/(b-a))*(W-LX-RX);
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart mbchart'});
+  [a+pad,(a+b)/2,b-pad].forEach(v=>{
+    svg.appendChild(sv('line',{x1:x(v),x2:x(v),y1:PT-12,y2:H-PB+4,class:'grid'}));
+    const t=sv('text',{x:x(v),y:PT-18,class:'tick'});
+    t.textContent='\u20b9'+v.toFixed(2);
+    svg.appendChild(t);
+  });
+  months.forEach((mm,i)=>{
+    const y=PT+i*rowH+rowH/2;
+    const here=rows.filter(r=>r.mm===mm);
+    const buy=here.reduce((s,r)=>s+r.cost_per_gcv*r.tonnes,0)/
+              Math.max(1e-9,here.reduce((s,r)=>s+r.tonnes,0));
+    const make=here[0].make_per_gcv;
+    const cheaper=make!==null&&buy<make;
+    const g=sv('g',{class:'mb'+(cheaper?' buywins':' makewins')});
+    if(make!==null)g.appendChild(sv('line',{x1:x(make),x2:x(buy),y1:y,y2:y,class:'gap'}));
+    if(make!==null)g.appendChild(sv('circle',{cx:x(make),cy:y,r:7.5,class:'make'}));
+    g.appendChild(sv('circle',{cx:x(buy),cy:y,r:7.5,class:'buy'}));
+    const lb=sv('text',{x:LX-12,y:y+4,class:'slab'});
+    lb.textContent=MONS[+mm];
+    g.appendChild(lb);
+    const vl=sv('text',{x:W-RX+12,y:y+4,class:'sval '+(cheaper?'good':'bad')});
+    vl.textContent=(make===null?'\u2014'
+      :(cheaper?'\u2212':'+')+'\u20b9'+Math.abs(buy-make).toFixed(3));
+    g.appendChild(vl);
+    g.addEventListener('mouseenter',()=>say(
+      MONS[+mm]+': buying in cost \u20b9'+buy.toFixed(3)+' a kilocalorie from '+
+      here.map(r=>r.vendor).join(', ')+
+      (make===null?'. No production figure for that month.'
+       :'. Making it yourself cost \u20b9'+make.toFixed(3)+', so '+
+         (cheaper?'buying was cheaper by \u20b9':'making was cheaper by \u20b9')+
+         Math.abs(buy-make).toFixed(3)+' a kilocalorie.')));
+    g.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(g);
+  });
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['make','cost to make it here'],['buy','cost to buy it in']].forEach(([c,t])=>{
+    const k=el('span','k mk '+c);k.appendChild(el('i'));
+    k.appendChild(document.createTextNode(t));key.appendChild(k);});
+  box.appendChild(key);
+  return figure(opt&&opt.title||'Making it against buying it, per kilocalorie',box,
+    'One row a month. The distance between the dots is what the decision is worth, and the '+
+    'figure on the right is that gap in rupees per unit of GCV.');
+}
+
+/* ---- month by material, coloured by cost per kilocalorie. A grid rather than a bar
+   chart, because the question is about a season and a choice at the same time: which
+   material, and in which month, gives the cheapest heat. */
+function heatGrid(cells){
+  const mats=[...new Set(cells.map(c=>c.material))];
+  const mms=['01','02','03','04','05','06','07','08','09','10','11','12']
+    .filter(m=>cells.some(c=>c.mm===m));
+  const costs=cells.map(c=>c.cost_per_gcv);
+  const lo=Math.min(...costs),hi=Math.max(...costs);
+  const CW=64,CH=48,LW=124,TH=28;
+  const W=LW+CW*mms.length, H=TH+CH*mats.length+8;
+
+  const box=el('div','svgbox'),say=readout(box);
+  const scroll=el('div','hscroll');
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'heatsvg',width:W,height:H});
+
+  mms.forEach((m,i)=>{
+    const t=sv('text',{x:LW+i*CW+CW/2,y:17,class:'hlab'});
+    t.textContent=MONSHORT[+m];
+    svg.appendChild(t);
+  });
+  mats.forEach((mat,r)=>{
+    const t=sv('text',{x:LW-12,y:TH+r*CH+CH/2+5,class:'hmat'});
+    t.textContent=mat;
+    svg.appendChild(t);
+    mms.forEach((m,i)=>{
+      const c=cells.find(x=>x.material===mat&&x.mm===m);
+      const x=LW+i*CW+2,y=TH+r*CH+2,w=CW-4,h=CH-4;
+      if(!c){
+        svg.appendChild(sv('rect',{x:x,y:y,width:w,height:h,rx:5,class:'hnil'}));
+        return;
+      }
+      const k=(c.cost_per_gcv-lo)/((hi-lo)||1);
+      const g=sv('g',{class:'hcell'});
+      // cheap is blue and good, dear is amber and bad. One axis, one meaning.
+      g.appendChild(sv('rect',{x:x,y:y,width:w,height:h,rx:5,
+        fill:k<0.5?'rgba(27,79,216,'+(0.62-k*0.86).toFixed(2)+')'
+                  :'rgba(200,119,11,'+((k-0.5)*0.94+0.14).toFixed(2)+')'}));
+      const lab=sv('text',{x:x+w/2,y:y+h/2+5,class:'hval'});
+      lab.textContent=c.cost_per_gcv.toFixed(2);
+      g.appendChild(lab);
+      g.addEventListener('mouseenter',()=>say(
+        mat+' in '+MONS[+m]+': \u20b9'+c.cost_per_gcv.toFixed(3)+' a kilocalorie. '+
+        '\u20b9'+IN(Math.round(c.rate_per_t),0)+' a tonne at '+IN(c.gcv,0)+' GCV. '+
+        'A normal year brings '+tn(c.tonnes)+', which is '+
+        IN(Math.round(c.energy_gcal),0)+' Gcal of heat.'));
+      svg.appendChild(g);
+    });
+  });
+  scroll.appendChild(svg);
+  box.appendChild(scroll);
+
+  // a scale, so the colours mean something without hovering every cell
+  const sc=el('div','hkey');
+  sc.appendChild(el('span','hke','\u20b9'+lo.toFixed(2)+' cheapest'));
+  const ramp=el('div','hramp');
+  for(let i=0;i<=10;i++){
+    const k=i/10,b=el('i');
+    b.style.background=k<0.5?'rgba(27,79,216,'+(0.62-k*0.86).toFixed(2)+')'
+                            :'rgba(200,119,11,'+((k-0.5)*0.94+0.14).toFixed(2)+')';
+    ramp.appendChild(b);
+  }
+  sc.appendChild(ramp);
+  sc.appendChild(el('span','hke','\u20b9'+hi.toFixed(2)+' dearest'));
+  box.appendChild(sc);
+
+  return figure('Cost per unit of GCV, by month and material',box,
+    'Every purchase in the books, grouped by the calendar month it arrived in. A blank cell '+
+    'means that material did not come to us in that month at all.');
+}
+
+/* ---- floor, likely and ceiling as a band. The gap is the answer. */
+function bandChart(rows){
+  const W=620,H=360,PT=26,PB=44,L=56;
+  const hi=niceTop(Math.max(1,...rows.map(r=>r.ceiling_t)));
+  const x=i=>L+i*((W-L-14)/Math.max(1,rows.length-1));
+  const y=v=>PT+(H-PT-PB)*(1-v/hi);
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+H,class:'chart'});
+  gridY(svg,L,W-8,PT,H-PB,hi,4);
+  const area=rows.map((r,i)=>x(i)+','+y(r.ceiling_t)).join(' ')+' '+
+             rows.map((r,i)=>x(rows.length-1-i)+','+y(rows[rows.length-1-i].floor_t)).join(' ');
+  svg.appendChild(sv('polygon',{points:area,class:'band'}));
+  [['floor_t','fl'],['expected_t','ex'],['ceiling_t','ce']].forEach(([k,c])=>
+    svg.appendChild(sv('polyline',{class:'ln '+c,
+      points:rows.map((r,i)=>x(i)+','+y(r[k])).join(' ')})));
+  rows.forEach((r,i)=>{
+    const half=(W-L-14)/Math.max(1,rows.length-1)/2;
+    const hit=sv('rect',{x:x(i)-half,y:PT,width:half*2,height:H-PT-PB,class:'hit'});
+    hit.addEventListener('mouseenter',()=>{
+      svg.querySelectorAll('.mark').forEach(n=>n.remove());
+      [['floor_t','fl'],['expected_t','ex'],['ceiling_t','ce']].forEach(([k,c])=>
+        svg.appendChild(sv('circle',{cx:x(i),cy:y(r[k]),r:4.5,class:'mark '+c})));
+      svg.appendChild(sv('line',{x1:x(i),x2:x(i),y1:PT,y2:H-PB,class:'mark rule'}));
+    });
+    hit.addEventListener('mouseenter',()=>say(
+      MONTHNAME(r.month)+': the plant makes '+tn(r.own_t)+', vendors have confirmed '+
+      tn(r.firm_t)+', and a further '+tn(r.unconfirmed_t)+' is promised but unconfirmed. '+
+      'Floor '+tn(r.floor_t)+', ceiling '+tn(r.ceiling_t)+'.'));
+    hit.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(hit);
+    svg.appendChild(Object.assign(sv('text',
+      {x:x(i),y:H-22,class:'tick'}),{textContent:MONTHSHORT(r.month)}));
+    if(r.month.slice(5)==='01'||i===0)svg.appendChild(Object.assign(sv('text',
+      {x:x(i),y:H-8,class:'tick yr'}),{textContent:r.month.slice(0,4)}));
+  });
+  svg.addEventListener('mouseleave',()=>
+    svg.querySelectorAll('.mark').forEach(n=>n.remove()));
+  box.appendChild(svg);
+  const key=el('div','key');
+  [['fl','what you can count on'],['ex','what history says will land'],
+   ['ce','if every promise holds']].forEach(([c,t])=>{
+    const k=el('span','k '+c);k.appendChild(el('i'));k.appendChild(document.createTextNode(t));
+    key.appendChild(k);});
+  box.appendChild(key);
+  return figure('Material you can count on, month by month',box,
+    'Plan against the bottom line. Quote against the middle. Never against the top.');
+}
+
+/* ---- money arriving, as a calendar strip rather than a bar chart. */
+function cashStrip(r){
+  const box=el('div','svgbox'),say=readout(box);
+  const strip=el('div','cash');
+  const peakAll=Math.max(1,r.overdue_amount,...r.weeks.map(w=>w.amount));
+  if(r.overdue_amount>1){
+    const c=el('div','cw late');
+    // usually the biggest number on the strip, and it had no bar, so the picture read
+    // "nothing is coming" when the answer was "everything is already late"
+    const lb=el('i');lb.style.height=(8+(r.overdue_amount/peakAll)*46)+'px';
+    c.appendChild(lb);
+    add(c,el('b',null,rs(r.overdue_amount)),el('span',null,'already late'));
+    c.addEventListener('mouseenter',()=>say(
+      rsFull(r.overdue_amount)+' across '+r.overdue_bills+' bills is past its due date. '+
+      (r.overdue_by_buyer||[]).slice(0,3).map(b=>b.name+' '+rs(b.amount)).join(',  ')));
+    c.addEventListener('mouseleave',()=>say(''));
+    strip.appendChild(c);
+  }
+  r.weeks.forEach(w=>{
+    const c=el('div','cw'+(w.amount>0?'':' nil'));
+    const bar=el('i');bar.style.height=(8+(w.amount/peakAll)*46)+'px';
+    c.appendChild(bar);
+    c.appendChild(el('b',null,w.amount>0?rs(w.amount):'\u2014'));
+    c.appendChild(el('span',null,MONTHSHORT(w.from)+' '+w.from.slice(8)));
+    c.addEventListener('mouseenter',()=>say(
+      'Week of '+w.from+': '+(w.amount>0
+        ?rsFull(w.amount)+' from '+w.bills+' bills.  '+
+         (w.by_buyer||[]).slice(0,3).map(b=>b.name+' '+rs(b.amount)).join(',  ')
+        :'nothing falls due')));
+    c.addEventListener('mouseleave',()=>say(''));
+    strip.appendChild(c);
+  });
+  box.appendChild(strip);
+  return figure('When the money is due',box,
+    'Each bill sits in the week its own buyer\u2019s contract makes it due, not in one '+
+    'house rule applied to everybody.');
+}
+
+/* ---- a month split into what is spoken for and what is not. */
+function donut(parts,centre,sub){
+  const R=64,C=2*Math.PI*R,W=180;
+  const tot=parts.reduce((a,p)=>a+Math.max(0,p.value),0)||1;
+  const box=el('div','svgbox'),say=readout(box);
+  const svg=sv('svg',{viewBox:'0 0 '+W+' '+W,class:'donut'});
+  let off=0;
+  parts.forEach(p=>{
+    const frac=Math.max(0,p.value)/tot;
+    const c=sv('circle',{cx:W/2,cy:W/2,r:R,fill:'none','stroke-width':22,
+      stroke:p.color,'stroke-dasharray':(frac*C)+' '+C,
+      'stroke-dashoffset':-off*C,transform:'rotate(-90 '+W/2+' '+W/2+')'});
+    c.addEventListener('mouseenter',()=>say(p.label+': '+tn(p.value)+
+      '  ('+Math.round(frac*100)+'% of what the plant can make)'));
+    c.addEventListener('mouseleave',()=>say(''));
+    svg.appendChild(c);off+=frac;
+  });
+  const t1=sv('text',{x:W/2,y:W/2-2,class:'dn'});t1.textContent=centre;
+  const t2=sv('text',{x:W/2,y:W/2+18,class:'ds'});t2.textContent=sub;
+  add(svg,t1,t2);box.appendChild(svg);
+  const key=el('div','key');
+  parts.forEach(p=>{const k=el('span','k');const i=el('i');i.style.background=p.color;
+    k.appendChild(i);k.appendChild(document.createTextNode(p.label));key.appendChild(k);});
+  box.appendChild(key);
+  return box;
+}
+
+/* ---- who owes what, as blocks sized by the debt. */
+function treemap(rows,label,value){
+  const box=el('div','svgbox'),say=readout(box);
+  const g=el('div','tree');
+  const tot=rows.reduce((a,r)=>a+Number(r[value]||0),0)||1;
+  rows.slice(0,12).forEach(r=>{
+    const v=Number(r[value]||0),f=v/tot;
+    const c=el('div','tc');
+    c.style.flex=Math.max(0.06,f)+' 1 '+Math.max(80,f*520)+'px';
+    c.style.background='rgba(27,79,216,'+(0.16+f*0.7).toFixed(2)+')';
+    add(c,el('b',null,r[label]),el('span',null,rs(v)));
+    c.addEventListener('mouseenter',()=>say(r[label]+' owes '+rsFull(v)+
+      ', which is '+Math.round(f*100)+'% of everything outstanding.'));
+    c.addEventListener('mouseleave',()=>say(''));
+    g.appendChild(c);
+  });
+  box.appendChild(g);
+  return box;
+}
+
+/* A round number to draw the top of the scale at, so the gridlines read as figures a
+   person would say rather than whatever the maximum happened to be. */
+function niceTop(v){
+  const p=Math.pow(10,Math.floor(Math.log10(v)));
+  const n=v/p;
+  return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;
+}
+/* Horizontal rules with their values on the left. Without these a chart is a shape, and a
+   shape is not a measurement. */
+function gridY(svg,x0,x1,y0,y1,top,steps){
+  for(let i=0;i<=steps;i++){
+    const v=top*i/steps, y=y1-(y1-y0)*(i/steps);
+    svg.appendChild(sv('line',{x1:x0,x2:x1,y1:y,y2:y,class:'grid'}));
+    const t=sv('text',{x:x0-9,y:y+4,class:'ytick'});
+    t.textContent=v>=1e5?IN(v/1e5,1)+'L':v>=1000?IN(v/1000,0)+'k':IN(v,0);
+    svg.appendChild(t);
+  }
+}
+
+/* One load, two loads. Small, and the kind of small that makes somebody doubt the big
+   numbers too. */
+function plural(n,one,many){return n+' '+(n===1?one:(many||one+'s'));}
+
+const MONS=['','January','February','March','April','May','June','July','August',
+            'September','October','November','December'];
+const MONSHORT=MONS.map(m=>m.slice(0,3));
+const MONTHNAME=m=>MONS[+String(m).slice(5,7)]+(String(m).length>6?' '+String(m).slice(0,4):'');
+const MONTHSHORT=m=>MONS[+String(m).slice(5,7)].slice(0,3);
+
+/* Which picture goes with which question.
+
+   Three rules learned the hard way. Draw nothing rather than draw a chart the data cannot
+   fill, because an axis reading Infinity is worse than a blank space. Never draw the
+   comparison an answer has just refused to make. And check the array has rows in it, not
+   just that the key exists, because an empty array is truthy in this language. */
+function visualFor(a){
+  const r=a.raw||{},m=a.metric,ok=a.verdict==='answered';
+  const some=x=>Array.isArray(x)&&x.length>0;
+  try{
+    /* ---- the order book: how far along each contract is, and the wall of deadlines */
+    if(m==='order_book'&&ok&&some(r.book)){
+      const w=el('div');
+      w.appendChild(bookChart(r.book));
+      if(some(r.by_deadline))w.appendChild(deadlineChart(r.by_deadline));
+      return w;
+    }
+    if(m==='open_commitment'&&r.contracted_t!==undefined){
+      /* Awarded and the option clause are different promises, so they are drawn as
+         different things. On one contract everything awarded had already gone out and the
+         whole remainder was the option, and a bar that showed one "contracted" total made
+         that look like a contract barely started. */
+      const parts=[{label:'delivered',value:r.dispatched_t,color:'#1B4FD8'}];
+      if(r.unattributed_t>0)parts.push(
+        {label:'went out, not yet placed',value:r.unattributed_t,color:'#C8770B'});
+      const left=Math.max(0,r.remaining_min_t);
+      const awardedLeft=Math.max(0,Math.min(left,r.awarded_t-r.dispatched_t));
+      if(awardedLeft>0)parts.push(
+        {label:'still to deliver',value:awardedLeft,color:'#CFD9E8'});
+      if(left-awardedLeft>0)parts.push(
+        {label:'option the buyer may call',value:left-awardedLeft,color:'#E7EDF9'});
+      return figure(
+        tn(r.awarded_t)+' awarded'+(r.option_t>0?', plus '+tn(r.option_t)+' option':''),
+        splitBar('',parts),
+        r.unattributed_loads
+          ? 'The amber went to this plant with no contract written against it. Until '+
+            'somebody places it, the remainder is a range.'
+          : (r.only_option_left
+             ? 'Everything awarded has gone out. What is left is the option clause, which '+
+               'the buyer may never call for.'
+             : 'Every load to this plant is accounted for, so the remainder is exact.'));
+    }
+
+    /* ---- capacity */
+    if(m==='capacity_free'&&ok&&some(r.months))
+      return capacityChart(r.months);
+    if(m==='month_pressure'&&ok&&r.capacity_t){
+      const w=el('div');
+      w.appendChild(monthSplit(r));
+      if(some(r.movable)||some(r.pinned))
+        w.appendChild(figure('What could move out of '+MONTHNAME(r.month),
+          moveList(r.movable||[],r.pinned||[]),
+          'A tender with months left before its deadline can be slowed down. One due this '+
+          'month cannot, and neither can a draw a private buyer contracted for.'));
+      return w;
+    }
+    if(m==='capacity_compare'&&ok&&r.a&&r.b)
+      return compareChart(r);
+    if(m==='delivery_runway'&&ok&&some(r.rows))
+      return runwayChart(r);
+    if(m==='fit_new_tender'&&ok&&some(r.fill))
+      return fitChart(r);
+
+    /* ---- what things cost */
+    if(m==='material_by_month'&&ok&&some(r.cells))
+      return heatGrid(r.cells);
+    if(m==='material_cost_per_gcv'&&ok&&some(r.rows))
+      return spreadChart(r.rows.map(x=>({label:x.material,value:x.cost_per_gcv,
+        note:x.material+': '+rs(x.rate_per_t)+' a tonne at '+IN(x.gcv,0)+' GCV, across '+
+             x.n+' purchases.'})),
+        {title:'Cost per unit of GCV, by material',
+         format:v=>'\u20b9'+v.toFixed(2),
+         note:'A material can be cheaper per tonne and dearer per unit of energy. This is '+
+              'the measure that decides what to buy.'});
+    if(m==='production_cost'&&ok&&some(r.rows))
+      return spreadChart(r.rows.map(x=>({label:x.month,value:x.cost_per_gcv,
+        note:x.month+': feedstock at '+rs(x.feed_rate_per_t)+' a tonne, times '+
+             r.feed_per_pellet+', plus '+rs(x.conversion_per_t)+' conversion, is '+
+             rs(x.cost_per_t)+' a tonne. At '+IN(r.gcv_typical,0)+' GCV that is \u20b9'+
+             x.cost_per_gcv.toFixed(3)+' per unit of GCV.'})),
+        {title:'What a tonne of '+r.grade+' costs to make, month by month',
+         format:v=>'\u20b9'+v.toFixed(2),
+         note:'The scale runs cheapest to dearest rather than from zero, because a seven '+
+              'percent spread drawn from zero is twelve identical bars.'});
+    if(m==='buy_in_cost'&&ok&&some(r.rows)){
+      const w=el('div');
+      w.appendChild(makeBuyMoney(r));
+      w.appendChild(makeBuyChart(r.rows,{title:'The same thing per unit of energy, by month'}));
+      if(some(r.vendors))w.appendChild(vendorRates(r.vendors,r.gcv));
+      return w;
+    }
+    if(m==='quote_for_tender'&&ok&&some(r.window))
+      return quoteChart(r);
+
+    /* ---- vendors and material coming in */
+    if(m==='supply_outlook'&&ok&&some(r.months))
+      return bandChart(r.months);
+    if(m==='vendor_reliability'&&ok&&some(r.rows))
+      return figure('Who keeps their word',vendorList(r.rows),
+        'Only promises somebody has confirmed are counted.');
+
+    /* ---- money */
+    if(m==='realised_price'&&ok)
+      return realisedChart(r);
+    if(m==='outstanding'&&ok&&some(r.rows))
+      return figure('Who is holding our money',treemap(r.rows,'party','outstanding'),
+        'Widest block is the largest debt.');
+    if(m==='cash_calendar'&&ok&&some(r.weeks))
+      return cashStrip(r);
+
+    /* ---- the reconciliations */
+    if(m==='channel_split'&&ok)
+      return channelChart(r);
+    if(m==='dispatch_total'&&r.register_loads!==undefined)
+      return reconChart(r,ok);
+    /* Refusing to compare two periods and then drawing them side by side undoes the
+       refusal. But when the comparison IS made, it is the whole point of the question and
+       sixteen of the twenty four answers were showing nothing at all. */
+    if(m==='item_period_comparison'&&ok&&r.earlier&&r.later)
+      return figure(r.grade+' across the two years',
+        splitBar('',[{label:r.earlier_fy,value:r.earlier.tonnes,color:'#9DB8F2'},
+                     {label:r.later_fy,value:r.later.tonnes,color:'#1B4FD8'}]),
+        'Earlier year first, whichever order you named them in.');
+  }catch(e){
+    // a blank column with no error in the log is how a renamed field survives
+    // for weeks. Three of them did.
+    console.error('chart failed for '+m, e);
+  }
+  return null;
+}
+
+const KW=/\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY|LEFT JOIN|JOIN|ON|AND|OR|SUM|COUNT|COALESCE|LIMIT|AS|FILTER|LATERAL|BETWEEN|NOT|WITH|CASE|WHEN|THEN|ELSE|END|GREATEST|NULLIF|EXTRACT|INTERVAL|DISTINCT)\b/g;
+
+/* The right-hand panel. The person on the left gets an answer; the evaluator gets the
+   queries that produced it and the settings they were built with. */
+function sqlPanel(a){
+  const box=el('div','right'),h=el('div','rh');
+  add(h,el('span',null,'What actually ran'),el('b',null,(a.sql||[]).length+' queries'));
+  box.appendChild(h);
+  const w=el('div','sqlwrap');
+  (a.sql||[]).forEach(function(q,i){
+    const ps=Object.entries(q.params||{});
+    w.appendChild(el('p','cap','query '+(i+1)+(ps.length?'     '+ps.map(function(kv){
+      return kv[0]+' = '+kv[1];}).join(',  '):'')));
+    const pre=el('pre');
+    pre.innerHTML=q.sql.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(KW,function(m){return '<span class="kw">'+m+'</span>';})
+      .replace(/%\((\w+)\)s/g,'<span class="pm">:$1</span>');
+    w.appendChild(pre);
+  });
+  if(!(a.sql||[]).length)
+    w.appendChild(el('pre',null,'No query ran. This one is refused before it reaches the database.'));
+  box.appendChild(w);
+  const du=a.definitions_used||{};
+  if(Object.keys(du).length){
+    const d=el('div','defbox');
+    Object.entries(du).forEach(function(e){
+      const word=e[0],info=e[1],line=el('div','dl');
+      line.appendChild(document.createTextNode(word+' = '));
+      line.appendChild(el('b',null,Object.entries(info.params||{})
+        .map(function(kv){return kv[0]+': '+kv[1];}).join(',  ')));
+      line.appendChild(document.createTextNode('    set '+info.since));
+      d.appendChild(line);
+    });
+    box.appendChild(d);
+  }
+  return box;
+}
+
+function answerCard(a){
+  const w=a.verdict==='withheld';
+  const c=el('div','ans '+(w?'w':'a'));
+  const top=el('div','vtop');
+  top.appendChild(el('span','badge',w?'withheld':'answered'));
+  if(a.reason)top.appendChild(el('span','rs',a.reason));
+  if(a.gate_failed)top.appendChild(el('span','rs','gate stopped it: '+a.gate_failed));
+  c.appendChild(top);
+  const grid=el('div','split2'),left=el('div','left');
+  const ls=el('div','lsplit'),words=el('div','lwords'),vcol=el('div','lvis');
+  if(a.head){
+    /* A figure gets the display treatment. A phrase does not, because set at that size it
+       fills the column and pushes the answer out of the way. */
+    /* A figure gets the display size. A phrase does not. And either way, a headline that
+       wraps onto three lines has stopped being a headline, so the size steps down as the
+       text gets longer rather than letting it break wherever it likes. */
+    const isFig=/\d/.test(a.head),len=a.head.length;
+    const size=len>22?' xs':len>16?' sm':len>12?' md':'';
+    words.appendChild(el('div','headnum'+(isFig?'':' word')+size,a.head));
+  }
+  if(a.sub)words.appendChild(el('p','headsub',a.sub));
+  words.appendChild(el('p','detail',a.text));
+  const wk=workingPanel(a);if(wk)words.appendChild(wk);
+  const vis=visualFor(a);
+  if(vis)vcol.appendChild(vis);
+  if(a.rows&&a.rows.length)
+    vcol.appendChild(dataTable(a.rows.slice(0,14),'The rows behind it'));
+  add(ls,words,vcol);
+  left.appendChild(ls);
+  grid.appendChild(left);grid.appendChild(sqlPanel(a));
+  c.appendChild(grid);
+  if(a.fix)c.appendChild(el('p','fix','\u2192 '+a.fix));
+  const rq=el('div');c.appendChild(rq);resolveHere(a,rq,()=>rerun(a,c));
+  const nx=followUps(a);if(nx)c.appendChild(nx);
+  const pv=el('div','prov');
+  pv.appendChild(el('span',null,'metric '+a.metric));
+  pv.appendChild(el('span',null,Object.keys(a.numbers||{}).length+' figures, every one from a query above'));
+  c.appendChild(pv);
+  return c;
+}
+/* Telling somebody a number is being held back because a load has not been placed, and
+   then making him go and find another screen to place it, is most of the way to him not
+   bothering. The questions that are blocking this answer are put underneath it, with the
+   possible answers as buttons. Answer one and the number recomputes in place. */
+async function resolveHere(a,host,after){
+  const r=a.raw||{};
+  const blocked=(r.blocked_rows||[]).map(x=>x.dispatch_no);
+  const wants=blocked.length||r.unattributed_loads;
+  if(a.verdict!=='withheld'||!wants)return;
+  let d;try{d=await api('/api/review?tenant='+S.tenant);}catch(e){return;}
+  let items=(d.items||[]).filter(i=>i.kind==='dispatch_tender');
+  if(blocked.length)items=items.filter(i=>blocked.indexOf(i.subject_ref)>=0);
+  if(!items.length)return;
+  const box=el('div','inq');
+  const h=el('div','inqh');
+  add(h,el('b',null,items.length===1?'One question is holding this number back'
+                                    :items.length+' questions are holding this number back'),
+        el('span',null,'Answer one and the figure below recomputes. A load placed on a '
+          + 'contract that is still open moves the total; one placed on a contract that has '
+          + 'closed narrows the range without moving the ceiling, because nothing is still '
+          + 'owed on it.'));
+  box.appendChild(h);
+  items.slice(0,6).forEach(it=>{
+    const pr=it.proposal||{},row=el('div','inqr');
+    const q=el('div','inqq');
+    q.appendChild(el('b',null,pr.question||'which contract was this load against?'));
+    const bits=[];
+    if(pr.tonnes!==undefined)bits.push(fmt(pr.tonnes)+' t');
+    if(pr.date)bits.push('sent '+pr.date);
+    if(pr.plant)bits.push('to '+pr.plant);
+    q.appendChild(el('span',null,bits.join('   \u00b7   ')));
+    row.appendChild(q);
+    const opts=el('div','inqo');
+    (pr.options&&pr.options.length?pr.options:['cannot be placed']).forEach(o=>{
+      const nice=(pr.labels&&pr.labels[o])||o;
+      const b=el('button','inqb',nice);
+      b.onclick=async()=>{
+        b.disabled=true;b.textContent='saving\u2026';
+        try{
+          await post('/api/review/resolve',{tenant:S.tenant,review_id:it.review_id,choice:o});
+          S.answers={};await loadSummary();drawTabs();
+          toast('Placed against '+nice+'. Recomputing.');
+          after();
+        }catch(e){b.disabled=false;b.textContent=nice;toast(e.message);}
+      };
+      opts.appendChild(b);
+    });
+    row.appendChild(opts);
+    box.appendChild(row);
+  });
+  if(items.length>6)box.appendChild(el('p','inqm',
+    'and '+(items.length-6)+' more on the review queue.'));
+  host.appendChild(box);
+}
+
+/* Re-ask the same question with the same parameters and swap the card in place, so the
+   owner watches the range close rather than being sent back to the top of the page. */
+async function rerun(a,card){
+  try{
+    const fresh=await post('/api/ask',
+      {tenant:S.tenant,metric:a.metric,params:a.params||{}});
+    const next=answerCard(fresh);
+    next.classList.add('flash');
+    card.replaceWith(next);
+  }catch(e){toast(e.message);}
+}
+
+/* The conversation an owner actually has. He sees a headroom figure and immediately wants
+   to know which month is tight, and then what he can move. Rather than making him find the
+   next question in a list of twenty, the metric declares what usually comes next and the
+   card offers it as one click, with the parameters it can carry over already filled. */
+function followUps(a){
+  const spec=(S.metrics||[]).find(m=>m.name===a.metric);
+  if(!spec||!spec.follows||!spec.follows.length)return null;
+  const wrap=el('div','nextwrap');
+  const box=el('div','next');
+  box.appendChild(el('span','nl','What I would ask next'));
+  const host=el('div','chainhost');
+  spec.follows.forEach(name=>{
+    const m=(S.metrics||[]).find(x=>x.name===name);if(!m)return;
+    const b=el('button','chip',m.title);
+    b.onclick=()=>askFollow(m,a,host,b);
+    box.appendChild(b);
+  });
+  add(wrap,box,host);
+  return wrap;
+}
+
+/* Carry over whatever the previous answer already settled, then let the owner fill the
+   rest in the sentence. A follow-up is still a metric plus typed parameters. There is no
+   free text anywhere on this path. */
+function carryOver(m,a){
+  const p={},r=a.raw||{},prev=a.params||{};
+  (m.params||[]).forEach(spec=>{
+    const k=spec.key;
+    // whatever the user already chose travels first
+    if(prev[k]!==undefined&&prev[k]!==null){p[k]=prev[k];return;}
+    let v;
+    switch(k){
+      case 'month':
+        // the month worth asking about is the one that is in trouble, then the tightest
+        v=(r.oversold_months&&r.oversold_months[0]&&r.oversold_months[0].month)
+          ||r.worst||r.month
+          ||(r.fill&&r.fill[0]&&r.fill[0].month);
+        break;
+      case 'by_month':
+        // the deadline the quote was priced against, if we came from one. Otherwise the
+        // first month with real room, and never the deadline of a tender that already does
+        // not close: seeding the worst possible month is worse than seeding nothing.
+        v=r.to||r.by_month||r.first_free
+          ||(r.free_months&&r.free_months[0]&&r.free_months[0].month);
+        break;
+      case 'deliver_from':
+        v=(r.fill&&r.fill.find(f=>f.take_t>0)||{}).month||r.first_free||r.from;
+        break;
+      case 'deliver_to':
+        v=r.by_month||r.to
+          ||((r.fill||[]).filter(f=>f.take_t>0).slice(-1)[0]||{}).month;
+        break;
+      case 'month_a': v=r.worst||(r.months&&r.months[0]&&r.months[0].month); break;
+      case 'month_b': v=r.first_free
+          ||(r.months&&r.months[r.months.length-1]&&r.months[r.months.length-1].month);
+        break;
+      case 'tender_ref':
+        // the contract the answer was actually about, or the one with most left on it
+        v=r.contract||r.tender_ref
+          ||(r.book&&r.book[0]&&r.book[0].tender_ref)
+          ||(r.runway&&r.runway[0]&&r.runway[0].tender_ref);
+        break;
+      case 'plant':
+        v=r.plant||(r.book&&r.book[0]&&r.book[0].plant)
+          ||(r.runway&&r.runway[0]&&r.runway[0].plant);
+        break;
+      case 'grade_code':
+        v=r.grade||r.grade_code
+          ||(r.book&&r.book[0]&&r.book[0].grade_code);
+        break;
+      case 'fy':
+        v=r.fy||prev.fy_b||prev.fy_a;
+        break;
+      case 'vendor':
+        v=(r.vendors&&r.vendors[0]&&(r.vendors[0].vendor))||r.vendor;
+        break;
+      case 'tonnes':
+        v=r.shortfall_t>0?Math.round(r.shortfall_t):undefined;
+        break;
+      default: v=undefined;
+    }
+    if(v!==undefined&&v!==null)p[k]=v;   // never write an explicit undefined
+  });
+  return p;
+}
+
+function askFollow(m,from,host,btn){
+  const open=host.querySelector('.chain[data-m="'+m.name+'"]');
+  if(open){open.remove();btn.classList.remove('on');return;}
+  host.querySelectorAll('.chain').forEach(n=>n.remove());
+  host.parentNode.querySelectorAll('.chip.on').forEach(n=>n.classList.remove('on'));
+  btn.classList.add('on');
+  const q={id:'\u21b3',ask:m.title,metric:m.name,
+           params:carryOver(m,from),why:m.about,followup:true};
+  const box=el('div','chain');box.setAttribute('data-m',m.name);
+  box.appendChild(questionCard(q,-1));
+  host.appendChild(box);
+  requestAnimationFrame(()=>{
+    const b=box.querySelector('button.run');if(b)b.click();
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+}
+
+/* Column names in a product are read by somebody who has never seen the schema, so
+   scheduled_t becomes "contracted this month" and the tonnages line up on the decimal. */
+// Column names are read by somebody who has never seen the schema, so each one says what
+// the figure is rather than what the code calls it. The two that matter most:
+// "owed to private buyers this month" is a promise about that month specifically, and
+// "needed to stay on tender deadlines" is not a promise at all, it is the pace.
+const COLNAME={month:'Month',
+  capacity_t:'Plant can make',
+  scheduled_t:'Owed to private buyers this month',
+  required_t:'Needed to stay on tender deadlines',
+  committed_t:'Total the month must produce',
+  free_t:'Room to sell',
+  used_pct:'Capacity used',
+  room_t:'Room that month',take_t:'This order would take',
+  after_t:'Left afterwards',cumulative_t:'Running total',eats_pct:'Share of the room',
+  awarded_t:'Awarded',delivered_t:'Delivered',done_pct:'Done',
+  suggested_t:'Suggested draw',oversold_t:'',
+  tender_ref:'Contract',plant:'Buyer',grade_code:'Product',tonnes:'Tonnes',
+  remaining_t:'Still owed',room_t:'Headroom to deadline',shortfall_t:'Short by',
+  deadline:'Due by',months_left:'Months left',needed_per_month:'Needed a month',
+  delivered:'Delivered',out_t:'Dispatched',cost_per_t:'Cost a tonne',
+  cost_per_gcv:'Cost per GCV',feed_rate_per_t:'Feedstock a tonne',
+  conversion_per_t:'Conversion a tonne',feed_cost_per_t:'Feedstock in a tonne',
+  own_t:'We make',firm_t:'Vendors confirmed',unconfirmed_t:'Promised, unconfirmed',
+  floor_t:'Floor',ceiling_t:'Ceiling',expected_t:'Likely',material:'Material',
+  energy_gcal:'Energy, Gcal',rate_per_t:'Rate a tonne',gcv:'GCV',amount:'Amount',
+  party:'Customer',outstanding:'Outstanding',week:'Week',from:'From',to:'To',
+  bills:'Bills',vendor:'Vendor',kept_pct:'Kept',credibility:'Credibility',
+  n:'Rows',mm:'',month_key:'',years:'Years'};
+const HIDE=new Set(['mm','month_key','rows','vendors','fits','n','state',
+                    'oversold_t','suggested_t']);
+const MONEYCOL=/(cost|rate|amount|outstanding|price|per_t$)/;
+
+/* How the rows became the number. Not the query, which is on the right, but the arithmetic
+   after it: each step, what it came to, and which two figures it came from. This is the
+   thing a second pair of eyes checks, and the thing a customer asks about six months on. */
+/* When a metric has not declared its steps, the panel falls back to the figures the query
+   returned. Those keys are written for the code, so they get names here, and a panel that
+   would be nothing but zeros is not shown at all: a grid of noughts under a refusal tells
+   nobody anything and it looks like a bug. */
+const NUMNAME={per_t:'Received per tonne',per_tonne:'Received per tonne',billed:'Billed',
+  ded:'Quality deductions',deducted:'Quality deductions',inv:'Sales vouchers',
+  invoices:'Sales vouchers',t:'Tonnes',tonnes:'Tonnes',net:'Money actually due',
+  total:'Total',total_free_t:'Room to sell',pool:'Still owed on tenders',
+  committed_t:'Still owed',awarded_t:'Awarded',delivered_t:'Delivered',
+  cap:'Plant can make',sched:'Owed to private buyers',req:'Tender pace needed',
+  free:'Room to sell',over:'Oversold by',used:'Capacity used',movable:'Could move',
+  pinned:'Cannot move',want:'Order asked for',short:'Short by',spare:'Left over',
+  n_free:'Months with room',n_over:'Months oversold',n_tight:'Months full',
+  n_months:'Months looked at',quote_per_t:'Quote per tonne',cost_per_t:'Cost per tonne',
+  margin:'Margin asked for',overdue:'Already overdue',window:'Due in the window',
+  soon:'Next money in',floor:'Floor',ceiling:'Ceiling',firm:'Confirmed by vendors',
+  unconfirmed:'Promised, unconfirmed',n_years:'Years with trade',best_t:'Biggest year',best:'Best year we ever bought',months:'Months we have traded with him',contracted_t:'Contracted',dispatched_t:'Already delivered',loads:'Loads',option_applied:'Option clause counted',remaining_min_t:'Least that could be left',remaining_max_t:'Most that could be left',unattributed_loads:'Loads with no contract against them',unattributed_t:'Tonnage with no contract against it',extracted:'Promises read out of email',feed:'Raw material bought',fin:'Finished pellets bought in',unk:'Could not be told apart',unk_n:'Purchases that could not be told apart',lo:'Lower bound',hi:'Upper bound',product:'What the product actually tests at',quoted:'The GCV you asked to quote',};
+
+function workingPanel(a){
+  const w=a.working||[];
+  const figs=Object.entries(a.numbers||{})
+    .filter(([k,v])=>typeof v==='number'&&v!==0);
+  const named=figs.filter(([k])=>NUMNAME[k]);
+  if(!w.length&&!named.length)return null;    // nothing we can explain, so say nothing
+  const box=el('div','work');
+  const h=el('button','workh');
+  const cnt=w.length||named.length;
+  h.appendChild(el('span','wt','How this number was reached'));
+  h.appendChild(el('span','wc',cnt+' steps'));
+  const body=el('div','workb');
+  box.appendChild(h);box.appendChild(body);
+  let open=true;
+  h.onclick=()=>{open=!open;body.hidden=!open;h.classList.toggle('shut',!open);};
+
+  if(w.length){
+    const ol=el('ol','wsteps');
+    w.forEach(stp=>{
+      const li=el('li');
+      const top=el('div','wline');
+      top.appendChild(el('span','wlab',stp.step));
+      const v=Number(stp.value);
+      const u=(stp.unit||'').toLowerCase();
+      const shown=!isFinite(v)?String(stp.value)
+        :u.indexOf('per gcv')>=0?v.toFixed(3)
+        :u.indexOf('rupee')>=0?rs(v)
+        :u.indexOf('tonne')>=0?IN(v,Math.abs(v)<100?1:0)
+        :IN(v,Number.isInteger(v)?0:2);
+      const val=el('span','wval',shown);
+      if(stp.unit&&u.indexOf('rupee')<0)val.appendChild(el('i',null,' '+stp.unit));
+      top.appendChild(val);
+      li.appendChild(top);
+      if(stp.detail)li.appendChild(el('p','wdet',stp.detail));
+      ol.appendChild(li);
+    });
+    body.appendChild(ol);
+    body.appendChild(el('p','wfoot',
+      'Every figure above came out of a query on the right. None of it was written by hand.'));
+  }else{
+    // no declared derivation, so show the figures themselves. Still a trail.
+    const g=el('div','wnums');
+    /* Only figures we can name in English. A panel headed "How this number was reached"
+       that answers "unk 538.4" is worse than one that says nothing: it looks like the
+       trail is there when the reader cannot follow a step of it. app/audit.py fails the
+       build if a figure ever reaches this panel without a label. */
+    figs.filter(([k])=>NUMNAME[k]).slice(0,24).forEach(([k,v])=>{
+      const c=el('div','wn');
+      c.appendChild(el('b',null,IN(v,Number.isInteger(v)?0:2)));
+      c.appendChild(el('span',null,NUMNAME[k]));
+      g.appendChild(c);
+    });
+    body.appendChild(g);
+    body.appendChild(el('p','wfoot',
+      'Each of these came back from a query on the right, and the reply is checked against '+
+      'them before it is sent.'));
+  }
+  return box;
+}
+
+function dataTable(rows,cap){
+  if(!rows||!rows.length)return el('div','empty','Nothing to show.');
+  const cols=Object.keys(rows[0]).filter(c=>!HIDE.has(c)&&COLNAME[c]!=='');
+  const box=el('div','tbl');
+  if(cap)box.appendChild(el('div','tcap',cap));
+  const sc=el('div','scroll'),t=el('table'),thead=el('thead'),htr=el('tr');
+  cols.forEach(c=>{
+    const th=el('th',typeof rows[0][c]==='number'?'num':null,
+                COLNAME[c]||c.replace(/_t$/,'').replace(/_/g,' '));
+    htr.appendChild(th);});
+  thead.appendChild(htr);t.appendChild(thead);
+  const tb=el('tbody');
+  rows.forEach(r=>{const tr=el('tr');
+    cols.forEach(c=>{
+      const v=r[c];
+      if(v===null||v===undefined){tr.appendChild(el('td','nil','not recorded'));return;}
+      if(typeof v==='number'){
+        const txt=MONEYCOL.test(c)?(Math.abs(v)<10?v.toFixed(3):rs(v))
+                 :Math.abs(v)<10&&!Number.isInteger(v)?v.toFixed(2):IN(v,v<100?1:0);
+        const td=el('td','num'+(v<0?' neg':''),txt);
+        tr.appendChild(td);return;
+      }
+      tr.appendChild(el('td',null,/^\d{4}-\d{2}$/.test(v)
+        ?MONTHSHORT(v)+' '+v.slice(0,4):String(v)));
+    });
+    tb.appendChild(tr);});
+  t.appendChild(tb);sc.appendChild(t);box.appendChild(sc);return box;
+}
+
+/* ---------------------------------------------------------------- ask page */
+/* The five questions the story leaves you holding.
+
+   Each one runs for real against the database, in order, and the answer to one is the
+   reason for the next. The parameters are not typed in: they come from what the previous
+   step found, which is also how the owner would actually arrive at them. */
+const STORY=[
+  {n:'1', beat:'He opens the file.',
+   ask:'So what have I already agreed to deliver?',
+   metric:'order_book', params:{},
+   after:'It will not give him a number. Four loads left the yard with nothing written '+
+         'against them, so the honest answer is a ceiling.'},
+
+  {n:'2', beat:'A ceiling is not a plan.',
+   ask:'Then when have I actually got room?',
+   metric:'capacity_free', params:{months:12},
+   after:'September is already oversold. The six months after it are full to within three '+
+         'percent. Nothing on his desk told him that.'},
+
+  {n:'3', beat:'Now the tender on the desk.',
+   ask:'It is 3,000 t. By when could I have it made?',
+   metric:'delivery_runway', params:{tonnes:3000},
+   after:'April, eight months out. The curve is what he quotes a date off, and it is his '+
+         'plant alone. Anything bought in pulls it forward.'},
+
+  {n:'4', beat:'So what can he buy in?',
+   ask:'How much material can I count on?',
+   metric:'supply_outlook', params:{months:12},
+   after:'Nothing. Not one vendor has promised him anything for a year. The promises exist, '+
+         'in fifteen hundred emails nobody has read back to him.'},
+
+  {n:'5', beat:'Which leaves the bid.',
+   ask:'And if I do bid, what do I quote?',
+   metric:'quote_for_tender',
+   params:{grade_code:'PLT-A1',quoted_gcv:3200,margin_per_gcv:0.3,
+           deliver_from:'2026-10',deliver_to:'2027-03'},
+   after:'Feedstock in each of those months, times the conversion ratio, plus conversion, '+
+         'divided by the energy in a tonne. Every step on screen. Change the margin and '+
+         'watch it move.'},
+];
+
+function pageStory(v){
+  const intro=el('div','sintro');
+  add(intro,
+      el('p','skicker','You have just watched a tender land on a man\u2019s desk'),
+      el('h2',null,'Five questions he cannot answer'),
+      el('p','slede','Every sentence below is editable and every answer is live, straight '+
+        'out of his books. Nothing here is a screenshot.'));
+  v.appendChild(intro);
+
+  const thread=el('div','thread');
+  STORY.forEach((step,i)=>{
+    const node=el('div','sstep');
+
+    const beat=el('div','sbeat');
+    beat.appendChild(el('span','sn',step.n));
+    beat.appendChild(el('span','sbt',step.beat));
+    node.appendChild(beat);
+    node.appendChild(el('div','sq',step.ask));
+
+    const q={id:'S'+(i+1),ask:step.ask,metric:step.metric,
+             params:Object.assign({},step.params),why:null,followup:true};
+    const card=questionCard(q,-1);
+    card.classList.add('scard');
+    node.appendChild(card);
+
+    const after=el('p','safter',step.after);
+    node.appendChild(after);
+    thread.appendChild(node);
+
+    // the answer arrives rather than being there already, which is most of what makes a
+    // sequence of cards feel like a sequence of moments
+    setTimeout(()=>{
+      const b=card.querySelector('button.run');
+      if(b)b.click();
+    },i*260);
+  });
+  v.appendChild(thread);
+
+  // the line fills as each beat comes into view, so the page has a direction
+  const seen=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting)e.target.classList.add('lit');
+  }),{rootMargin:'-15% 0px -55% 0px'});
+  thread.querySelectorAll('.sstep').forEach(n=>seen.observe(n));
+
+  const end=el('div','send');
+  add(end,el('h3',null,'That is the whole argument.'),
+      el('p',null,'Two answers, two refusals and a calculation you can follow. Twenty '+
+        'three more questions next door, all behaving the same way: they answer, or they '+
+        'tell you exactly what is stopping them.'));
+  const go=el('button','cta','Ask the rest');
+  go.onclick=()=>{S.page='ask';drawTabs();draw();window.scrollTo(0,0);};
+  end.appendChild(go);
+  v.appendChild(end);
+}
+
+function pageAsk(v){
+  add(v,el('h2',null,'Ask'),
+        el('p','lede','Every question is a sentence with the choices inside it. Change a dropdown and it becomes your own question. Nothing you pick here turns into SQL: it selects a calculation and its settings, and the values on offer come out of this company’s own data.'));
+  statStrip(v);
+  S.questions.forEach((q,i)=>v.appendChild(questionCard(q,i)));
+}
+
+function questionCard(q,i){
+  const card=el('div','qcard');
+  const head=el('div','qhead');
+  head.appendChild(el('span','qtag',q.id));
+  const sen=el('div','sentence');
+  const params={...q.params};
+  const tpl=SENT[q.metric]||[q.ask];
+  tpl.forEach(bit=>{
+    if(typeof bit==='string'){sen.appendChild(document.createTextNode(bit));return;}
+    if(typeof bit==='function'){sen.appendChild(document.createTextNode(bit()));return;}
+    const key=bit.p,kind=KIND[key]||'int';
+    if(kind==='int'||kind==='float'){
+      const inp=el('input');inp.type='number';inp.step=kind==='float'?'0.05':'1';
+      // Showing a default in the box is not the same as having chosen it. Seed the
+      // parameter with what is on screen, or the request goes out without it and the
+      // metric is asked to work with nothing.
+      const start=params[key]??DEFAULTV[key]??0;
+      params[key]=kind==='float'?parseFloat(start):parseInt(start);
+      inp.value=start;
+      inp.oninput=()=>params[key]=kind==='float'?parseFloat(inp.value):parseInt(inp.value);
+      sen.appendChild(inp);
+    }else{
+      const wrap=el('span','wrapsel'),sel=el('select');
+      (S.options[kind]||[]).forEach(o=>{
+        const val=typeof o==='object'?o.value:o, lab=typeof o==='object'?o.label:o;
+        const op=el('option',null,lab);op.value=val;sel.appendChild(op);});
+      if(params[key])sel.value=params[key];
+      params[key]=sel.value;          // whatever is showing is what will be asked
+      sel.onchange=()=>{params[key]=sel.value;};
+      wrap.appendChild(sel);sen.appendChild(wrap);
+    }
+  });
+  head.appendChild(sen);
+  const run=el('button','run','Run');
+  head.appendChild(run);
+  card.appendChild(head);
+  if(q.why)card.appendChild(el('p','why',q.why));
+  const slot=el('div');card.appendChild(slot);
+  if(!q.followup&&S.answers[q.id])slot.appendChild(answerCard(S.answers[q.id]));
+  run.onclick=async()=>{
+    run.classList.add('busy');run.textContent='...';
+    try{
+      const a=await post('/api/ask',{tenant:S.tenant,metric:q.metric,params});
+      if(!q.followup)S.answers[q.id]=a;
+      slot.innerHTML='';slot.appendChild(answerCard(a));
+    }catch(e){slot.innerHTML='';slot.appendChild(el('div','body','Could not run that: '+e.message));}
+    run.classList.remove('busy');run.textContent='Run';
+  };
+  return card;
+}
+
+function statStrip(v){
+  const q=S.summary,g=el('div','stats');
+  const one=(n,l,flag)=>{const d=el('div','stat'+(flag?' flag':''));
+    d.appendChild(el('b',null,fmt(n)));d.appendChild(el('span',null,l));g.appendChild(d);};
+  one(q.live_contracts,'live contracts');
+  one(q.loads,'loads dispatched');
+  one(Math.round(q.tonnes),'tonnes shipped');
+  one(q.untagged,'loads with no contract on them',q.untagged>0);
+  one(q.open_reviews,'waiting on a person',q.open_reviews>0);
+  v.appendChild(g);
+}
+
+/* ---------------------------------------------------------------- review */
+async function pageReview(v){
+  add(v,el('h2',null,'Review queue'),
+        el('p','lede','Everything the system would not guess at, as a specific question with the possible answers beside it. Answer one and the numbers that depended on it change.'));
+  let d;
+  try{d=await api('/api/review?tenant='+S.tenant);}
+  catch(e){v.appendChild(el('div','empty',e.message));return;}
+  if(!d.items.length){v.appendChild(el('div','empty','Nothing waiting. Every load and every purchase is accounted for.'));return;}
+  const kinds=[...new Set(d.items.map(i=>i.kind))];let active=kinds[0];
+  const chips=el('div','chips'),body=el('div');
+  const render=()=>{
+    body.innerHTML='';
+    d.items.filter(i=>i.kind===active).slice(0,40).forEach(it=>{
+      const p=it.proposal||{},pan=el('div','panel'),h=el('div','ph');
+      h.appendChild(el('span','ref',it.subject_ref));
+      h.appendChild(el('span','qn',p.question||it.kind.replace(/_/g,' ')));
+      pan.appendChild(h);
+      const bits=[];
+      if(p.date)bits.push(p.date);
+      if(p.tonnes!==undefined)bits.push(fmt(p.tonnes)+' t');
+      if(p.plant)bits.push(p.plant);
+      if(p.vendor)bits.push(p.vendor);
+      if(p.rate!==undefined)bits.push('Rs '+fmt(p.rate)+'/t');
+      if(p.item)bits.push(p.item);
+      if(bits.length)pan.appendChild(el('div','meta',bits.join('   ·   ')));
+      const opts=el('div','opts');
+      (p.options&&p.options.length?p.options:['cannot be placed']).forEach(o=>{
+        const nice=(p.labels&&p.labels[o])||o;
+        const b=el('button','opt',nice);
+        b.onclick=async()=>{
+          try{await post('/api/review/resolve',{tenant:S.tenant,review_id:it.review_id,choice:o});
+            toast('Saved. That load now counts against '+((p.labels&&p.labels[o])||o));
+            S.answers={};await loadSummary();draw();}
+          catch(e){toast(e.message);}
+        };
+        opts.appendChild(b);});
+      pan.appendChild(opts);body.appendChild(pan);
+    });
+  };
+  kinds.forEach(k=>{
+    const b=el('button','qchip',k.replace(/_/g,' ')+'  '+d.counts[k]);
+    b.setAttribute('aria-pressed',String(k===active));
+    b.onclick=()=>{active=k;[...chips.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));render();};
+    chips.appendChild(b);});
+  add(v,chips,body);render();
+}
+
+/* ---------------------------------------------------------------- data */
+async function pageData(v){
+  add(v,el('h2',null,'The data'),
+        el('p','lede','Exactly what came out of the company’s systems, untouched. Dates are still text, quantities are still in quintals, party names are still as somebody typed them.'));
+  let tables;
+  try{tables=await api('/api/tables?tenant='+S.tenant);}
+  catch(e){v.appendChild(el('div','empty',e.message));return;}
+  const chips=el('div','chips'),body=el('div');let active=tables[0].name;
+  const show=async()=>{
+    body.innerHTML='';
+    const meta=tables.find(t=>t.name===active);
+    body.appendChild(el('p','note',meta.note+'   '+fmt(meta.rows)+' rows.'));
+    const d=await api(`/api/table/${active}?tenant=${S.tenant}&limit=100`);
+    const p=el('div','qcard');
+    p.appendChild(d.rows.length?dataTable(d.rows):el('div','empty','Nothing in this table yet.'));
+    body.appendChild(p);
+  };
+  tables.forEach(t=>{
+    const b=el('button','qchip',t.name+'  '+fmt(t.rows));
+    b.setAttribute('aria-pressed',String(t.name===active));
+    b.onclick=()=>{active=t.name;[...chips.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));show();};
+    chips.appendChild(b);});
+  add(v,chips,body);show();
+}
+
+/* ---------------------------------------------------------------- definitions */
+async function pageDefs(v){
+  add(v,el('h2',null,'Definitions'),
+        el('p','lede','What each word means for this company. Two customers use the same word differently and both are right, so the meaning lives here as a setting rather than in the code. Pick a sentence, save it, and every answer that depends on that word is computed again under the new rule.'));
+  let d;
+  try{d=await api('/api/definitions?tenant='+S.tenant);}
+  catch(e){v.appendChild(el('div','empty',e.message));return;}
+  Object.entries(d.current).forEach(([word,info])=>{
+    const pan=el('div','panel'),h=el('div','ph');
+    h.appendChild(el('span','ref',word.replace(/_/g,' ')));
+    h.appendChild(el('span','qn','in force since '+info.version));
+    pan.appendChild(h);
+    const wrap=el('div','dwrap'),picked={};
+    Object.entries(info.params).forEach(([k,val])=>{
+      const spec=(d.schema[word]||{})[k]||{};
+      const f=el('div','dsec');
+      f.appendChild(el('p','dq',spec.note||k.replace(/_/g,' ')));
+      const opts=spec.options||[];
+      if(opts.length){
+        /* Not a dropdown of fifo and lifo. A choice between two sentences, each with the
+           consequence written underneath it, because that is what somebody is signing. */
+        const list=el('div','dopts');
+        opts.forEach(o=>{
+          const card=el('label','dopt'+(String(o.value)===String(val)?' on':''));
+          const rd=el('input');rd.type='radio';rd.name=word+'.'+k;
+          rd.checked=String(o.value)===String(val);
+          rd.onchange=()=>{picked[k]=o.value;
+            list.querySelectorAll('.dopt').forEach(n=>n.classList.remove('on'));
+            card.classList.add('on');};
+          const bd=el('div','ob');
+          add(bd,el('b',null,o.label),el('span',null,o.detail));
+          add(card,rd,bd);list.appendChild(card);
+        });
+        f.appendChild(list);
+      }else{
+        const i=el('input');i.type='number';i.step='0.01';i.value=val;
+        i.oninput=()=>{picked[k]=parseFloat(i.value);};
+        const row=el('div','dnum');
+        add(row,i,el('span',null,'currently '+val));
+        f.appendChild(row);
+      }
+      wrap.appendChild(f);
+    });
+    pan.appendChild(wrap);
+    const b=el('button','save','Save and recompute every answer that uses this word');
+    b.onclick=async()=>{
+      const params=Object.assign({},info.params,picked);
+      try{await post('/api/definitions',{tenant:S.tenant,word,params});
+        S.answers={};toast('Saved. Every answer using \u201c'+word+'\u201d has been recomputed.');
+        draw();}
+      catch(e){toast(e.message);}
+    };
+    pan.appendChild(b);v.appendChild(pan);
+  });
+}
+
+/* When the company changes, the definitions change with it, and that is the whole point of
+   the exercise. Rather than leaving the evaluator to go and look, the difference is put on
+   screen for a few seconds: the word, what it meant, what it means now. */
+async function showDefDiff(prevTenant,prevDefs){
+  let now;try{now=await api('/api/definitions?tenant='+S.tenant);}catch(e){return;}
+  S.defs=now;
+  if(!prevDefs)return;
+  const rows=[];
+  Object.entries(now.chosen||{}).forEach(([word,fields])=>{
+    Object.entries(fields).forEach(([k,cur])=>{
+      const was=((prevDefs.chosen||{})[word]||{})[k];
+      if(!was||String(was.value)===String(cur.value))return;
+      rows.push({word,key:k,from:was.label||String(was.value),to:cur.label||String(cur.value)});
+    });
+  });
+  if(!rows.length)return;
+  const bar=el('div','diff');
+  const h=el('div','dh');
+  add(h,el('b',null,rows.length+' definition'+(rows.length>1?'s':'')+' changed with the company'),
+        el('span',null,'the same twenty questions now compute under different rules'));
+  bar.appendChild(h);
+  rows.forEach((r,i)=>{
+    const line=el('div','dr');
+    line.style.animationDelay=(0.06*i+0.1)+'s';
+    add(line,el('span','w',r.word.replace(/_/g,' ')),
+             el('span','was',r.from),
+             el('span','arw','\u2192'),
+             el('span','now',r.to));
+    bar.appendChild(line);
+  });
+  const host=$('#view');host.insertBefore(bar,host.firstChild);
+  requestAnimationFrame(()=>bar.classList.add('in'));
+  setTimeout(()=>{bar.classList.remove('in');setTimeout(()=>bar.remove(),500);},9000);
+}
+
+/* ---------------------------------------------------------------- shell */
+async function loadSummary(){S.summary=await api('/api/summary?tenant='+S.tenant);drawTabs();}
+async function loadTenant(){
+  const prevDefs=S.defs,prevTenant=S.lastTenant;
+  const [q,o,m]=await Promise.all([api('/api/questions?tenant='+S.tenant),
+    api('/api/options?tenant='+S.tenant),api('/api/metrics')]);
+  S.questions=q;S.options=o;S.metrics=m;S.answers={};S.lastTenant=S.tenant;
+  await loadSummary();draw();
+  showDefDiff(prevTenant,prevTenant&&prevTenant!==S.tenant?prevDefs:null);
+}
+function draw(){
+  const v=$('#view');v.innerHTML='';
+  ({story:pageStory,ask:pageAsk,review:pageReview,data:pageData,
+    defs:pageDefs})[S.page](v);
+}
+(async()=>{
+  const ts=await api('/api/tenants'),sel=$('#tenant');
+  ts.forEach(t=>{const o=el('option',null,t.name);o.value=t.tenant_id;sel.appendChild(o);});
+  S.tenant=ts[0].tenant_id;
+  sel.onchange=()=>{S.tenant=sel.value;loadTenant();};
+  await loadTenant();
+})().catch(e=>{
+  $('#view').innerHTML='<div class="empty"><b>Cannot reach the database.</b><br><br>Start Postgres, then <code>python db/load.py</code>, then reload this page.<br><br>'+e.message+'</div>';
+});
+</script>
+</body>
+</html>
