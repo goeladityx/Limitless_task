@@ -1,0 +1,10 @@
+# run.sh must arrive with Unix line endings whatever machine it was committed from.
+# A stray carriage return makes bash fail with "bad interpreter: /usr/bin/env bash^M",
+# which reads like the script is broken rather than like a checkout problem.
+*.sh    text eol=lf
+*.bat   text eol=crlf
+*.sql   text eol=lf
+*.py    text eol=lf
+
+# it is a shell script, and it should arrive executable
+run.sh  text eol=lf
